@@ -102,25 +102,25 @@ while(min(ldr1, ldr2, ldr3, ldr4)>lumin){     //estabelece luminosidade mínima 
 	while (ldr1<(ldr2+epsilon) || ldr4<(ldr3+epsilon)){  // se esta condição for verdadeira, significa que está chegando mais luz aos sensores 1 e/ou 4, consequentemente, o conjunto deverá operar uma rotação no sentido horário.
 
 	//motor de passo ligado ao eixo axial deve dar um passo no sentido horário(considerando que o motor de passo e o eixo giram no mesmo sentido)
-	passo_azi = passo_azi++; //atualiza a contagem de passos
+	passo_azi++; //atualiza a contagem de passos
 	}
 
 	while (ldr1>(ldr2+epsilon) || ldr4>(ldr3+epsilon)){  // se esta condição for verdadeira, significa que está chegando mais luz aos sensores 1 e/ou 4, consequentemente, o conjunto deverá operar uma rotação no sentido ANTI-horário.
 
 	//motor de passo ligado ao eixo axial deve dar um passo no sentido ANTI-horário(considerando que o motor de passo e o eixo giram no mesmo sentido)
-	passo_azi = passo_azi--; //atualiza a contagem de passos
+	passo_azi--; //atualiza a contagem de passos
 	}
 
 	while (ldr1<(ldr4+epsilon) || ldr2<(ldr3+epsilon)){  // se esta condição for verdadeira, significa que está chegando mais luz aos sensores 1 e/ou 2, consequentemente, o conjunto deverá operar uma rotação que aponte para cima.
 
 	//motor de passo ligado ao eixo zenital deve dar um passo no sentido horário (considerando que o motor de passo e o eixo giram no mesmo sentido)
-	passo_zen = passo_zen++; //atualiza a contagem de passos
+	passo_zen++; //atualiza a contagem de passos
 	}
 
 	while (ldr1>(ldr4+epsilon) || ldr2>(ldr3+epsilon)){  // se esta condição for verdadeira, significa que está chegando mais luz aos sensores 3 e/ou 4, consequentemente, o conjunto deverá operar uma rotação que aponte para baixo.
 
 	//motor de passo ligado ao eixo zenital deve dar um passo no sentido ANTI-horário (considerando que o motor de passo e o eixo giram no mesmo sentido)
-	passo_zen = passo--; //atualiza a contagem de passos
+	passo--; //atualiza a contagem de passos
 	}
 
 	//escreve valores dos angulos axial e zenital, medidos em pot_axial e pot_zenital em arquivo
