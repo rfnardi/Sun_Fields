@@ -1,0 +1,50 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=1.5cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,dsfont,mathtools}
+\usepackage{cancel}
+\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{bookmark}
+\usepackage{verbatim}
+\onehalfspacing
+\usepackage[brazilian]{babel}
+
+\usepackage{tikz, pgfplots}
+\usepackage{tkz-fct, tkz-base, tkz-euclide} %tkz-fct chama gnuplot --> precisa compilar com a opção -shell-escape depois de pdflatex
+\pgfplotsset{width=10cm,compat=1.17}
+\usetikzlibrary{calc,angles,quotes,intersections}
+\usetikzlibrary{decorations.pathmorphing}
+
+
+\begin{document}
+	
+\begin{figure}
+	% \centering
+	\begin{tikzpicture}
+		\tkzInit[xmin=0,xmax=7,ymin=-2,ymax=7]
+		\tkzDefPoint(0,0){extr_left}
+		\tkzDefPoint(5,0){extr_right}
+		\tkzDrawSegment(extr_right,extr_left)
+		\tkzDefPoint(0,0){Origem}
+		\tkzDefPoint(0,4){Origem_acima}
+		\tkzDrawSegment[->,>=stealth](Origem,Origem_acima)
+
+		\tkzDefPoint(30:3){raio1_1}
+		\tkzDefPoint(30:5){raio1_2}
+		\tkzDrawSegment[->,>=stealth](raio1_2,raio1_1)
+		\tkzDrawSegment[dashed,thin](Origem,raio1_1)
+		\tkzDefPoint(30:0.5){angulo_apoio}
+		\tkzLabelPoint[above](angulo_apoio){$\theta$}
+		\tkzDrawArc(Origem,angulo_apoio)(Origem_acima)
+		\tkzDefPoint(80:3){rotulo}
+		\tkzLabelPoint(rotulo){\scriptsize Potência do raio incidente: $I_0$}
+	\end{tikzpicture}
+\end{figure}
+
+
+
+\end{document}
