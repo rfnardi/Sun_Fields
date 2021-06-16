@@ -22,27 +22,88 @@
 
 \begin{document}
 	
-\begin{figure}
-	% \centering
+	{\bf Problema de se determinar a potência do raio refletido a partir da
+	densidade de potência do raio incidente como dependência do ângulo de
+	incidência.}
+
+	\bigskip
+
+	A potência $P$ é a integral de superfície do fluxo de potência $\vec I_0$
+	ao longo da superfície que recebe este fluxo. Assim,
+	\begin{equation}
+		P = \int \vec I_0 \cdot d\vec a .
+	\end{equation}
+	onde $ d\vec a$ é o elemento de área da superfície sobre a qual o fluxo do
+	radiação incide. Considerando uma superfície plana, que faz um ângulo $\theta$ 
+	com o raio de radiação incidente, temos que a potência dissipada na superfície é dada por
+	\begin{equation}
+		P = I_{0}A\cos(\theta)\ . 
+	\end{equation}
+
+
+\begin{figure}[h!]
+	\centering
 	\begin{tikzpicture}
 		\tkzInit[xmin=0,xmax=7,ymin=-2,ymax=7]
-		\tkzDefPoint(0,0){extr_left}
-		\tkzDefPoint(5,0){extr_right}
-		\tkzDrawSegment(extr_right,extr_left)
+		\tkzDefPoint(-1,0){extr_left}
+		\tkzDefPoint(1,0){extr_right}
+		\foreach \i in {1,2,...,12}{
+			\tkzDefPoint(0.2*\i -1.4,0){I\i}
+			\tkzDefPoint(0.2*\i-1.2,-0.2){II\i}
+			\tkzDrawSegment(I\i,II\i)
+
+		}
 		\tkzDefPoint(0,0){Origem}
 		\tkzDefPoint(0,4){Origem_acima}
 		\tkzDrawSegment[->,>=stealth](Origem,Origem_acima)
 
 		\tkzDefPoint(30:3){raio1_1}
 		\tkzDefPoint(30:5){raio1_2}
+
+		\tkzLabelPoint[above right](raio1_2){$I_0$}
 		\tkzDrawSegment[->,>=stealth](raio1_2,raio1_1)
 		\tkzDrawSegment[dashed,thin](Origem,raio1_1)
-		\tkzDefPoint(30:0.5){angulo_apoio}
-		\tkzLabelPoint[above](angulo_apoio){$\theta$}
+		\tkzDefPoint(30:0.3){angulo_apoio}
+		\tkzLabelPoint[above](angulo_apoio){\scriptsize $\theta$}
 		\tkzDrawArc(Origem,angulo_apoio)(Origem_acima)
-		\tkzDefPoint(80:3){rotulo}
-		\tkzLabelPoint(rotulo){\scriptsize Potência do raio incidente: $I_0$}
+		
+		\tkzDefPointWith[orthogonal,K=0.2](Origem,raio1_1) \tkzGetPoint{base_left}
+		\tkzDefPointWith[orthogonal,K=-0.2](Origem,raio1_1) \tkzGetPoint{base_right}
+		\tkzDefMidPoint(Origem,base_right) \tkzGetPoint{base_middle_right}
+		% \tkzDrawArc(Origem,base_middle_right)(extr_right)
+		% \tkzLabelPoint[right](base_middle_right){\scriptsize $\theta$}
+		\tkzGetPointCoord(base_right){B}
+		\tkzDefPoint(\Bx,0){point_B}
+		% \tkzDrawSegment[thin, dashed](base_right,point_B)
+
+		\tkzGetPointCoord(base_left){BB}
+		\tkzDefPoint(\BBx,0){point_BB}
+		% \tkzDrawSegment[thin, dashed](base_left,point_BB)
+
+		% \tkzDrawSegment(base_left,base_right)
+		\tkzDefPointWith[orthogonal,K=-0.2](raio1_1,Origem) \tkzGetPoint{upper_left}
+		\tkzDefPointWith[orthogonal,K=0.2](raio1_1,Origem) \tkzGetPoint{upper_right}
+		\tkzDefLine[parallel=through upper_right](raio1_1,raio1_2) \tkzGetPoint{top_right}
+		\tkzDefLine[parallel=through upper_left](raio1_1,raio1_2) \tkzGetPoint{top_left}
+		\tkzDrawSegment[->,>=stealth](top_right,upper_right)
+		\tkzDrawSegment[->,>=stealth](top_left,upper_left)
+
+		\tkzDefMidPoint(raio1_2,top_right) \tkzGetPoint{mid_right}
+		\tkzDefMidPoint(raio1_2,top_left) \tkzGetPoint{mid_left}
+		\tkzDefMidPoint(raio1_1,upper_right) \tkzGetPoint{bottom_mid_right}
+		\tkzDefMidPoint(raio1_1,upper_left) \tkzGetPoint{bottom_mid_left}
+		\tkzDrawSegment[->,>=stealth](mid_right,bottom_mid_right)
+		\tkzDrawSegment[->,>=stealth](mid_left,bottom_mid_left)
+
+		\tkzInterLL(Origem,extr_right)(top_right,upper_right) \tkzGetPoint{crossing_right}
+		\tkzInterLL(Origem,extr_left)(top_left,upper_left) \tkzGetPoint{crossing_left}
+		\tkzDrawSegment[very thin, dotted](upper_left,crossing_left)
+		\tkzDrawSegment[very thin, dotted](upper_right,crossing_right)
+
+		\tkzDrawSegment(crossing_left,crossing_right)
+
 	\end{tikzpicture}
+	\caption{Incidência de um raio de luz com densidade perpendicular de potência $I_0$.}
 \end{figure}
 
 
