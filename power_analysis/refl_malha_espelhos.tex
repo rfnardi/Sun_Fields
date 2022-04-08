@@ -1,0 +1,185 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=1.5cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,dsfont,mathtools}
+\usepackage{cancel}
+\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{bookmark}
+\usepackage{verbatim}
+\onehalfspacing
+\usepackage[brazilian]{babel}
+
+\usepackage{tikz, pgfplots}
+\usepackage{tkz-fct, tkz-base, tkz-euclide} %tkz-fct chama gnuplot --> precisa compilar com a opção -shell-escape depois de pdflatex
+\usepackage{animate}
+\pgfplotsset{width=10cm,compat=1.17}
+\usetikzlibrary{calc,angles,quotes,intersections}
+\usetikzlibrary{decorations.pathmorphing}
+
+\DeclareMathOperator{\sen}{sen}
+
+\begin{document}
+	{\bf Problema:} determinar como a potência refletida por um espelho em
+	direção ao ponto focal depende da localização do espelho.
+
+
+	\begin{figure}[htpb]
+		\centering
+			\begin{animateinline}[poster=first,controls={play,stop,step}]{4}
+				\multiframe{35}{ri=0+4}
+				{
+					\begin{tikzpicture}[scale=1, transform shape]
+						\tkzInit[xmin=-7,xmax=7,ymax=7]
+						\tkzDrawX[noticks]
+						\tkzDrawY[noticks]
+						\tkzDefPoint(0,0){Origem}
+						\tkzDefPoint(0.5,0.5){A}
+						\foreach \i in {0,1,2,3}{
+							\pgfmathparse{0+\i*90}
+							\tkzDefPointBy[rotation=center Origem angle \pgfmathresult](A) \tkzGetPoint{A\i}
+						}
+						\tkzDrawPolygon[fill=red!80](A0, A1, A2, A3)
+
+						\def\MirrorPos{4}
+						\tkzDefPoint(\MirrorPos,\MirrorPos){P}
+						\tkzDefPoint(\MirrorPos + 0.5,\MirrorPos + 0.5){B}
+						\foreach \j in {0,1,2,3}{
+							\pgfmathparse{0+\j*90}
+							\tkzDefPointBy[rotation=center P angle \pgfmathresult](B) \tkzGetPoint{B\j}
+						}
+						\tkzDrawPolygon[fill=blue!30](B0, B1, B2, B3)
+						\tkzDrawSegment[->,>=stealth](Origem,P)
+						\tkzDefMidPoint(Origem,P) \tkzGetPoint{r}
+						\tkzLabelPoint[above left](r){$\hat{r}$}
+
+						\def\radiusSunPos{6}
+						\tkzDefPoint(160 - \ri:\radiusSunPos){S}
+						\tkzGetPointCoord(S){SCoord}
+						\tkzDefPoint(\SCoordx + 0.3,\SCoordy + 0.3){C}
+						\foreach \k in {0,1,2,3,4}{
+							\pgfmathparse{0+\k*72}
+							\tkzDefPointBy[rotation=center S angle \pgfmathresult](C) \tkzGetPoint{C\k}
+						}
+						\tkzDrawPolygon[fill=yellow!80](C0, C2, C4, C1, C3)
+						\tkzDrawSegment[->,>=stealth](P,S)
+						\tkzDefMidPoint(S,P) \tkzGetPoint{sun_to_mirror}
+						\tkzLabelPoint[above left](sun_to_mirror){$\hat{s}$}
+					\end{tikzpicture}
+				}
+			\end{animateinline}
+		\caption{Malha de espelhos: vista de cima}%
+		\label{fig:}
+	\end{figure}
+	
+	Para determinar a inclinação do espelho usamos o fato de que a normal do
+	espelho $\vec n$ faz ângulos idênticos com a direção dos raios solares
+	(dada pelo vetor $\hat{s}$) e com o vetor $\hat{r}$ que dá a localização do
+	espelho em relação ao ponto focal aliado ao fato de que os três vetores
+	mencionados pertencem ao mesmo plano (numa reflexão, os vetores raio
+	incidente, raio refletido e normal da superfície são coplanares).
+
+	\begin{figure}[htpb]
+		\centering
+		\begin{animateinline}[poster=first,controls={step,stop,step}]{8}
+			\begin{tikzpicture}[scale=1, transform shape]
+				\tkzInit[xmin=-5,xmax=5,ymax=5]
+				\tkzDrawX[noticks]
+				\tkzDefPoint(0,0){Esp}
+				\tkzDefPoint(0,4){Esp_above}
+				\tkzDefPoint(4,4){s}
+				\tkzDefPoint(1,1){right_theta_above}
+				\tkzDefPoint(1.41,0){right_theta}
+				\tkzDefPoint(18:1.41){right_theta_label}
+				\tkzLabelPoint[above right](right_theta_label){$\theta$}
+				\tkzDrawArc[thick](Esp,right_theta)(right_theta_above)
+				\tkzDefPoint(-1,1){left_theta_above}
+				\tkzDefPoint(-1.41,0){left_theta}
+				\tkzDefPoint(162:1.41){left_theta_label}
+				\tkzLabelPoint[above left](left_theta_label){$\theta$}
+				\tkzDrawArc[thick](Esp,left_theta_above)(left_theta)
+				\tkzDefPoint(-4,4){r}
+				\tkzDrawSegment[->,> = stealth, thick](r,Esp)
+				\tkzDrawSegment[->,> = stealth, thick](Esp,s)
+				\tkzDrawSegment[->,> = stealth, thick](Esp, Esp_above)
+				\tkzLabelPoint[left](r){$\hat{r}$}
+				\tkzLabelPoint[right](s){$\hat{s}$}
+				\tkzLabelPoint[above right](Esp_above){$\vec n$}
+			\end{tikzpicture}
+
+			\newframe
+			\begin{tikzpicture}[scale=1, transform shape]
+				\tkzInit[xmin=-5,xmax=5,ymax=5]
+				\tkzDrawX[noticks]
+				\tkzDefPoint(0,0){Esp}
+				\tkzDefPoint(4,4){s}
+				\tkzDefPoint(-4,4){r}
+				\tkzDrawSegment[->,> = stealth, thick](r,Esp)
+				\tkzDrawSegment[->,> = stealth, thick](Esp,s)
+				\tkzDrawSegment[->,> = stealth, thick, red](r,s)
+				\tkzLabelPoint[left](r){$\hat{r}$}
+				\tkzLabelPoint[right](s){$\hat{s}$}
+				\tkzDefMidPoint(r,s) \tkzGetPoint{midpoint}
+				\tkzLabelPoint[above right, red](midpoint){$\hat{s} + \hat{r}$}
+			\end{tikzpicture}
+
+			\newframe
+			\begin{tikzpicture}[scale=1, transform shape]
+				\tkzInit[xmin=-5,xmax=5,ymax=5]
+				\tkzDrawX[noticks]
+				\tkzDefPoint(0,0){Esp}
+				\tkzDefPoint(4,4){s}
+				\tkzDefPoint(-4,4){r}
+				\tkzDrawSegment[->,> = stealth, thick, red](Esp,r)
+				\tkzDrawSegment[->,> = stealth, thick](Esp,s)
+				\tkzDrawSegment[->,> = stealth, thick, red](r,Esp_above)
+				\tkzLabelPoint[left, red](r){$-\hat{r}$}
+				\tkzLabelPoint[right](s){$\hat{s}$}
+				\tkzDefMidPoint(r,Esp_above) \tkzGetPoint{midmidpoint}
+				\tkzDefMidPoint(Esp,Esp_above) \tkzGetPoint{normal_label}
+				\tkzLabelPoint[above left, red](midmidpoint){$\frac{\hat{s} + \hat{r}}{2}$}
+			\end{tikzpicture}
+
+			\newframe
+			\begin{tikzpicture}[scale=1, transform shape]
+				\tkzInit[xmin=-5,xmax=5,ymax=5]
+				\tkzDrawX[noticks]
+				\tkzDefPoint(0,0){Esp}
+				\tkzDefPoint(4,4){s}
+				\tkzDefPoint(-4,4){r}
+				\tkzDrawSegment[->,> = stealth, thick, red](Esp,r)
+				\tkzDrawSegment[->,> = stealth, thick](Esp,s)
+				\tkzDrawSegment[->,> = stealth, thick, red](r,Esp_above)
+				\tkzDrawSegment[->,> = stealth, thick, red](Esp,Esp_above)
+				\tkzLabelPoint[left, red](r){$-\hat{r}$}
+				\tkzLabelPoint[right](s){$\hat{s}$}
+				\tkzDefMidPoint(r,Esp_above) \tkzGetPoint{midmidpoint}
+				\tkzDefMidPoint(Esp,Esp_above) \tkzGetPoint{normal_label}
+				\tkzLabelPoint[above left, red](midmidpoint){$\frac{\hat{s} + \hat{r}}{2}$}
+				\tkzLabelPoint[above right, red](normal_label){$\vec n = \frac{\hat{s} + \hat{r}}{2} - \hat{r}$}
+			\end{tikzpicture}
+
+		\end{animateinline}
+		\caption{Reflexão num espelho}%
+		\label{fig:reflexao}
+	\end{figure}
+
+	Assim, chegamos à expressão do vetor normal à superfície de tamanho unitário:
+	\begin{eqnarray}
+		\hat{n} &=& \frac{\vec n}{|\vec n|}\\
+				&=& \frac{\frac{\hat{s} - \hat{r}}{2}}{|{\frac{\hat{s} - \hat{r}}{2}}|}\\
+				&=& \frac{\hat{s} - \hat{r}}{|\hat{s} - \hat{r}|}\\
+				&=& \frac{\hat{s} - \hat{r}}{\sqrt{s^2 -2\hat{s}\cdot\hat{r} + r^2}}\\
+				&=& \frac{\hat{s} - \hat{r}}{\sqrt{1 -2\hat{s}\cdot\hat{r} + 1}}\\
+				&=& \frac{\hat{s} - \hat{r}}{\sqrt{2}\sqrt{1 -\hat{s}\cdot\hat{r}}}\\
+				&=& \boxed{\frac{\hat{s} - \hat{r}}{\sqrt{2}\sqrt{1 -\cos(2\theta)}}}
+	\end{eqnarray}
+
+	
+
+
+
+\end{document}
