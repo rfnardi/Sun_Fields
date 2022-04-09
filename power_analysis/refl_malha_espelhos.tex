@@ -1,5 +1,4 @@
 \documentclass[12pt,a4paper]{article}
-
 \usepackage[a4paper]{geometry}
 \geometry{verbose,tmargin=1.5cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
 \usepackage{amsmath,amsfonts,amssymb,amsthm,dsfont,mathtools}
@@ -12,20 +11,17 @@
 \usepackage{verbatim}
 \onehalfspacing
 \usepackage[brazilian]{babel}
-
 \usepackage{tikz, pgfplots}
 \usepackage{tkz-fct, tkz-base, tkz-euclide} %tkz-fct chama gnuplot --> precisa compilar com a opção -shell-escape depois de pdflatex
 \usepackage{animate}
 \pgfplotsset{width=10cm,compat=1.17}
 \usetikzlibrary{calc,angles,quotes,intersections}
 \usetikzlibrary{decorations.pathmorphing}
-
 \DeclareMathOperator{\sen}{sen}
 
 \begin{document}
 	{\bf Problema:} determinar como a potência refletida por um espelho em
 	direção ao ponto focal depende da localização do espelho.
-
 
 	\begin{figure}[htpb]
 		\centering
@@ -71,8 +67,8 @@
 					\end{tikzpicture}
 				}
 			\end{animateinline}
-		\caption{Malha de espelhos: vista de cima}%
-		\label{fig:}
+		\caption{Reflexão em um espelho da malha: vista de cima}%
+		\label{fig:um_espelho_da_malha}
 	\end{figure}
 	
 	Para determinar a inclinação do espelho usamos o fato de que a normal do
@@ -86,22 +82,26 @@
 		\centering
 		\begin{animateinline}[poster=first,controls={step,stop,step}]{8}
 			\begin{tikzpicture}[scale=1, transform shape]
-				\tkzInit[xmin=-5,xmax=5,ymax=5]
+				\tkzInit[xmin=-4,xmax=4,ymax=4.5]
 				\tkzDrawX[noticks]
+				\tkzDrawY[noticks]
 				\tkzDefPoint(0,0){Esp}
 				\tkzDefPoint(0,4){Esp_above}
-				\tkzDefPoint(4,4){s}
-				\tkzDefPoint(1,1){right_theta_above}
-				\tkzDefPoint(1.41,0){right_theta}
-				\tkzDefPoint(18:1.41){right_theta_label}
-				\tkzLabelPoint[above right](right_theta_label){$\theta$}
-				\tkzDrawArc[thick](Esp,right_theta)(right_theta_above)
-				\tkzDefPoint(-1,1){left_theta_above}
-				\tkzDefPoint(-1.41,0){left_theta}
-				\tkzDefPoint(162:1.41){left_theta_label}
-				\tkzLabelPoint[above left](left_theta_label){$\theta$}
-				\tkzDrawArc[thick](Esp,left_theta_above)(left_theta)
-				\tkzDefPoint(-4,4){r}
+				\tkzDefPoint(2,2){s}
+				\tkzDefPoint(1,1){right_alpha_above}
+				\tkzDefPoint(1.41,0){right_alpha}
+				\tkzDefPoint(18:1.41){right_alpha_label}
+				\tkzLabelPoint[above right](right_alpha_label){$\alpha$}
+				\tkzDrawArc[thick](Esp,right_alpha)(right_alpha_above)
+				\tkzDrawArc[thick](Esp,right_alpha_above)(Esp_above)
+				\tkzDefPoint(60:1.41){theta}
+				\tkzLabelPoint[above](theta){$\theta$}
+				\tkzDefPoint(-1,1){left_alpha_above}
+				\tkzDefPoint(-1.41,0){left_alpha}
+				\tkzDefPoint(162:1.41){left_alpha_label}
+				\tkzLabelPoint[above left](left_alpha_label){$\alpha$}
+				\tkzDrawArc[thick](Esp,left_alpha_above)(left_alpha)
+				\tkzDefPoint(-2,2){r}
 				\tkzDrawSegment[->,> = stealth, thick](r,Esp)
 				\tkzDrawSegment[->,> = stealth, thick](Esp,s)
 				\tkzDrawSegment[->,> = stealth, thick](Esp, Esp_above)
@@ -112,58 +112,51 @@
 
 			\newframe
 			\begin{tikzpicture}[scale=1, transform shape]
-				\tkzInit[xmin=-5,xmax=5,ymax=5]
+				\tkzInit[xmin=-4,xmax=4,ymax=4.5]
 				\tkzDrawX[noticks]
+				\tkzDrawY[noticks]
 				\tkzDefPoint(0,0){Esp}
-				\tkzDefPoint(4,4){s}
-				\tkzDefPoint(-4,4){r}
+				\tkzDefPoint(2,2){s}
+				\tkzDefPoint(-2,2){r}
 				\tkzDrawSegment[->,> = stealth, thick](r,Esp)
 				\tkzDrawSegment[->,> = stealth, thick](Esp,s)
 				\tkzDrawSegment[->,> = stealth, thick, red](r,s)
-				\tkzLabelPoint[left](r){$\hat{r}$}
-				\tkzLabelPoint[right](s){$\hat{s}$}
 				\tkzDefMidPoint(r,s) \tkzGetPoint{midpoint}
 				\tkzLabelPoint[above right, red](midpoint){$\hat{s} + \hat{r}$}
+				\tkzDefMidPoint(Esp,s) \tkzGetPoint{s_label}
+				\tkzDefMidPoint(Esp,r) \tkzGetPoint{r_label}
+				\tkzLabelPoint[below right](s_label){$\hat{s}$}
+				\tkzLabelPoint[below left](r_label){$\hat{r}$}
 			\end{tikzpicture}
 
 			\newframe
 			\begin{tikzpicture}[scale=1, transform shape]
-				\tkzInit[xmin=-5,xmax=5,ymax=5]
+				\tkzInit[xmin=-4,xmax=4,ymax=4.5]
 				\tkzDrawX[noticks]
+				\tkzDrawY[noticks]
 				\tkzDefPoint(0,0){Esp}
-				\tkzDefPoint(4,4){s}
-				\tkzDefPoint(-4,4){r}
-				\tkzDrawSegment[->,> = stealth, thick, red](Esp,r)
+				\tkzDefPoint(2,2){s}
+				\tkzDefPoint(-2,2){r}
+				\tkzDrawSegment[->,> = stealth, thick](Esp,r)
 				\tkzDrawSegment[->,> = stealth, thick](Esp,s)
-				\tkzDrawSegment[->,> = stealth, thick, red](r,Esp_above)
-				\tkzLabelPoint[left, red](r){$-\hat{r}$}
-				\tkzLabelPoint[right](s){$\hat{s}$}
-				\tkzDefMidPoint(r,Esp_above) \tkzGetPoint{midmidpoint}
-				\tkzDefMidPoint(Esp,Esp_above) \tkzGetPoint{normal_label}
-				\tkzLabelPoint[above left, red](midmidpoint){$\frac{\hat{s} + \hat{r}}{2}$}
-			\end{tikzpicture}
-
-			\newframe
-			\begin{tikzpicture}[scale=1, transform shape]
-				\tkzInit[xmin=-5,xmax=5,ymax=5]
-				\tkzDrawX[noticks]
-				\tkzDefPoint(0,0){Esp}
-				\tkzDefPoint(4,4){s}
-				\tkzDefPoint(-4,4){r}
-				\tkzDrawSegment[->,> = stealth, thick, red](Esp,r)
-				\tkzDrawSegment[->,> = stealth, thick](Esp,s)
-				\tkzDrawSegment[->,> = stealth, thick, red](r,Esp_above)
-				\tkzDrawSegment[->,> = stealth, thick, red](Esp,Esp_above)
-				\tkzLabelPoint[left, red](r){$-\hat{r}$}
-				\tkzLabelPoint[right](s){$\hat{s}$}
-				\tkzDefMidPoint(r,Esp_above) \tkzGetPoint{midmidpoint}
-				\tkzDefMidPoint(Esp,Esp_above) \tkzGetPoint{normal_label}
-				\tkzLabelPoint[above left, red](midmidpoint){$\frac{\hat{s} + \hat{r}}{2}$}
-				\tkzLabelPoint[above right, red](normal_label){$\vec n = \frac{\hat{s} + \hat{r}}{2} - \hat{r}$}
+				\tkzDefPoint(0,4){top} 
+				\tkzDrawSegment[->,> = stealth, thick, red](r,top)
+				\tkzDrawSegment[->,> = stealth, thick, red](s,top)
+				\tkzDefMidPoint(Esp,s) \tkzGetPoint{s_label}
+				\tkzDefMidPoint(Esp,r) \tkzGetPoint{r_label}
+				\tkzDefMidPoint(s,top) \tkzGetPoint{s_label_top}
+				\tkzDefMidPoint(r,top) \tkzGetPoint{r_label_top}
+				\tkzDefMidPoint(Esp,top) \tkzGetPoint{sum_label}
+				\tkzLabelPoint[right, red](sum_label){$\vec n$}
+				\tkzLabelPoint[below right](s_label){$\hat{s}$}
+				\tkzLabelPoint[below left](r_label){$-\hat{r}$}
+				\tkzLabelPoint[above right](s_label_top){$-\hat{r}$}
+				\tkzLabelPoint[above left](r_label_top){$\hat{s}$}
+				\tkzDrawSegment[->,> = stealth, thick, red](Esp,top)
 			\end{tikzpicture}
 
 		\end{animateinline}
-		\caption{Reflexão num espelho}%
+		\caption{Reflexão num espelho: vista de perfil no espelho}%
 		\label{fig:reflexao}
 	\end{figure}
 
@@ -175,11 +168,20 @@
 				&=& \frac{\hat{s} - \hat{r}}{\sqrt{s^2 -2\hat{s}\cdot\hat{r} + r^2}}\\
 				&=& \frac{\hat{s} - \hat{r}}{\sqrt{1 -2\hat{s}\cdot\hat{r} + 1}}\\
 				&=& \frac{\hat{s} - \hat{r}}{\sqrt{2}\sqrt{1 -\hat{s}\cdot\hat{r}}}\\
-				&=& \boxed{\frac{\hat{s} - \hat{r}}{\sqrt{2}\sqrt{1 -\cos(2\theta)}}}
+				&=& \frac{\hat{s} - \hat{r}}{\sqrt{2}\sqrt{1 -\cos(2\alpha)}}. \label{eq:n_quase_final}
 	\end{eqnarray}
 
+	Por fim, usamos as identidades trigonométricas 
+	\begin{equation}
+		1-\cos(2\alpha) = 2\sen^2(\alpha)
+	\end{equation}
+	e 
+	\begin{equation}
+		\sen(\alpha) = \cos\left(\frac{\pi}{2}-\alpha\right) = \cos(\theta)
+	\end{equation}
+	que levam (\ref{eq:n_quase_final}) à seguinte forma:
+	\begin{equation}
+		\boxed{\hat{n} = \frac{\hat{s} - \hat{r}}{2\cos(\theta)}\ .}
+	\end{equation}
 	
-
-
-
 \end{document}
