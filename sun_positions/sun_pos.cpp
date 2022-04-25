@@ -32,28 +32,26 @@ float decl_calculation(int NDA){
 }
 
 class vetor_3d {
-	float v_x;
-	float v_y; 
-	float v_z;
+	public:
+	float coord[3];
 
 	vetor_3d(float v_x, float v_y, float v_z){
-		this->v_x = v_x;	
-		this->v_y = v_y;	
-		this->v_z = v_z;	
+		this->coord[0] = v_x;	
+		this->coord[1] = v_y;	
+		this->coord[2] = v_z;	
 	}
 	
 	float scalar_prod(vetor_3d vetor_2){
-		
-		return sqrt(this->v_x * vetor_2.v_x + this->v_y * vetor_2.v_y + this->v_z * vetor_2.v_z);
+		return sqrt(this->coord[0] * vetor_2.coord[0] + this->coord[1] * vetor_2.coord[1] + this->coord[2] * vetor_2.coord[2]);
 	}
 
 };
 
 int main()
 {
-	int NDA = NDA_calculation(24,3);
+	int NDA = NDA_calculation(26,3);
 
-	float rad_hor = ang_hor_rad(17.514);
+	float rad_hor = ang_hor_rad(18);
 
 	float lat = -18.9051; //Jaguaré em graus
 	/* float lat = -14.7973; //Ilhéus em graus */
@@ -74,6 +72,10 @@ int main()
 	float s_x = cos_Alt*sin_Azim; //projeção leste-oeste (positivo se ao leste)
 	float s_y = cos_Alt*cos_Azim; //projeção norte-sul (positivo se ao norte)
 
+	//teste de cálculo da norma do vetor de localização do sol:
+	vetor_3d s(s_x, s_y, s_z);
+	vetor_3d r(s_x, s_y, s_z);
+	float norma = s.scalar_prod(r);
 
 	std::cout << "NDA: "<< NDA << std::endl;
 	std::cout << "Valor do Azimute: "<< asin(sin_Azim) << std::endl;
@@ -81,6 +83,8 @@ int main()
 	std::cout << "Valor da Projeção vertical: "<< s_z << std::endl;
 	std::cout << "Valor da Projeção leste-oeste: "<< s_x << std::endl;
 	std::cout << "Valor da Projeção norte-sul: "<< s_y << std::endl;
+	std::cout << "Testando cálculo da Norma: "<< norma << std::endl;
+
 
 	return 0;
 }
