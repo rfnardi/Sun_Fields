@@ -27,7 +27,8 @@ float ang_hor_rad(float hora_local){
 
 float decl_calculation(int NDA){
 
-	float decl = 23.45*sin(360*(NDA -80)/365.25); //em graus
+	float angulo_rad = deg_to_rad(360*(NDA - 80)/365.25);
+	float decl = 23.45*sin(angulo_rad); //em graus
 	return deg_to_rad(decl);
 }
 
@@ -49,9 +50,9 @@ class vetor_3d {
 
 int main()
 {
-	int NDA = NDA_calculation(26,3);
+	int NDA = NDA_calculation(30,5);
 
-	float rad_hor = ang_hor_rad(18);
+	float rad_hor = ang_hor_rad(17.4);
 
 	float lat = -18.9051; //Jaguaré em graus
 	/* float lat = -14.7973; //Ilhéus em graus */
