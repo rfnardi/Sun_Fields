@@ -193,13 +193,17 @@ int main()
 	vetor_3d R(0,-12,0); //espelho localizado a 12 metros ao sul do ponto focal
 
 	float * sin_Alt_sin_Azim_Array;
-	for (float hora_local = 6; hora_local<18 ; hora_local++) {
+	float power;
+	float hora_local = 8.0;
+	vetor_3d s(0,0,0);
+	while(hora_local<18){
 		sin_Alt_sin_Azim_Array = sin_Alt_sin_Azim_calculation(NDA, lat, hora_local);
-		vetor_3d s = sun_pos_in_cartesian_coord(sin_Alt_sin_Azim_Array);
-		float power = one_mirror_power(s, R, NDA);
+		s = sun_pos_in_cartesian_coord(sin_Alt_sin_Azim_Array);
+		power = one_mirror_power(s, R, NDA);
 		std::cout << "Hora local: "<< hora_local ;
-		std::cout << " ; Projeção vertical do sol: " << s.coord[2] ; 
-		std::cout << " ; Potência: "<< power << std::endl;
+		std::cout << "\t ; Projeção vertical do sol: " << s.coord[2] ; 
+		std::cout << "\t ; Potência: "<< power << std::endl;
+		hora_local += 1;
 	}
 
 	/* log_entrada(NDA, lat, hora_local); */
