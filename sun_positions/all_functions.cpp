@@ -21,6 +21,20 @@ class vetor_3d {
 		return result;
 	}
 
+	void reset_coord(float x, float y, float z){
+		this->coord[0] = x;
+		this->coord[1] = y;
+		this->coord[2] = z;
+	}
+
+	vetor_3d vector_sum(vetor_3d vetor_2, vetor_3d result){
+		result.coord[0] = this->coord[0] + vetor_2.coord[0];	
+		result.coord[1] = this->coord[1] + vetor_2.coord[1];	
+		result.coord[2] = this->coord[2] + vetor_2.coord[2];	
+
+		return result;
+	}
+
 	void log_coords(){
 		std::cout << "Coordenada x: "<< this->coord[0] << std::endl;
 		std::cout << "Coordenada y: "<< this->coord[1] << std::endl;
