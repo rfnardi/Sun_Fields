@@ -45,11 +45,11 @@ class vetor_3d {
 	}
 	
 	float scalar_prod(vetor_3d vetor_2){
-		float square = 0.0;
+		float result = 0.0;
 		for (short i=0; i<3; i++) {
-			square += this->coord[i] * vetor_2.coord[i];
+			result += this->coord[i] * vetor_2.coord[i];
 		}
-		return sqrt(square);
+		return result;
 	}
 
 	void log_coords(){
@@ -119,10 +119,13 @@ void log_sun_position(vetor_3d s){
 
 vetor_3d get_normal_vector(vetor_3d s, vetor_3d r){
 
-	float denominador = sqrt(2)*sqrt(1 - s.scalar_prod(r));
+	float prod_escalar = s.scalar_prod(r);
+	/* std::cout << "Valor do produto escalar: "<< prod_escalar << std::endl; */
+	float denominador = sqrt(2)*sqrt(1 - prod_escalar);
+	/* std::cout << "valor do denominador: "<< denominador << std::endl; */
 	float n[3];
-	for (short i = 0; i < 3; ++i) {
-		n[i] =(s.coord[i] - r.coord[i])/denominador; 
+	for (short i = 0; i < 3; i++) {
+		n[i] = (s.coord[i] - r.coord[i])/denominador; 
 	}
 
 	static vetor_3d normal_vector(n[0],n[1],n[2]);
@@ -161,19 +164,22 @@ float refl_power_from_scalar_product(vetor_3d n, vetor_3d s, float J){
 }
 
 float one_mirror_power(vetor_3d s, vetor_3d R, int NDA){
+	/* std::cout << "Coordenadas de s unitário:" << std::endl; */
+	/* s.log_coords(); */
+
 	vetor_3d r = get_unitary_vector(R);
-	std::cout << "Coordenadas de r unitário:" << std::endl;
-	r.log_coords();
+	/* std::cout << "Coordenadas de r unitário:" << std::endl; */
+	/* r.log_coords(); */
 
 	vetor_3d n = get_normal_vector(s, r);
-	std::cout << "Coordenadas do vetor normal à superfície n unitário:" << std::endl;
-	n.log_coords();
+	/* std::cout << "Coordenadas do vetor normal à superfície n unitário:" << std::endl; */
+	/* n.log_coords(); */
 
 	float J = J_elliptic_correction(NDA);
-	std::cout << "Valor de J: "<< J << std::endl;
+	/* std::cout << "Valor de J: "<< J << std::endl; */
 
 	float power = refl_power_from_scalar_product(n, s, J);
-	std::cout << "Valor de power: "<< power << std::endl;
+	/* std::cout << "Valor de power: "<< power << std::endl; */
 
 	return power;
 }
@@ -181,21 +187,25 @@ float one_mirror_power(vetor_3d s, vetor_3d R, int NDA){
 int main()
 {
 	int NDA = NDA_calculation(24,3);
-	float hora_local = 17.693;
 	float lat = -18.9051; //Jaguaré em graus
 	/* float lat = -14.7973; //Ilhéus em graus */
 
-	float * sin_Alt_sin_Azim_Array = sin_Alt_sin_Azim_calculation(NDA, lat, hora_local);
-
-	vetor_3d s = sun_pos_in_cartesian_coord(sin_Alt_sin_Azim_Array);
 	vetor_3d R(0,-12,0); //espelho localizado a 12 metros ao sul do ponto focal
 
-	float power = one_mirror_power(s, R, NDA);
+	float * sin_Alt_sin_Azim_Array;
+	for (float hora_local = 6; hora_local<18 ; hora_local++) {
+		sin_Alt_sin_Azim_Array = sin_Alt_sin_Azim_calculation(NDA, lat, hora_local);
+		vetor_3d s = sun_pos_in_cartesian_coord(sin_Alt_sin_Azim_Array);
+		float power = one_mirror_power(s, R, NDA);
+		std::cout << "Hora local: "<< hora_local ;
+		std::cout << " ; Projeção vertical do sol: " << s.coord[2] ; 
+		std::cout << " ; Potência: "<< power << std::endl;
+	}
 
-	log_entrada(NDA, lat, hora_local);
-	log_angulos(sin_Alt_sin_Azim_Array);
-	log_sun_position(s);
-	std::cout << "Potência de um espelho: "<< power << std::endl;
+	/* log_entrada(NDA, lat, hora_local); */
+	/* log_angulos(sin_Alt_sin_Azim_Array); */
+	/* log_sun_position(s); */
+
 
 
 	return 0;
