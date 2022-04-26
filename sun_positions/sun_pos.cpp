@@ -59,7 +59,7 @@ class vetor_3d {
 	}
 };
 
-float * sin_Alt_sin_Azim_calculation(int NDA, float lat, float local_time){
+float * sin_Alt_sin_Azim_calculation(int NDA, float lat, float local_time, float * result){
 
 	float hora_local = local_time;
 	float hor_rad = ang_hor_rad(hora_local);
@@ -77,12 +77,14 @@ float * sin_Alt_sin_Azim_calculation(int NDA, float lat, float local_time){
 	float sin_Azim = cos(decl_rad)*sin(hor_rad)/cos_Alt;  //AND THIS GUY
 	/* float cos_Azim = sqrt(1 - pow(sin_Azim,2)); */
 
-	static float result[2] = {sin_Alt, sin_Azim};
+	float array[2] = {sin_Alt, sin_Azim};
+
+	result = array;
 
 	return result;
 }
 
-vetor_3d sun_pos_in_cartesian_coord(float * sin_Alt_sin_Azim_Array){
+vetor_3d sun_pos_in_cartesian_coord(float * sin_Alt_sin_Azim_Array, vetor_3d result){
 
 	float sin_Alt = sin_Alt_sin_Azim_Array[0];
 	float sin_Azim = sin_Alt_sin_Azim_Array[1];
@@ -94,9 +96,11 @@ vetor_3d sun_pos_in_cartesian_coord(float * sin_Alt_sin_Azim_Array){
 	float s_x = cos_Alt*sin_Azim; //projeção leste-oeste (positivo se ao leste)
 	float s_y = cos_Alt*cos_Azim; //projeção norte-sul (positivo se ao norte)
 
-	static vetor_3d s(s_x, s_y, s_z);
+	vetor_3d s(s_x, s_y, s_z);
 
-	return s;
+	result = s;
+
+	return result;
 }
 
 void log_entrada(int NDA, float latitude, float local_time){
@@ -117,7 +121,7 @@ void log_sun_position(vetor_3d s){
 	std::cout << "Valor da Projeção norte-sul: "<< s.coord[1] << std::endl; //positivo ao norte
 }
 
-vetor_3d get_normal_vector(vetor_3d s, vetor_3d r){
+vetor_3d get_normal_vector(vetor_3d s, vetor_3d r, vetor_3d result){
 
 	float prod_escalar = s.scalar_prod(r);
 	/* std::cout << "Valor do produto escalar: "<< prod_escalar << std::endl; */
@@ -128,19 +132,23 @@ vetor_3d get_normal_vector(vetor_3d s, vetor_3d r){
 		n[i] = (s.coord[i] - r.coord[i])/denominador; 
 	}
 
-	static vetor_3d normal_vector(n[0],n[1],n[2]);
+	vetor_3d normal_vector(n[0],n[1],n[2]);
 
-	return normal_vector;
+	result = normal_vector;
+
+	return result;
 }
 
-vetor_3d get_unitary_vector(vetor_3d v){
+vetor_3d get_unitary_vector(vetor_3d v, vetor_3d result){
 	float v_hat[3];
 	for (short i = 0; i < 3; ++i) {
-		v_hat[i] = v.coord[i]/v.scalar_prod(v); 
+		v_hat[i] = v.coord[i]/sqrt(v.scalar_prod(v)); 
 	}
-	static vetor_3d unitary(v_hat[0],v_hat[1],v_hat[2]);
+	vetor_3d unitary(v_hat[0],v_hat[1],v_hat[2]);
 
-	return unitary;
+	result = unitary;
+
+	return result;
 }
 
 //calcula a correção na constante solar devido à variação na distância Terra-Sol ~ (d/D)^2
@@ -167,11 +175,13 @@ float one_mirror_power(vetor_3d s, vetor_3d R, int NDA){
 	/* std::cout << "Coordenadas de s unitário:" << std::endl; */
 	/* s.log_coords(); */
 
-	vetor_3d r = get_unitary_vector(R);
+	vetor_3d r(0,0,0);
+	r = get_unitary_vector(R,r);
 	/* std::cout << "Coordenadas de r unitário:" << std::endl; */
 	/* r.log_coords(); */
 
-	vetor_3d n = get_normal_vector(s, r);
+	vetor_3d n(0,0,0);
+	n = get_normal_vector(s, r, n);
 	/* std::cout << "Coordenadas do vetor normal à superfície n unitário:" << std::endl; */
 	/* n.log_coords(); */
 
@@ -186,19 +196,19 @@ float one_mirror_power(vetor_3d s, vetor_3d R, int NDA){
 
 int main()
 {
-	int NDA = NDA_calculation(24,3);
+	int NDA = NDA_calculation(25,3);
 	float lat = -18.9051; //Jaguaré em graus
 	/* float lat = -14.7973; //Ilhéus em graus */
 
-	vetor_3d R(0,-12,0); //espelho localizado a 12 metros ao sul do ponto focal
+	vetor_3d R(0,-10,0); //espelho localizado a 12 metros ao sul do ponto focal
 
 	float * sin_Alt_sin_Azim_Array;
 	float power;
-	float hora_local = 8.0;
+	float hora_local = 6.0;
 	vetor_3d s(0,0,0);
 	while(hora_local<18){
-		sin_Alt_sin_Azim_Array = sin_Alt_sin_Azim_calculation(NDA, lat, hora_local);
-		s = sun_pos_in_cartesian_coord(sin_Alt_sin_Azim_Array);
+		sin_Alt_sin_Azim_Array = sin_Alt_sin_Azim_calculation(NDA, lat, hora_local, sin_Alt_sin_Azim_Array);
+		s = sun_pos_in_cartesian_coord(sin_Alt_sin_Azim_Array, s);
 		power = one_mirror_power(s, R, NDA);
 		std::cout << "Hora local: "<< hora_local ;
 		std::cout << "\t ; Projeção vertical do sol: " << s.coord[2] ; 
@@ -209,7 +219,6 @@ int main()
 	/* log_entrada(NDA, lat, hora_local); */
 	/* log_angulos(sin_Alt_sin_Azim_Array); */
 	/* log_sun_position(s); */
-
 
 
 	return 0;
