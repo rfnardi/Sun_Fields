@@ -1,0 +1,130 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=1.5cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,dsfont,mathtools}
+\usepackage{cancel}
+\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{bookmark}
+\usepackage{verbatim}
+\usepackage{xcolor}
+\onehalfspacing
+\usepackage[brazilian]{babel}
+
+\usepackage{tikz, pgfplots}
+\usepackage{tkz-fct, tkz-base, tkz-euclide} %tkz-fct chama gnuplot --> precisa compilar com a opção -shell-escape depois de pdflatex
+\pgfplotsset{width=10cm,compat=1.17}
+\usetikzlibrary{calc,angles,quotes,intersections}
+\usetikzlibrary{decorations.pathmorphing}
+
+\DeclareMathOperator{\sen}{sen}
+
+\begin{document}
+	
+	{\large \bf Problema:} determinar a distância percorrida ${\color{red} d}$ por um raio de luz
+	do sol dentro da atmosfera terrestre como função do ângulo zenital $z$.
+
+	\bigskip
+
+	\begin{figure}[htpb]
+		\centering
+		\begin{tikzpicture}[scale=1, transform shape]
+			\def\squareSize{4}
+			\tkzInit[xmin=-\squareSize,xmax=+\squareSize,ymin=-\squareSize,ymax=\squareSize]
+			\tkzDefPoint(0,0){O}
+			\tkzDefPoint(0,2.5){A}
+			\tkzDefPoint(0,4){B}
+			\tkzDefPoint(55:4){C} \tkzDefPoint(55:0.7){c}
+			\tkzDefPoint(55:2.5){E}
+			\tkzDrawCircle(O,A)
+			\tkzDrawCircle(O,B)
+			\tkzDrawSegment[dashed](O,B)
+			\tkzDrawSegment[dashed](O,C)
+			\tkzDrawSegment[red](A,C)
+			\tkzDefPointBy[projection=onto O--B](C) \tkzGetPoint{D}
+			\tkzDrawSegment[dashed](D,C)
+
+			\tkzDefMidPoint(O,E) \tkzGetPoint{Rt} \tkzLabelPoint[below right](Rt){$R_T$}
+			\tkzDefMidPoint(E,C) \tkzGetPoint{H} \tkzLabelPoint[below right](H){$H$}
+			\tkzDefMidPoint(A,D) \tkzGetPoint{h} \tkzLabelPoint[left](h){$h$}
+			\tkzDefMidPoint(C,D) \tkzGetPoint{l} \tkzLabelPoint[above](l){$l$}
+			\tkzDefMidPoint(A,C) \tkzGetPoint{d} \tkzLabelPoint[below, red](d){$d$}
+
+			\tkzDrawArc[black](O,c)(A) \tkzLabelPoint[above]({70.5:0.7}){$\alpha$}
+
+			\tkzDefPointWith[linear, K=0.15](A,C) \tkzGetPoint{zen_angle}
+			\tkzDrawArc[black](A,zen_angle)(B) 
+
+			\tkzDefPointBy[rotation=center A angle 20](zen_angle) 
+			\tkzLabelPoint[above](tkzPointResult){$z$}
+	\end{tikzpicture}
+		\caption{{\color{red} Caminho} do raio de luz na atmosfera.}%
+		\label{fig:caminho_luz_na_atmosfera}
+	\end{figure}
+
+	\bigskip
+
+	Da figura (\ref{fig:caminho_luz_na_atmosfera}) extraímos as seguintes expressões trigonométricas:
+
+	\begin{equation}
+		d^2 = h^2 + l^2 \ ;\ \text{(Pitágoras)} \label{eq:pit_1},
+	\end{equation}
+
+	\begin{equation}
+		{(H + R_T)}^2 = {(h + R_T)}^2 + l^2 \ ;\ \text{(Pitágoras)}  \label{eq:pit_2},
+	\end{equation}
+	e
+	\begin{equation}
+		\cos(z) = \frac{h}{d}   \label{eq:cos_zen}.
+	\end{equation}
+
+	Tomamos (\ref{eq:pit_2})  $-$ (\ref{eq:pit_1}):
+	\begin{eqnarray}
+		{(H + R_T)}^2 - d^2 &=& {(h + R_T)}^2 - h^2 \\
+		H^2 + 2 H R_T + \bcancel{{R_T}^2} - d^2 &=& \cancel{h^2}  + 2 h R_T + \bcancel{{R_T}^2} - \cancel{h^2} 
+	\end{eqnarray}
+
+	\begin{equation}
+		 d^2 + 2 h R_T - (H^2 + 2 H R_T) = 0
+	\end{equation}
+	e agora usamos (\ref{eq:cos_zen}):
+	\begin{equation}
+		 d^2 + 2 (d\cos(z)) R_T - (H^2 + 2 H R_T) = 0. \label{eq:2nd_order_equation_for_d}
+	\end{equation}
+
+	Vemos que (\ref{eq:2nd_order_equation_for_d}) é uma equação de segunda ordem para $d$. Logo, 
+	\begin{equation}
+		d = \frac{-2R_T\cos(z) \pm \sqrt{ {(2R_T\cos(z))}^2-4\cdot 1 \cdot (-(H^2 + 2H R_T)) }}{2}	
+	\end{equation}
+	donde
+	\begin{equation}
+		d = \frac{-\cancel{2}R_T\cos(z) \pm \cancel{2}R_T\cos(z)\sqrt{ 1 +  \frac{H(H + 2R_T)}{{R_T}^2\cos^2(z)} }}{\cancel{2}}	.
+		\label{eq:almost_there}
+	\end{equation}
+
+	Usamos agora o fato de que dado que o raio da Terra ($\sim 6500 km$) é
+	muito maior do que a espessura da atmosfera terrestre ($\sim 12 km$), o que
+	faz com que a fração que aparece dentro da raiz quadrada em
+	(\ref{eq:almost_there}) tenha valor inferior a $1$ o que por sua vez nos
+	permite lançar mão da aproximação binomial em primeira ordem:
+	\begin{eqnarray}
+		d &\approx& R_T\cos(z)(-1 \pm { 1 + \frac{H(H + 2R_T)}{2{R_T}^2\cos^2(z)}}) \label{eq:almost_there1}\\
+		  &\approx& R_T\cos(z)(\cancel{-1} + \cancel{1} + \frac{H(H + 2R_T)}{2{R_T}^2\cos^2(z)}) \label{eq:almost_there2}\\
+		  &\approx& \cancel{R_T\cos(z)}(\frac{H(H + 2R_T)}{2{R_T}^{\cancel{2}}\cos^{\cancel{2}}(z)})
+	\end{eqnarray}
+	Onde de (\ref{eq:almost_there1}) para (\ref{eq:almost_there2}) restringimos
+	apenas ao sinal positivo já que, sendo $d$ uma distância não pode ser
+	negativa.
+
+	Finalmente temos a distância percorrida pelo raio de luz do sol
+	no interior da atmosfera até atingir a superfície do planeta à um ângulo
+	zenital $z$:
+	\begin{equation}
+		 \boxed{d \approx \frac{H(H + 2R_T)}{2{R_T}\cos(z)}.} 
+	\end{equation}
+
+
+\end{document}
