@@ -104,18 +104,18 @@ vetor_3d get_unitary_vector(vetor_3d v, vetor_3d result){
 }
 
 float deg_to_rad(float deg){ //transforma graus em radianos
-	return 2*M_PI*deg/360;
+	return 2*M_PI*deg/360.0;
 }
 
 float ang_hor_rad(float hora_local){
 	
-	float ang_hor_deg = (12 - hora_local)*15; //em graus 
+	float ang_hor_deg = (12.00 - hora_local)*15.00; //em graus 
 	return deg_to_rad(ang_hor_deg);
 }
 
 float decl_calculation(int NDA){ //a declinação mede o ângulo da linha Terra-Sol com o plano do equador
 
-	float angulo_rad = deg_to_rad(360.0*(NDA - 80.00)/365.0); //dia 80 é o 21 de março: equinócio de outono
+	float angulo_rad = deg_to_rad(360.0*(NDA - 266.00)/365.25); //dia 80 é o 21 de março: equinócio de outono
 	float decl = 23.45*sin(angulo_rad); //em graus
 	return deg_to_rad(decl);
 }
@@ -168,7 +168,8 @@ vetor_3d sun_pos_in_cartesian_coord(float * sin_Alt_sin_Azim_Array, vetor_3d res
 
 //calcula a correção na constante solar devido à variação na distância Terra-Sol ~ (d/D)^2
 float J_elliptic_correction(int NDA){ 
-	float J = J_0*(1 + 0.033*cos(deg_to_rad(360*NDA/365.25)));
+	float J = J_0*(1.000 + 0.033*cos(deg_to_rad(360.0*NDA/365.25)));
+	/* float J = J_0; */
 	return J;
 }
 
