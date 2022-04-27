@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 ./power_analisys/*.pdf
 ./power_analisys/*.log
 ./power_analisys/*.aux
 ./sun_positions/sun_pos
+=======
+*.pdf
+*.log
+*.aux
+>>>>>>> power_calculations
