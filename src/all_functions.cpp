@@ -115,8 +115,8 @@ float ang_hor_rad(float hora_local){
 
 float decl_calculation(int NDA){ //a declinação mede o ângulo da linha Terra-Sol com o plano do equador
 
-	float angulo_rad = deg_to_rad(360.0*(NDA - 266.00)/365.25); //dia 80 é o 21 de março: equinócio de outono
-	float decl = 23.45*sin(angulo_rad); //em graus
+	float angulo_rad = deg_to_rad(360.0*(NDA - 80.00)/365.25); //dia 80 é o 21 de março: equinócio de outono
+	float decl = 23.45*sin(angulo_rad);							//dia 266 é 23 de setembro: equinócio de primavera 
 	return deg_to_rad(decl);
 }
 
@@ -158,9 +158,7 @@ vetor_3d sun_pos_in_cartesian_coord(float * sin_Alt_sin_Azim_Array, vetor_3d res
 	float s_x = cos_Alt*sin_Azim; //projeção leste-oeste (positivo se ao leste)
 	float s_y = cos_Alt*cos_Azim; //projeção norte-sul (positivo se ao norte)
 
-	vetor_3d s(s_x, s_y, s_z);
-
-	result = s;
+	result.reset_coord(s_x, s_y, s_z);
 
 	return result;
 }
