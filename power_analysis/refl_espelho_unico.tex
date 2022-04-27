@@ -1,0 +1,151 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=1.5cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,dsfont,mathtools}
+\usepackage{cancel}
+\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{bookmark}
+\usepackage{verbatim}
+\onehalfspacing
+\usepackage[brazilian]{babel}
+
+\usepackage{tikz, pgfplots}
+\usepackage{tkz-fct, tkz-base, tkz-euclide} %tkz-fct chama gnuplot --> precisa compilar com a opção -shell-escape depois de pdflatex
+\pgfplotsset{width=10cm,compat=1.17}
+\usetikzlibrary{calc,angles,quotes,intersections}
+\usetikzlibrary{decorations.pathmorphing}
+
+\DeclareMathOperator{\sen}{sen}
+
+\begin{document}
+	
+	{\large \bf Problema:} determinar a potência do raio de radiação refletido a
+	partir da densidade de potência do raio incidente e o ângulo de incidência.
+
+	\bigskip
+
+\begin{figure}[h!]
+	\centering
+	\begin{tikzpicture}[scale=1.5]
+		\tkzInit[xmin=0,xmax=7,ymin=-2,ymax=4]
+		\tkzDefPoint(-1,0){extr_left}
+		\tkzDefPoint(1,0){extr_right}
+		\foreach \i in {1,2,...,12}{
+			\tkzDefPoint(0.2*\i -1.4,0){I\i}
+			\tkzDefPoint(0.2*\i-1.2,-0.2){II\i}
+			\tkzDrawSegment(I\i,II\i)
+
+		}
+		\tkzDefPoint(0,0){Origem}
+		\tkzDefPoint(0,3){Origem_acima}
+		\tkzLabelPoint[left](Origem_acima){$\hat{n}$}
+		\tkzDrawSegment[->,>=stealth](Origem,Origem_acima)
+
+		\tkzDefPoint(30:3){raio1_1}
+		\tkzDefPoint(30:5){raio1_2}
+
+		\tkzLabelPoint[above right](raio1_2){$I_0$}
+		\tkzDrawSegment[->,>=stealth](raio1_2,raio1_1)
+		\tkzDrawSegment[dashed,thin](Origem,raio1_1)
+		\tkzDefPoint(30:0.3){angulo_apoio}
+		\tkzLabelPoint[above](angulo_apoio){\scriptsize $\theta$}
+		\tkzDrawArc(Origem,angulo_apoio)(Origem_acima)
+		\tkzDrawArc[R](Origem, 0.5)(0,30)
+		\tkzDefPoint(15:0.5){angulo_apoio_alpha} \tkzLabelPoint[right](angulo_apoio_alpha){\scriptsize $\alpha$}
+		
+		\tkzDefPointWith[orthogonal,K=0.2](Origem,raio1_1) \tkzGetPoint{base_left}
+		\tkzDefPointWith[orthogonal,K=-0.2](Origem,raio1_1) \tkzGetPoint{base_right}
+		\tkzDefMidPoint(Origem,base_right) \tkzGetPoint{base_middle_right}
+		% \tkzDrawArc(Origem,base_middle_right)(extr_right)
+		% \tkzLabelPoint[right](base_middle_right){\scriptsize $\theta$}
+		\tkzGetPointCoord(base_right){B} % armazena coordenadas do ponto base_right nas variáveis \Bx e \By
+		\tkzDefPoint(\Bx,0){point_B}
+		% \tkzDrawSegment[thin, dashed](base_right,point_B)
+
+		\tkzGetPointCoord(base_left){BB}
+		\tkzDefPoint(\BBx,0){point_BB}
+		% \tkzDrawSegment[thin, dashed](base_left,point_BB)
+
+		% \tkzDrawSegment(base_left,base_right)
+		\tkzDefPointWith[orthogonal,K=-0.2](raio1_1,Origem) \tkzGetPoint{upper_left}
+		\tkzDefPointWith[orthogonal,K=0.2](raio1_1,Origem) \tkzGetPoint{upper_right}
+		\tkzDefLine[parallel=through upper_right](raio1_1,raio1_2) \tkzGetPoint{top_right}
+		\tkzDefLine[parallel=through upper_left](raio1_1,raio1_2) \tkzGetPoint{top_left}
+		\tkzDrawSegment[->,>=stealth](top_right,upper_right)
+		\tkzDrawSegment[->,>=stealth](top_left,upper_left)
+
+		% feixe de raios:
+		\tkzDefMidPoint(raio1_2,top_right) \tkzGetPoint{mid_right}
+		\tkzDefMidPoint(raio1_2,top_left) \tkzGetPoint{mid_left}
+		\tkzDefMidPoint(raio1_1,upper_right) \tkzGetPoint{bottom_mid_right}
+		\tkzDefMidPoint(raio1_1,upper_left) \tkzGetPoint{bottom_mid_left}
+		\tkzDrawSegment[->,>=stealth](mid_right,bottom_mid_right)
+		\tkzDrawSegment[->,>=stealth](mid_left,bottom_mid_left)
+
+		\tkzInterLL(Origem,extr_right)(top_right,upper_right) \tkzGetPoint{crossing_right} %pega o cruzamento das linhas
+		\tkzInterLL(Origem,extr_left)(top_left,upper_left) \tkzGetPoint{crossing_left} %pega o cruzamento das linha
+		\tkzDrawSegment[very thin, dotted](upper_left,crossing_left)
+		\tkzDrawSegment[very thin, dotted](upper_right,crossing_right)
+
+		\tkzDrawSegment(crossing_left,crossing_right) % desenha a linha do espelho
+
+		\tkzDefShiftPoint[crossing_right](120:5){C} 
+		\tkzInterLL(crossing_right,C)(crossing_left,upper_left) \tkzGetPoint{Q} 
+		\tkzDrawSegment[thin, dashed](crossing_right,Q)
+		\tkzLabelPoint[above](Q){\scriptsize $Q$}
+		\tkzLabelPoint[below left](crossing_left){\scriptsize $P$}
+		\tkzLabelPoint(crossing_right){\scriptsize $R$}
+		\tkzDrawPoint[size=2pt](crossing_left)
+		\tkzDrawPoint[size=2pt](crossing_right)
+		\tkzDrawPoint[size=2pt](Q)
+
+		\tkzDrawArc[R](crossing_left, 0.5)(0,30)
+		\tkzDefShiftPoint[crossing_left](15:0.5){angulo_apoio_alpha2}
+		\tkzLabelPoint[right](angulo_apoio_alpha2){\scriptsize $\alpha$}
+
+	\end{tikzpicture}
+	\caption{Incidência de um raio de luz com densidade transversal de potência $I_0$.\label{fig:potencia_refletida}}
+\end{figure}
+
+Na figura (\ref{fig:potencia_refletida}) olhamos para como o tamanho da seção
+transversal $\overline{QR}$ do feixe de radiação incidente pode ser relacionado
+com o tamanho $\overline{PR}$ do espelho por uma analise trigonométrica do
+triângulo $PQR$ o que conduz à expressão (\ref{eq:cosine_relation})
+\begin{equation}
+	\overline{QR} = \overline{PR} \sen(\alpha) = \overline{PR} \cos(\theta) . \label{eq:cosine_relation}
+\end{equation}
+
+Já que a potência carregada pelo feixe deve ser um produto da sua densidade
+transversal de potência multiplicada pela área da seção transversal temos:
+\begin{equation}
+	P = I_{0}\cdot \overline{QR} = I_{0}\cdot \overline{PR} \cos(\theta) . 
+\end{equation}
+
+Se pensarmos agora que se trata de um espelho infinitesimal de área orientada
+$d\vec a = \hat{n}da$ temos que a potência infinitesimal transferida ao espelho 
+é dada por
+\begin{equation}
+	dP = I_{0} da \cos(\theta) = - \vec{I_0} \cdot d\vec a \label{eq:power_infinitesimal_element}
+\end{equation}
+onde $\vec I_0$ é o vetor fluxo de radiação.
+
+Sendo (\ref{eq:power_infinitesimal_element}) a contribuição infinitesimal da
+potência, temos que a potência total $P$ captada numa superfície de dimensões
+finitas deve ser dada por uma integral de superfície do fluxo de potência $\vec I_0$
+ao longo da superfície que recebe este fluxo. Assim,
+\begin{equation}
+	P = \int \vec I_0 \cdot d\vec a . \label{eq:surface_integral}
+\end{equation}
+onde $ d\vec a$ é o elemento de área da superfície sobre a qual o fluxo do
+radiação incide. Considerando uma superfície plana, que faz um ângulo $\theta$ 
+com o raio de radiação incidente, temos que a potência dissipada na superfície é dada por
+\begin{equation}
+	P = I_{0}A\cos(\theta)\ , 
+\end{equation}
+onde $A$ é a área finita da superfície.
+
+\end{document}
