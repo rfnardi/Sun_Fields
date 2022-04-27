@@ -19,18 +19,6 @@ int main()
 	std::vector<vetor_3d> malha;
 	vetor_3d mirror_place(0,0,0);
 
-
-	/* mirror_place.log_coords(); */
-	/* malha.push_back(mirror_place); */
-	/* mirror_place.reset_coord(3,4,7); */
-	/* mirror_place.log_coords(); */
-	/* malha.push_back(mirror_place); */
-	
-	/* std::cout << "na malha: "<< std::endl; */
-	/* malha[0].log_coords(); */
-	/* malha[1].log_coords(); */
-
-
 	//setting malha:
 	for (float i = -10; i < 12; i +=1.5) {
 		mirror_place.reset_coord(i,-12.0,0.0);
@@ -38,10 +26,7 @@ int main()
 	}
 
 	std::cout << "tamanho da malha: "<< malha.size()<<std::endl;
-
-	/* for (int i = 0; i < malha.size(); ++i) { */
-	/* 	malha[i].log_coords(); */
-	/* } */
+	log_entrada(NDA, lat, hora_local);
 
 	vetor_3d s(0,0,0);
 	while(hora_local<=18){
@@ -58,10 +43,8 @@ int main()
 		hora_local += 1;
 	}
 
-	/* log_entrada(NDA, lat, hora_local); */
 	/* log_angulos(sin_Alt_sin_Azim_Array); */
 	/* log_sun_position(s); */
-
 
 	return 0;
 }

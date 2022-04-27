@@ -58,7 +58,7 @@ int NDA_calculation(int month_day, int month){
 void log_entrada(int NDA, float latitude, float local_time){
 	
 	std::cout << "Latitude: " << latitude << std::endl;
-	std::cout << "Hora local: " << local_time << std::endl;
+	/* std::cout << "Hora local: " << local_time << std::endl; */
 	std::cout << "NDA: "<< NDA << std::endl;
 }
 
@@ -115,7 +115,7 @@ float ang_hor_rad(float hora_local){
 
 float decl_calculation(int NDA){ //a declinação mede o ângulo da linha Terra-Sol com o plano do equador
 
-	float angulo_rad = deg_to_rad(360*(NDA - 80)/365.25); //dia 80 é o 21 de março: equinócio de outono
+	float angulo_rad = deg_to_rad(360.0*(NDA - 80.00)/365.0); //dia 80 é o 21 de março: equinócio de outono
 	float decl = 23.45*sin(angulo_rad); //em graus
 	return deg_to_rad(decl);
 }
