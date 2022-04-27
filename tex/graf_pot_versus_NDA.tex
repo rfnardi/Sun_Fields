@@ -5,22 +5,11 @@
 \usepackage[a4paper]{geometry}
 \geometry{verbose,tmargin=1.5cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
 \usepackage{amsmath,amsfonts,amssymb,amsthm,dsfont,mathtools}
-\usepackage{cancel}
-\usepackage{setspace}
-\usepackage{hyperref} %para inserir links internos e para a internet
-\usepackage{graphicx} %para inserir figuras
-\onehalfspacing
 \usepackage[brazilian]{babel} 
 
 \usepackage{tikz, pgfplots} 
 \usepackage{tkz-fct, tkz-base, tkz-euclide} 
 \pgfplotsset{width=10cm,compat=1.17}
-\usetikzlibrary{calc,angles,quotes,intersections}
-\usetikzlibrary{decorations.pathmorphing}
-\usetikzlibrary{3d}
-
-\usepackage{fancyvrb} 
-
 
 
 \begin{document}
@@ -30,7 +19,7 @@
 \bigskip
 
 \begin{figure}[!htb]
-	\centering %para centralizar a figura na página
+	\centering 
 	\begin{tikzpicture}
 		\begin{axis}[
 			height=16cm, 
@@ -43,7 +32,7 @@
 			ylabel={Power ($W$)}, 
 			title={Potência refletida ao longo do ano}]
 			
-			\addplot[mark size=0.5pt, color=blue] table[x=NDA, y=POWER, col sep=semicolon] {../src/pot_dep_NDA.dat};
+			\addplot[mark size=0.5pt, color=blue] table[x=NDA, y=POWER, col sep=semicolon] {../dat/pot_dep_NDA.dat};
 
 		\end{axis}
 	\end{tikzpicture}
