@@ -1,3 +1,6 @@
+
+<!-- Fonte: https://blog.mettzer.com/projeto-de-pesquisa/ -->
+
 # O que é projeto de pesquisa?
 É um formato de trabalho intermediário que antecede a pesquisa, com a descrição
 dos planos de desenvolvimento das atividades de pesquisa.
@@ -11,11 +14,11 @@ ser realizada.
    (PRODUÇÃO CALORÍFICA NO MODELO DE TORRE CENTRAL).
 
 1. Estabeleça quais serão os objetivos geral (ESTUDO TEÓRICO DA POTÊNCIA DE
-   RADIAÇÃO CAPTADA POR UM ARRANJO DE HELIOSTATOS NA REGIÃO DE ILHÉUS)e
+   RADIAÇÃO CAPTADA POR UM ARRANJO DE HELIOSTATOS NO ESTADO DA BAHIA)e
    específicos.
 
 1. Faça a justificativa do seu trabalho. (AUSÊNCIA DE ESTUDOS DE VIABILIDADE DE
-   PROJETOS DE GERAÇÃO DE ENERGIA TERMOSOLAR NA BAHIA)
+   PROJETOS DE GERAÇÃO DE ENERGIA TERMOSOLAR NA BAHIA) -- **citar atlas solar da bahia**
 
 1. Desenvolva a fundamentação teórica da pesquisa. (ESTUDAR REFERÊNCIAS)
 

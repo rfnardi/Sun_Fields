@@ -1,0 +1,37 @@
+
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=1.5cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,dsfont,mathtools} %vários suportes para símbolos matemáticos
+\usepackage{cancel} %cancelamentos em manipulações algébricas
+\usepackage{setspace}
+\usepackage{booktabs} %tabelas
+\usepackage{hyperref} %links externos
+\hypersetup{
+    colorlinks=true,
+    linkcolor=red,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Professor Rafael Nardi --- UFSB},
+    % pdfpagemode=FullScreen,
+    }
+\usepackage{graphicx} %inserção de figuras externas
+\usepackage{bookmark} %cria um menu indexando as divisões do texto
+\usepackage{verbatim}
+\onehalfspacing
+\usepackage[brazilian]{babel}
+\usepackage{xr} % cross-referencing across different files
+\usepackage{enumitem} %controla símbolos de items nos ambientes enumerate, description e itemize
+
+\DeclareMathOperator{\sen}{sen}
+\numberwithin{equation}{section} %enumera equações de acordo com a seção
+\usepackage{fp}
+\usepackage{animate}
+\usepackage{ifthen,xifthen,ifthenx}
+\usepackage{xstring}
+\usepackage{calc}
+\usepackage{tikz, pgfplots}
+\usepackage{tkz-fct, tkz-base, tkz-euclide} %tkz-fct chama gnuplot --> precisa compilar com a opção -shell-escape depois de pdflatex
+\pgfplotsset{width=10cm,compat=1.17}
+\usetikzlibrary{calc,angles,quotes,intersections}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{3d}
