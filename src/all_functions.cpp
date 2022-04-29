@@ -40,6 +40,7 @@ class vetor_3d {
 		std::cout << "Coordenada y: "<< this->coord[1] << std::endl;
 		std::cout << "Coordenada z: "<< this->coord[2] << std::endl;
 	}
+
 };
 
 
@@ -215,4 +216,12 @@ float one_mirror_power(vetor_3d s, vetor_3d R, int NDA){
 
 	return power;
 }
+
+	vetor_3d get_sun_position(float NDA, float lat, float hora_local, vetor_3d result){
+		float sin_Alt = sin_Alt_calculation(NDA, lat, hora_local);
+		float sin_Azim = sin_Azim_calculation(NDA, lat, hora_local);
+		result = sun_pos_in_cartesian_coord(sin_Alt, sin_Azim, result);
+
+		return result;
+	}
 
