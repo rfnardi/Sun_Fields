@@ -115,13 +115,27 @@ float ang_hor_rad(float hora_local){
 
 float decl_calculation(int NDA){ //a declinação mede o ângulo da linha Terra-Sol com o plano do equador
 
-	float angulo_rad = deg_to_rad(360.0*(NDA - 266.00)/365.25); //dia 80 é o 21 de março: equinócio de outono
-	float decl = 23.45*sin(angulo_rad); //em graus
+	float angulo_rad = deg_to_rad(360.0*(NDA - 80.00)/365.25); //dia 80 é o 21 de março: equinócio de outono
+	float decl = 23.45*sin(angulo_rad);							//dia 266 é 23 de setembro: equinócio de primavera 
 	return deg_to_rad(decl);
 }
 
 
-float * sin_Alt_sin_Azim_calculation(int NDA, float lat, float local_time, float * result){
+float sin_Alt_calculation(int NDA, float lat, float local_time){
+
+	float hora_local = local_time;
+	float hor_rad = ang_hor_rad(hora_local);
+
+	float lat_rad = deg_to_rad(lat);
+
+	float decl_rad = decl_calculation(NDA);
+
+	float sin_Alt = sin(lat_rad)*sin(decl_rad) + cos(lat_rad)*cos(decl_rad)*cos(hor_rad); //THIS GUY
+
+	return sin_Alt;
+}
+
+float sin_Azim_calculation(int NDA, float lat, float local_time){
 
 	float hora_local = local_time;
 	float hor_rad = ang_hor_rad(hora_local);
@@ -139,17 +153,11 @@ float * sin_Alt_sin_Azim_calculation(int NDA, float lat, float local_time, float
 	float sin_Azim = cos(decl_rad)*sin(hor_rad)/cos_Alt;  //AND THIS GUY
 	/* float cos_Azim = sqrt(1 - pow(sin_Azim,2)); */
 
-	float array[2] = {sin_Alt, sin_Azim};
-
-	result = array;
-
-	return result;
+	return sin_Azim;
 }
 
-vetor_3d sun_pos_in_cartesian_coord(float * sin_Alt_sin_Azim_Array, vetor_3d result){
+vetor_3d sun_pos_in_cartesian_coord(float sin_Alt, float sin_Azim, vetor_3d result){
 
-	float sin_Alt = sin_Alt_sin_Azim_Array[0];
-	float sin_Azim = sin_Alt_sin_Azim_Array[1];
 	float cos_Alt = sqrt(1 - pow(sin_Alt,2));
 	float cos_Azim = sqrt(1 - pow(sin_Azim,2));
 
@@ -158,9 +166,7 @@ vetor_3d sun_pos_in_cartesian_coord(float * sin_Alt_sin_Azim_Array, vetor_3d res
 	float s_x = cos_Alt*sin_Azim; //projeção leste-oeste (positivo se ao leste)
 	float s_y = cos_Alt*cos_Azim; //projeção norte-sul (positivo se ao norte)
 
-	vetor_3d s(s_x, s_y, s_z);
-
-	result = s;
+	result.reset_coord(s_x, s_y, s_z);
 
 	return result;
 }
