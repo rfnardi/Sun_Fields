@@ -28,7 +28,7 @@
 			grid style={line width=.1pt, draw=gray!20},
 			major grid style={line width=.2pt,draw=gray!50}, 
 			minor tick num=4, 
-			xlabel={x}, 
+			xlabel={array size}, 
 			ylabel={Power ($W$)}, 
 			title={Potência refletida por malha ao longo da direção leste-oeste}]
 			\addplot[mark size=0.5pt, color=red] table[x=array_size, y=power, col sep=semicolon] {../../data/pow_dep_array_size.dat};
@@ -48,9 +48,9 @@
 			grid style={line width=.1pt, draw=gray!20},
 			major grid style={line width=.2pt,draw=gray!50}, 
 			minor tick num=4, 
-			xlabel={x}, 
+			xlabel={array size}, 
 			ylabel={Power ($W$)}, 
-			title={Incremneto de potência refletida por uma malha situada ao longo da direção leste-oeste}]
+			title={Incremento de potência refletida por uma malha situada ao longo da direção leste-oeste}]
 			\addplot[mark size=0.5pt, color=blue] table[x=array_size, y=delta, col sep=semicolon] {../../data/pow_dep_array_size.dat};
 		\end{axis}
 	\end{tikzpicture}
