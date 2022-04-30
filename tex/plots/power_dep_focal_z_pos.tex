@@ -1,0 +1,55 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=1.5cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,dsfont,mathtools}
+\usepackage[brazilian]{babel} 
+
+\usepackage{tikz, pgfplots} 
+\usepackage{tkz-fct, tkz-base, tkz-euclide} 
+\pgfplotsset{width=10cm,compat=1.17}
+
+
+\begin{document}
+
+\bigskip
+\bigskip
+\bigskip
+
+\begin{figure}[!htb]
+	\centering 
+	\begin{tikzpicture}
+		\begin{axis}[
+			height=16cm, 
+			width=16cm, 
+			grid=both, 
+			grid style={line width=.1pt, draw=gray!20},
+			major grid style={line width=.2pt,draw=gray!50}, 
+			minor tick num=4, 
+			xlabel={x}, 
+			ylabel={Power ($W$)}, 
+			title={Potência refletida variando em termos da altura do ponto focal}]
+			\addplot[mark size=0.5pt, color=red] table[x=z_pos, y=power, col sep=semicolon] {../../data/pow_dep_focal_z_pos.dat};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Potência refletida por um espelho $10m$ ao sul variando com a altura do ponto focal em relação ao nível dos espelhos} 
+\end{figure}
+
+Observa-se que um pico de potência é atingido por volta da altura $16m$.
+Considerando que o espelho está $10m$ ao sul da torre que sustenta o ponto
+focal, é possível calcular o ângulo $\alpha$ formado pela vertical com o vetor que liga
+o espelho ao ponto focal. Este ângulo deve coincidir com o próprio ângulo
+zenital $z$ para esta posição de altura $16m$ do ponto focal:
+
+\begin{equation}
+	\tan(\alpha) = \frac{10}{16} = 0,625 \implies \alpha = 0.558
+\end{equation}
+
+O resultado bate com a conta do algoritmo que dá um valor de $ zen = 0.561$.
+Claro que um resultado melhor pode ser obtido se determinarmos exatamente qual
+é a altura onde ocorre a potência máxima (aqui pegamos $16m$ de olho), mas já indica 
+que as confirmações simples que esperamos da trigonometria estão acontecendo.
+
+\end{document}

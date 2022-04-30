@@ -41,6 +41,12 @@ class vetor_3d {
 		std::cout << "Coordenada z: "<< this->coord[2] << std::endl;
 	}
 
+	void transf_coord_from_spher_to_cart(float r, float theta_rad, float phi_rad){
+		this->coord[0] = r*sin(phi_rad)*cos(theta_rad);
+		this->coord[1] = r*sin(phi_rad)*sin(theta_rad);
+		this->coord[2] = r*cos(phi_rad);
+	}
+
 };
 
 

@@ -1,5 +1,4 @@
 \documentclass[a4paper,12pt]{article}
-
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[a4paper]{geometry}
@@ -34,7 +33,7 @@
 			ylabel={Power ($W$)}, 
 			title={Potência refletida ao longo do dia}]
 			\addplot[mark size=0.5pt, color=red] table[x=HORA_LOCAL, y=POWER, col sep=semicolon] 
-				{../data/pow_one_mirror_intra_day_espelho_ao_sudeste.dat};
+				{../../data/pow_one_mirror_intra_day_espelho_ao_sudeste.dat};
 		\end{axis}
 	\end{tikzpicture}
 	\caption{Dependência da potência refletida por um espelho com a hora local} 
@@ -55,7 +54,7 @@
 			ylabel={Zen}, 
 			title={Ângulo zenital ao longo do dia}]
 			\addplot[mark size=0.5pt, color=red] table[x=HORA_LOCAL, y=ZEN, col sep=semicolon] 
-				{../data/pow_one_mirror_intra_day_espelho_ao_sudeste.dat};
+				{../../data/pow_one_mirror_intra_day_espelho_ao_sudeste.dat};
 		\end{axis}
 	\end{tikzpicture}
 	\caption{Dependência do ângulo zenital com a hora local} 
@@ -78,7 +77,7 @@
 			ylabel={$S_z$}, 
 			title={Componente zenital da posição do sol ao longo do dia}]
 			\addplot[mark size=0.5pt, color=red] table[x=HORA_LOCAL, y=S_z, col sep=semicolon] 
-				{../data/pow_one_mirror_intra_day_espelho_ao_sudeste.dat};
+				{../../data/pow_one_mirror_intra_day_espelho_ao_sudeste.dat};
 		\end{axis}
 	\end{tikzpicture}
 	\caption{Variação da componente vertical da posição do sol com a hora local} 
@@ -99,7 +98,7 @@
 			ylabel={Azim}, 
 			title={Componente azimutal da posição do sol ao longo do dia}]
 			\addplot[mark size=0.5pt, color=red] table[x=HORA_LOCAL, y=AZIM, col sep=semicolon] 
-				{../data/pow_one_mirror_intra_day_espelho_ao_sudeste.dat};
+				{../../data/pow_one_mirror_intra_day_espelho_ao_sudeste.dat};
 		\end{axis}
 	\end{tikzpicture}
 	\caption{Variação do ângulo azimutal da posição do sol com a hora local} 
