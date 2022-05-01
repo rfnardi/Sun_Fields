@@ -39,9 +39,9 @@
 			  ]
 				\def\r{2}
 
-				\draw[->,>= stealth, dashed] (0,-\r,0)--(0,\r+1,0) node[pos=1, left] {$Leste$};
-				\draw[->,>= stealth, dashed] (-\r,0,0)--(\r+1,0,0) node[pos=1, right] {$Norte$};
-				\draw[->,>= stealth, dashed] (0,0,0)--(0,0,\r+1) node[pos=1, above] {$Zênite$};
+				\draw[->,>= stealth, dashed] (0,-\r,0)--(0,\r+1,0) node[pos=1, left] {Leste};
+				\draw[->,>= stealth, dashed] (-\r,0,0)--(\r+1,0,0) node[pos=1, right] {Norte};
+				\draw[->,>= stealth, dashed] (0,0,0)--(0,0,\r+1) node[pos=1, above] {Zênite};
 
 				\addplot3+[domain=pi/4:pi,samples=200,samples y=0,no marks, black, thick]
 					({\r*cos(deg(x))}, {\r*sin(deg(x))}, {0});

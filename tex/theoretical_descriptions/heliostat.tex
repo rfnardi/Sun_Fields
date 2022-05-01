@@ -1,0 +1,138 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=1.5cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,dsfont,mathtools}
+\usepackage{cancel}
+\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{bookmark}
+\usepackage{verbatim}
+\onehalfspacing
+\usepackage[brazilian]{babel}
+\usepackage{tikz, pgfplots}
+\usepackage{tikz-3dplot}
+\usepackage{tkz-fct, tkz-base, tkz-euclide} %tkz-fct chama gnuplot --> precisa compilar com a opção -shell-escape depois de pdflatex
+\usepackage{animate}
+\pgfplotsset{width=10cm,compat=1.18}
+\usetikzlibrary{calc,angles,quotes,intersections}
+\usetikzlibrary{decorations.pathmorphing}
+\DeclareMathOperator{\sen}{sen}
+
+\begin{document}
+	{\bf Problema:} determinar a posição do sol como função do dia do ano, da hora local e da latitude.
+
+	\begin{figure}[!ht]
+		\centering
+		\begin{animateinline}[poster=first,controls={play,stop,step}]{8}
+		\multiframe{50}{ri=0+1}
+		{
+			\begin{tikzpicture}[scale=1.3]
+				% \useasboundingbox (-1.6, 0) rectangle (8, 8);
+				\begin{axis}[view={-20+\ri}{-20}, % {angulo azimutal}{angulo zenital}
+					zmax=3,
+					xmax=3,
+					ymax=3,
+					% height=10cm,
+					xtick=\empty,
+					ytick=\empty,
+					ztick=\empty,
+					clip=false,
+					hide axis
+					]
+					\def\r{1}
+
+					\addplot3+[domain=pi:2*pi,samples=200,samples y=0,no marks, black, fill=gray!50]
+						({\r*cos(deg(x))}, {\r*sin(deg(x))}, {0});
+
+					%EIXO VERTICAL
+					\def\altEixo{2}
+					\draw[very thick] (0,0,-0.8)--(0,0,\altEixo) ;
+
+					\addplot3+[domain=0:pi,samples=200,samples y=0,no marks, black, fill=gray!50]
+						({\r*cos(deg(x))}, {\r*sin(deg(x))}, {0});
+
+					%"GARFO"
+					\def\altTotal{3.5}
+					\draw[very thick] (-1,0,\altEixo)--(1,0,\altEixo) ;
+					\draw[very thick] (-1,0,\altEixo)--(-1,0,\altTotal) ;
+					\draw[very thick] (1,0,\altEixo)--(1,0,\altTotal) ;
+
+					\FPeval\angZen{0-10*pi/180}
+					\FPeval\senZen{sin(\angZen)}
+					\FPeval\cosZen{cos(\angZen)}
+					\draw[very thin, fill=blue!10] (-0.95,\cosZen,\altTotal+\senZen)--(-0.95,-\cosZen,\altTotal-\senZen)--(0.95,-\cosZen,\altTotal-\senZen)--(0.95,\cosZen,\altTotal+\senZen)--cycle;
+
+					% EIXO HORIZONTAL
+					\draw[dashed, very thin] (-1,0,\altTotal)--(1,0,\altTotal) ;
+
+				\end{axis}
+			\end{tikzpicture}
+		}
+		\end{animateinline}
+		\caption{Sistema de coordenadas horizontal}%
+	\end{figure}
+
+
+	\begin{figure}[!ht]
+		\centering
+		\begin{animateinline}[poster=first,controls={play,stop,step}]{8}
+			\multiframe{50}{ri=0+1}
+			{
+				\begin{tikzpicture}[transform shape, scale=1.3]
+				% \useasboundingbox (-8, -8) rectangle (8, 8); %not working
+					\begin{axis}[view={-20}{-20}, % {angulo azimutal}{angulo zenital}
+						zmax=3,
+						xmax=3,
+						ymax=3,
+						% height=10cm,
+						xtick=\empty,
+						ytick=\empty,
+						ztick=\empty,
+						clip=false,
+						hide axis
+						]
+						\def\r{1}
+
+						\addplot3+[domain=pi:2*pi,samples=200,samples y=0,no marks, black, fill=gray!50]
+							({\r*cos(deg(x))}, {\r*sin(deg(x))}, {0});
+
+						%LIMITES DO DESENHO 
+						\draw[fill=black] (0,0,5) circle[radius=1pt];
+						\draw[thin, dashed] (-2,0,0)--(2,0,0);
+						\draw[fill=black] (-2,0,0) circle[radius=1pt];
+						\draw[fill=black] (2,0,0) circle[radius=1pt];
+
+						%EIXO VERTICAL
+						\def\altEixo{2}
+						\draw[very thick] (0,0,-0.8)--(0,0,\altEixo);
+
+						\addplot3+[domain=0:pi,samples=200,samples y=0,no marks, black, fill=gray!50]
+							({\r*cos(deg(x))}, {\r*sin(deg(x))}, {0});
+
+						%"GARFO"
+						\def\altTotal{3.5}
+						\draw[very thick] (-1,0,\altEixo)--(1,0,\altEixo) ;
+						\draw[very thick] (-1,0,\altEixo)--(-1,0,\altTotal);
+						\draw[very thick] (1,0,\altEixo)--(1,0,\altTotal);
+
+						\FPeval\angZen{0-(10+(\ri))*pi/180}
+						\FPeval\senZen{sin(\angZen)}
+						\FPeval\cosZen{cos(\angZen)}
+						\draw[very thin, fill=blue!10] (-0.95,\cosZen,\altTotal+\senZen)--(-0.95,-\cosZen,\altTotal-\senZen)--(0.95,-\cosZen,\altTotal-\senZen)--(0.95,\cosZen,\altTotal+\senZen)--cycle;
+
+						% EIXO HORIZONTAL
+						\draw[dashed, very thin] (-1,0,\altTotal)--(1,0,\altTotal) ;
+					\end{axis}
+				\end{tikzpicture}
+			}
+		\end{animateinline}
+		\caption{Sistema de coordenadas horizontal}%
+		\end{figure}
+	Queremos descrever o vetor $\hat{s}$ ao longo do ano (NDA), ao longo da
+	hora local e também sua dependência com a latitude ($\phi$). Para isso
+	precisamos expressar como os ângulos $\color{red}{z}$ ({\bf distância zenital}) e
+	$\color{blue}{A}$ ({\bf azimute}) dependem dessas variáveis.
+	
+\end{document}
