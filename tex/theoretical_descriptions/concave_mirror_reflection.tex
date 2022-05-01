@@ -1,0 +1,89 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=1.5cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,dsfont,mathtools}
+\usepackage{cancel}
+\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{bookmark}
+\usepackage{verbatim}
+\onehalfspacing
+\usepackage[brazilian]{babel}
+\usepackage{tikz, pgfplots}
+\usepackage{tikz-3dplot}
+\usepackage{tkz-fct, tkz-base, tkz-euclide} %tkz-fct chama gnuplot --> precisa compilar com a opção -shell-escape depois de pdflatex
+\usepackage{animate}
+\pgfplotsset{width=10cm,compat=1.17}
+\usetikzlibrary{calc,angles,quotes,intersections}
+\usetikzlibrary{decorations.pathmorphing}
+\DeclareMathOperator{\sen}{sen}
+
+\begin{document}
+	{\bf Problema:} determinar o ponto focal de um espelho parabólico cuja parábola é dada por $y(x)=ax^2$.
+
+	\begin{figure}[htpb]
+		\centering
+	\begin{tikzpicture}[scale=1, transform shape]
+		\tkzInit[xmin=-5,xmax=5,ymax=6,ymin=-0.5]
+		\tkzDrawY[noticks]
+		\FPset\a{0.05}
+		\tkzFct[color=blue, domain=-5:5, samples=200]{\a*x*x}
+		\tkzDefPoint(0,0){O}
+		\FPset\sx{0} %THIS GUY --- direção dos raios incidentes
+		\FPset\sy{1} %THIS GUY --- direção dos raios incidentes
+
+		\FPeval\normaS{root(2,(((\sx)*(\sx))+((\sy)*(\sy))))}
+		\FPeval\SX{(\sx)/\normaS}
+		\FPeval\SY{(\sy)/\normaS}
+		\tkzDefPoint(\SX,\SY){S}
+		\tkzDefPoint(0,5){B}
+
+		\foreach \x in {1,2,...,4}{
+			\FPeval\fx{\a*\x*\x}
+			\tkzDefPoint(\x,\fx){A\x}
+			\FPeval\deriv{2*\a*\x}
+			\FPeval\norm{root(2,1+pow(2,\deriv))}
+			\tkzDefPoint(1/\norm,\deriv/\norm){v\x}
+			\FPeval\nx{(-\deriv)/\norm}
+			\FPeval\ny{(1/\norm)}
+			\tkzDefPoint(\nx,\ny){n\x}
+			\tkzDefPointWith[colinear=at A\x](O,v\x) \tkzGetPoint{V\x}
+			\tkzDefPointWith[colinear=at A\x](O,n\x) \tkzGetPoint{N\x}
+			\tkzDefPointWith[colinear=at A\x](O,S) \tkzGetPoint{SunAtPoint\x}
+			\tkzDrawLine[thin, dashed, add = 0 and 4, color=orange](A\x,SunAtPoint\x)
+			\tkzDrawSegment[->,> = stealth](A\x,V\x)
+			\tkzDrawSegment[->,> = stealth](A\x,N\x)
+			\FPeval\sprod{(((\nx)*(\SX)) + ((\ny)*(\SY)))}
+			\FPeval\angulo{2*(arccos(\sprod))}
+			\tkzDefPointBy[rotation in rad=center O angle \angulo](S) \tkzGetPoint{S\x}
+			\tkzDefPointWith[colinear=at A\x](O,S\x) \tkzGetPoint{R\x}
+			\tkzInterLL(A\x,R\x)(O,B) \tkzGetPoint{C\x}
+			\tkzDrawSegment[thin, dashed, color=orange](A\x,C\x)
+			\tkzDrawSegment[color=red,->,> = stealth](A\x,R\x)
+		}
+		
+	\end{tikzpicture}
+	\caption{Foco de um espelho parabólico}%
+	\label{fig:espelho_parab}
+	\end{figure}
+	
+	É importante notar que se variarmos a direção dos raios incidentes
+	(controlado nas variáveis $sx$ e $sy$ no script da figura acima) os raios
+	refletidos deixam de se encontrar no mesmo ponto. Isto implica que não é
+	possível usar arranjos parabólicos de espelhos planos num mesmo heliostato
+	para focalizar mais mais luz com menor número de heliostatos (e assim
+	reduzir a quantidade de partes móveis contribuindo consequentemente para
+	redução do custo).
+
+	Uma alternativa para contornar esta dificuldade poderia ser a de usar
+	lentes divergentes no ponto focal de cada espelho parabólico que
+	paralelizariam os raios num feixe mais concentrado que por sua vez pode ser
+	refletido por um segundo espelho plano móvel. Esta solução viabiliza a
+	concentração de mais luz (maior potência) com menor quantidade de
+	heliostatos mas por outro lado introduz custos adicionais: lente,
+	segundo espelho e mais partes móveis. Muito provavelmente o ganho de
+	potência não compensa os custos adicionais.
+
+\end{document}
