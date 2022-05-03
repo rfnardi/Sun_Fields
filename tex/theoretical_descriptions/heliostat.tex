@@ -21,26 +21,20 @@
 \DeclareMathOperator{\sen}{sen}
 
 \begin{document}
-	{\bf Problema:} determinar a posição do sol como função do dia do ano, da hora local e da latitude.
+
+\begin{center} {\bf \Large Movimentos do heliostato} \end{center}
 
 	\begin{figure}[!ht]
 		\centering
 		\begin{animateinline}[poster=first,controls={play,stop,step}]{8}
-		\multiframe{50}{ri=0+1}
-		{
+			\multiframe{50}{ri=0+2} {
 			\begin{tikzpicture}[scale=1.3]
 				% \useasboundingbox (-1.6, 0) rectangle (8, 8);
-				\begin{axis}[view={-20+\ri}{-20}, % {angulo azimutal}{angulo zenital}
-					zmax=3,
-					xmax=3,
-					ymax=3,
+				\begin{axis}[view={-20}{-20}, % {angulo azimutal}{angulo zenital}
+					zmax=3, xmax=3, ymax=3,
 					% height=10cm,
-					xtick=\empty,
-					ytick=\empty,
-					ztick=\empty,
-					clip=false,
-					hide axis
-					]
+					xtick=\empty, ytick=\empty, ztick=\empty,
+					clip=false, hide axis ]
 					\def\r{1}
 
 					\addplot3+[domain=pi:2*pi,samples=200,samples y=0,no marks, black, fill=gray!50]
@@ -53,32 +47,47 @@
 					\addplot3+[domain=0:pi,samples=200,samples y=0,no marks, black, fill=gray!50]
 						({\r*cos(deg(x))}, {\r*sin(deg(x))}, {0});
 
+					\draw[->, >=stealth, dashed, very thin] (0,0,\altEixo)--(0,0,\altEixo + 1.5) ;
+
 					%"GARFO"
 					\def\altTotal{3.5}
-					\draw[very thick] (-1,0,\altEixo)--(1,0,\altEixo) ;
-					\draw[very thick] (-1,0,\altEixo)--(-1,0,\altTotal) ;
-					\draw[very thick] (1,0,\altEixo)--(1,0,\altTotal) ;
+					\FPeval\angPhi{(\ri)*pi/180}
+					\FPeval\senPhi{sin(\angPhi)}
+					\FPeval\cosPhi{cos(\angPhi)}
+					\draw[very thick] (-\cosPhi,\senPhi,\altEixo)--(\cosPhi,-\senPhi,\altEixo) ;
+					\draw[very thick] (-\cosPhi,\senPhi,\altEixo)--(-\cosPhi,\senPhi,\altTotal) ;
+					\draw[very thick] (\cosPhi,-\senPhi,\altEixo)--(\cosPhi,-\senPhi,\altTotal) ;
 
-					\FPeval\angZen{0-10*pi/180}
-					\FPeval\senZen{sin(\angZen)}
-					\FPeval\cosZen{cos(\angZen)}
-					\draw[very thin, fill=blue!10] (-0.95,\cosZen,\altTotal+\senZen)--(-0.95,-\cosZen,\altTotal-\senZen)--(0.95,-\cosZen,\altTotal-\senZen)--(0.95,\cosZen,\altTotal+\senZen)--cycle;
+					\FPeval\angTheta{0+20*pi/180}
+					\FPeval\senTheta{sin(\angTheta)}
+					\FPeval\cosTheta{cos(\angTheta)}
 
-					% EIXO HORIZONTAL
-					\draw[dashed, very thin] (-1,0,\altTotal)--(1,0,\altTotal) ;
+
+					%					(y   , x  , z    )
+					\coordinate (A) at (-0.95*\cosPhi +\senPhi*1.5*\cosTheta,1.5*\cosTheta*\cosPhi +0.95*\senPhi,\altTotal - 1.5*\senTheta);
+					\coordinate (B) at (-0.95*\cosPhi -\senPhi*1.5*\cosTheta,-1.5*\cosTheta*\cosPhi +0.95*\senPhi,\altTotal + 1.5*\senTheta);
+					\coordinate (C) at (0.95*\cosPhi -\senPhi*1.5*\cosTheta,-1.5*\cosTheta*\cosPhi - 0.95*\senPhi,\altTotal + 1.5*\senTheta);
+					\coordinate (D) at (0.95*\cosPhi +\senPhi*1.5*\cosTheta,1.5*\cosTheta*\cosPhi - 0.95*\senPhi,\altTotal - 1.5*\senTheta);
+
+					\draw[thin, fill=blue!10] (A)--(B)--(C)--(D)--cycle;
+
+					% EIXOS HORIZONTAIS
+					\draw[->, >=stealth, dashed, very thin, color=red] (-2,0,0)--(2,0,0) ;
+					\draw[->, >=stealth, dashed, very thin, color=blue] (0,-2,0)--(0,2,0) ;
+
+					\draw[->, >=stealth, dashed, very thin] (0,0,\altEixo+1.5)--(0,0,5) ;
 
 				\end{axis}
-			\end{tikzpicture}
-		}
+			\end{tikzpicture} }
 		\end{animateinline}
-		\caption{Sistema de coordenadas horizontal}%
+		\caption{Heliostato --- Movimento no eixo vertical}%
 	\end{figure}
 
 
 	\begin{figure}[!ht]
 		\centering
 		\begin{animateinline}[poster=first,controls={play,stop,step}]{8}
-			\multiframe{50}{ri=0+1}
+			\multiframe{20}{ri=0+2}
 			{
 				\begin{tikzpicture}[transform shape, scale=1.3]
 				% \useasboundingbox (-8, -8) rectangle (8, 8); %not working
@@ -99,10 +108,8 @@
 							({\r*cos(deg(x))}, {\r*sin(deg(x))}, {0});
 
 						%LIMITES DO DESENHO 
-						\draw[fill=black] (0,0,5) circle[radius=1pt];
+						\draw[thin, dashed] (0,0,0)--(0,0,5);
 						\draw[thin, dashed] (-2,0,0)--(2,0,0);
-						\draw[fill=black] (-2,0,0) circle[radius=1pt];
-						\draw[fill=black] (2,0,0) circle[radius=1pt];
 
 						%EIXO VERTICAL
 						\def\altEixo{2}
@@ -117,22 +124,33 @@
 						\draw[very thick] (-1,0,\altEixo)--(-1,0,\altTotal);
 						\draw[very thick] (1,0,\altEixo)--(1,0,\altTotal);
 
-						\FPeval\angZen{0-(10+(\ri))*pi/180}
-						\FPeval\senZen{sin(\angZen)}
-						\FPeval\cosZen{cos(\angZen)}
-						\draw[very thin, fill=blue!10] (-0.95,\cosZen,\altTotal+\senZen)--(-0.95,-\cosZen,\altTotal-\senZen)--(0.95,-\cosZen,\altTotal-\senZen)--(0.95,\cosZen,\altTotal+\senZen)--cycle;
+						% EIXO VERTICAL SOB O ESPELHO
+						\draw[->, >=stealth, dashed, very thin] (0,0,\altEixo)--(0,0,\altEixo + 1.5) ;
 
-						% EIXO HORIZONTAL
-						\draw[dashed, very thin] (-1,0,\altTotal)--(1,0,\altTotal) ;
+						\FPeval\angTheta{0+\ri*pi/180}
+						\FPeval\senTheta{sin(\angTheta)}
+						\FPeval\cosTheta{cos(\angTheta)}
+
+						%					(y   , x  , z    )
+						\coordinate (A) at (-0.95 ,1.5*\cosTheta,\altTotal - 1.5*\senTheta);
+						\coordinate (B) at (-0.95 ,-1.5*\cosTheta,\altTotal + 1.5*\senTheta);
+						\coordinate (C) at (0.95 ,-1.5*\cosTheta,\altTotal + 1.5*\senTheta);
+						\coordinate (D) at (0.95 ,1.5*\cosTheta,\altTotal - 1.5*\senTheta);
+
+						\draw[thin, fill=blue!10] (A)--(B)--(C)--(D)--cycle;
+
+						% EIXOS HORIZONTAIS
+						\draw[->, >=stealth, dashed, very thin, color=red] (-2,0,0)--(2,0,0) ;
+						\draw[->, >=stealth, dashed, very thin, color=blue] (0,-2,0)--(0,2,0) ;
+
+						%EIXO VERTICAL SOBRE O ESPELHO
+						\draw[->, >=stealth, dashed, very thin] (0,0,\altEixo+1.5)--(0,0,5) ;
+
 					\end{axis}
 				\end{tikzpicture}
 			}
 		\end{animateinline}
-		\caption{Sistema de coordenadas horizontal}%
+		\caption{Heliostato --- movimento do eixo horizontal}%
 		\end{figure}
-	Queremos descrever o vetor $\hat{s}$ ao longo do ano (NDA), ao longo da
-	hora local e também sua dependência com a latitude ($\phi$). Para isso
-	precisamos expressar como os ângulos $\color{red}{z}$ ({\bf distância zenital}) e
-	$\color{blue}{A}$ ({\bf azimute}) dependem dessas variáveis.
-	
+
 \end{document}
