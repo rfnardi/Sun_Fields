@@ -201,8 +201,7 @@
 
 	À medida que a radiação penetra na atmosfera, sua intensidade sofre
 	correção devido a vários processos de absorção e espalhamento. Todos eles
-	se combinam aditivamente para montar a trânsmitância total  $\tau$:
-	$k_{\lambda}m_{\lambda}$:
+	se combinam aditivamente:
 	\begin{equation}
 		k_{\lambda}m_{\lambda} = \sum_{i=1}^{j} k_{\lambda i}m_{\lambda i}
 	\end{equation}
@@ -216,12 +215,12 @@
 	por partículas de diâmetro $d$ tal que $\lambda > 10 d$ é dado pela teoria de Rayleigh.
 	Para ar seco pode ser aproximado por 
 	\begin{equation}
-		k_{\lambda,\ Ray} \approx 0,0087352\lambda^{-4,08}. \label{eq:dry_air_extinc_fac_scat_rayl}
+		k_{\lambda,Ray} \approx 0,0087352\lambda^{-4,08}. \label{eq:dry_air_extinc_fac_scat_rayl}
 	\end{equation}
 
 	Temos assim uma transmitância devida ao espelhamento de luz por ar seco dada por
 	\begin{equation}
-		\tau_{\lambda,\ Ray} = e^{0,0087352\lambda^{-4,08}m_a} \label{eq:dry_air_rayl_scat_transm}
+		\tau_{\lambda,Ray} = e^{0,0087352\lambda^{-4,08}m_a} \label{eq:dry_air_rayl_scat_transm}
 	\end{equation}
 	onde $m_a$ é a massa óptica à pressão atmosférica local ($m_a=1$ para a pressão padrão de $1atm$).
 
@@ -232,62 +231,62 @@
 
 	O espalhamento por gotículas de água é dado por
 	\begin{eqnarray}
-		k_{\lambda, wd} \approx 0,008635\lambda^{-2},\\
+		k_{\lambda,wd} \approx 0,008635\lambda^{-2},\\
 		\nonumber \\
-		\tau_{\lambda,\ wd} = e^{0,008635\lambda^{-2}w m_r}  \label{eq:wat_droplets_scat_transm}
+		\tau_{\lambda,wd} = e^{0,008635\lambda^{-2}w m_r}  \label{eq:wat_droplets_scat_transm}
 	\end{eqnarray}
 	onde $w$ é o tamanho da gotícula de água e $m_r$ é a massa óptica
 	dada pela equação (\ref{eq:dry_air_corr_to_opt_mass}).
 
 	Já o espalhamento por partículas de poeira é dado por
 	\begin{eqnarray}
-		k_{\lambda, dust} \approx 0,08128\lambda^{-0,75}.\\
+		k_{\lambda,dust} \approx 0,08128\lambda^{-0,75}.\\
 		\nonumber \\
-		\tau_{\lambda,\ dust} = e^{0,08128\lambda^{-0,75}\frac{d}{800}m_a}   \label{eq:dust_scat_transm}
+		\tau_{\lambda,dust} = e^{0,08128\lambda^{-0,75}\frac{d}{800}m_a}   \label{eq:dust_scat_transm}
 	\end{eqnarray}
 	onde $d$ é a quantidade de partículas de poeira por $cm^3$ e $m_a$ é a 
 	massa óptica à pressão medida.
 
 	Com essas 3 contribuições podemos expressar a transmitância global da
-	radiação direta para luz monocromática devido ao espalhamento $\tau_{\lambda,\ S}$:
+	radiação direta para luz monocromática devido ao espalhamento $\tau_{\lambda,S}$:
 	\begin{equation}%EQUAÇÃO 6.7.2 DO MUHAMAD IQBAL
-		\tau_{\lambda,\ S} = e^{-(k_{\lambda,\ Ray} + k_{\lambda,\ wd}w + k_{\lambda,\ dust}\frac{d}{800} + )m_{\lambda}}
+		\tau_{\lambda,S} = e^{-(k_{\lambda,Ray} + k_{\lambda,wd}w + k_{\lambda,dust}\frac{d}{800} + )m_{\lambda}}
 		\label{eq:global_scatt_transm}
 	\end{equation}
 	onde usamos $m_\lambda$ como símbolo genérico para a massa óptica.
 
 	Quanto à atenuação devido à absorção, a transmitância decorre de 3
-	principais contribuições: mistura de gases ($\tau_{\lambda,\ g}$),
-	vapor de água ($\tau_{\lambda,\ wv}$) e absorção pela camada de ozônio ($\tau_{\lambda,\ O}$). 
+	principais contribuições: mistura de gases ($\tau_{\lambda,g}$),
+	vapor de água ($\tau_{\lambda,wv}$) e absorção pela camada de ozônio ($\tau_{\lambda,O}$). 
 
 	As expressões são as seguintes:
 	\begin{eqnarray}%EQ 6.13.1 IQBAL
-		\tau_{\lambda,\ g} = e^{-1,41 k_{\lambda,\ g}m_a{(1+118,93 k_{\lambda,\ g}m_a)}^{-0,45}}, 
+		\tau_{\lambda,g} = e^{-1,41 k_{\lambda,g}m_a{(1+118,93 k_{\lambda,g}m_a)}^{-0,45}}, 
 		\label{eq:gas_mix_absp_transm}
 	\end{eqnarray}
 
 	\begin{eqnarray}%EQ 6.13.2 IQBAL
-		\tau_{\lambda,\ wv} = e^{-0,2385 k_{\lambda,\ wv}w m_r{(1+20,07 k_{\lambda,\ g}w m_r)}^{-0,45}}, 
+		\tau_{\lambda,wv} = e^{-0,2385 k_{\lambda,wv}w m_r{(1+20,07 k_{\lambda,g}w m_r)}^{-0,45}}, 
 		\label{eq:wat_v_absp_transm}
 	\end{eqnarray}
 	e
 	\begin{eqnarray}
-		\tau_{\lambda,\ O} = e^{-k_{\lambda,\ O} l m_r}
+		\tau_{\lambda,O} = e^{-k_{\lambda,O} l m_r}
 	\end{eqnarray}
-	onde $k_{\lambda,\ O}$ é o fator de atenuação para o ozônio, $m_r$ sua
+	onde $k_{\lambda,O}$ é o fator de atenuação para o ozônio, $m_r$ sua
 	massa óptica e $l$ é a espessura da camada de ozônio.
 
 	No final do dia, as contribuições de atenuação devido a fenômenos de absorção constroem 
-	a transmitância devido a absorção $\tau_{\lambda,\ A}$:
+	a transmitância devido a absorção $\tau_{\lambda,A}$:
 	\begin{equation}
-		\tau_{\lambda,\ A} = \tau_{\lambda,\ g}\tau_{\lambda,\ wv}\tau_{\lambda,\ O} \label{eq:global_abs_transm}
+		\tau_{\lambda,A} = \tau_{\lambda,g}\tau_{\lambda,wv}\tau_{\lambda,O} \label{eq:global_abs_transm}
 	\end{equation}
 
 	Com todas essas contribuições estabelecidas podemos escrever a transmitância global 
 	da radiação direta de comprimento de onda $\lambda$ como um produto entre a transmitância devido 
 	ao espalhamento (\ref{eq:global_scatt_transm}) pela transmitância devido à absorção (\ref{eq:global_abs_transm}):
 	\begin{equation}
-		\tau_{\lambda} = \tau_{\lambda,\ S}\tau_{\lambda,\ A}
+		\tau_{\lambda} = \tau_{\lambda,S}\tau_{\lambda,A}
 	\end{equation}
 
 
