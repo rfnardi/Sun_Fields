@@ -24,8 +24,10 @@
 
 \begin{document}
 	
-	{\large \bf Problema:} determinar a distância percorrida ${\color{red} d}$ por um raio de luz
-	do sol dentro da atmosfera terrestre como função do ângulo zenital $z$.
+	{\large \bf Problema:} 
+
+	\section{Determinação da distância percorrida ${\color{red} d}$ por um raio de luz
+	do sol dentro da atmosfera terrestre como função do ângulo zenital $\theta_z$ --- sem correção por refração.}
 
 	\bigskip
 
@@ -59,7 +61,7 @@
 			\tkzDrawArc[black](A,zen_angle)(B) 
 
 			\tkzDefPointBy[rotation=center A angle 20](zen_angle) 
-			\tkzLabelPoint[above](tkzPointResult){$z$}
+			\tkzLabelPoint[above](tkzPointResult){$\theta_z$}
 	\end{tikzpicture}
 		\caption{{\color{red} Caminho} do raio de luz na atmosfera.}%
 		\label{fig:caminho_luz_na_atmosfera}
@@ -78,7 +80,7 @@
 	\end{equation}
 	e
 	\begin{equation}
-		\cos(z) = \frac{h}{d}   \label{eq:cos_zen}.
+		\cos(\theta_z) = \frac{h}{d}   \label{eq:cos_zen}.
 	\end{equation}
 
 	Tomamos (\ref{eq:pit_2})  $-$ (\ref{eq:pit_1}):
@@ -92,16 +94,16 @@
 	\end{equation}
 	e agora usamos (\ref{eq:cos_zen}):
 	\begin{equation}
-		 d^2 + 2 (d\cos(z)) R_T - (H^2 + 2 H R_T) = 0. \label{eq:2nd_order_equation_for_d}
+		 d^2 + 2 (d\cos(\theta_z)) R_T - (H^2 + 2 H R_T) = 0. \label{eq:2nd_order_equation_for_d}
 	\end{equation}
 
 	Vemos que (\ref{eq:2nd_order_equation_for_d}) é uma equação de segunda ordem para $d$. Logo, 
 	\begin{equation}
-		d = \frac{-2R_T\cos(z) \pm \sqrt{ {(2R_T\cos(z))}^2-4\cdot 1 \cdot (-(H^2 + 2H R_T)) }}{2}	
+		d = \frac{-2R_T\cos(\theta_z) \pm \sqrt{ {(2R_T\cos(\theta_z))}^2-4\cdot 1 \cdot (-(H^2 + 2H R_T)) }}{2}	
 	\end{equation}
 	donde
 	\begin{equation}
-		d = \frac{-\cancel{2}R_T\cos(z) \pm \cancel{2}R_T\cos(z)\sqrt{ 1 +  \frac{H(H + 2R_T)}{{R_T}^2\cos^2(z)} }}{\cancel{2}}	.
+		d = \frac{-\cancel{2}R_T\cos(\theta_z) \pm \cancel{2}R_T\cos(\theta_z)\sqrt{ 1 +  \frac{H(H + 2R_T)}{{R_T}^2\cos^2(\theta_z)} }}{\cancel{2}}	.
 		\label{eq:almost_there}
 	\end{equation}
 
@@ -111,9 +113,9 @@
 	(\ref{eq:almost_there}) tenha valor inferior a $1$ o que por sua vez nos
 	permite lançar mão da aproximação binomial em primeira ordem:
 	\begin{eqnarray}
-		d &\approx& R_T\cos(z)(-1 \pm { 1 + \frac{H(H + 2R_T)}{2{R_T}^2\cos^2(z)}}) \label{eq:almost_there1}\\
-		  &\approx& R_T\cos(z)(\cancel{-1} + \cancel{1} + \frac{H(H + 2R_T)}{2{R_T}^2\cos^2(z)}) \label{eq:almost_there2}\\
-		  &\approx& \cancel{R_T\cos(z)}(\frac{H(H + 2R_T)}{2{R_T}^{\cancel{2}}\cos^{\cancel{2}}(z)})
+		d &\approx& R_T\cos(\theta_z)(-1 \pm { 1 + \frac{H(H + 2R_T)}{2{R_T}^2\cos^2(\theta_z)}}) \label{eq:almost_there1}\\
+		  &\approx& R_T\cos(\theta_z)(\cancel{-1} + \cancel{1} + \frac{H(H + 2R_T)}{2{R_T}^2\cos^2(\theta_z)}) \label{eq:almost_there2}\\
+		  &\approx& \cancel{R_T\cos(\theta_z)}(\frac{H(H + 2R_T)}{2{R_T}^{\cancel{2}}\cos^{\cancel{2}}(\theta_z)})
 	\end{eqnarray}
 	Onde de (\ref{eq:almost_there1}) para (\ref{eq:almost_there2}) restringimos
 	apenas ao sinal positivo já que, sendo $d$ uma distância não pode ser
@@ -121,10 +123,179 @@
 
 	Finalmente temos a distância percorrida pelo raio de luz do sol
 	no interior da atmosfera até atingir a superfície do planeta à um ângulo
-	zenital $z$:
+	zenital $\theta_z$:
 	\begin{equation}
-		 \boxed{d \approx \frac{H(H + 2R_T)}{2{R_T}\cos(z)}.} 
+		 \boxed{d \approx \frac{H(H + 2R_T)}{2{R_T}\cos(\theta_z)}.} \label{eq:straight_optical_path}
 	\end{equation}
 
+	\section{Cálculo da massa óptica relativa}
+
+	A equação (\ref{eq:straight_optical_path}) dá uma
+	aproximação~\cite{muhamad_iqbal} com erro inferior a $0,25\%$ para
+	$\theta_z=60^{\circ}$ que aumenta para $10\%$ para ângulos superiores a
+	$85^{\circ}$. 
+
+	Faremos aqui uma primeira abordagem com a correção na intensidade da
+	radiação dada pela equação (\ref{eq:straight_optical_path}) e em seguida
+	consideraremos refinamentos deste resultado. Na prática esta aproximação
+	assume que a densidade da atmosfera é homogênea. Sob esta hipótese ocorre
+	que a intensidade da radiação que chega ao solo sofre uma correção
+	proporcional a este caminho posto que a quantidade de energia liberada por
+	um feixe de radiação num meio é proporcional à quantidade de massa presente
+	no caminho do feixe de radiação.
+
+	Usa-se na literatura o termo \emph{massa óptica relativa} $m_r(\theta_z)$ para
+	designar a razão entre a quantidade de massa atmosférica $m_0$ atravessada
+	pelo raio luminoso no zênite e a quantidade de massa de atmosférica $m(\theta_z)$
+	atravessada à um ângulo zenital $\color{red}{\theta_z}$:
+	\begin{equation}
+		m_r (\theta_z) = \frac{m_0}{m(\theta_z)}.
+	\end{equation}
+
+	Como estamos trabalhando sob a hipótese de que a massa é proporcional ao
+	comprimento do caminho óptico temos que (\ref{eq:straight_optical_path})
+	incorre em 
+	\begin{equation}
+		m_r (\theta_z) = \frac{1}{\cos(\theta_z)}. \label{eq:0-th_order_optical_mass_correction}
+	\end{equation}
+	que será tomada como nosso termo de ordem zero na correção do fator de
+	absorção sofrido pelo feixe de radiação.
+
+	\subsection{Correção para a luz visível pela massa de ar seco }
+
+	Para comprimentos de onda na faixa visível ($\sim 0.7\mu m$) Kasten 
+	apresenta a seguinte correção para $m_r (\theta_z)$:
+	\begin{equation}
+		m_r (\theta_z) = {\left(\cos(\theta_z) + 0.15{(93,885-\theta_z)}^{-1,253}\right)}^{-1}. \label{eq:dry_air_corr_to_opt_mass}
+	\end{equation}
+
+	Confrontada com valores medidos experimentalmente, a expressão
+	(\ref{eq:dry_air_corr_to_opt_mass}) fornece dados com erro na
+	inferior a $0,1\%$ para medidas do ângulo zênital $\theta_z$ variando desde $0$ a
+	$86^{\circ}$. O pior valor ocorre em $\theta_z = 89,5^{\circ}$ quando o
+	erro atinge $1,25\%$.
+
+	\subsection{Correção para a luz visível pela massa de vapor de água }
+
+	A correção dada pela interação da radiação com vapor de água
+	ocorre predominantemente nas camadas mais baixas da atmosfera.
+	Assim, também Kasten propõe a seguinte fórmula para a respectiva
+	massa optica relativa:
+	\begin{equation}
+		m_r (\theta_z) = {\left(\cos(\theta_z) + 0.00548{(92,650-\theta_z)}^{-1,452}\right)}^{-1}. \label{eq:w_vapor_corr_to_opt_mass}
+	\end{equation}
+
+	\section{Correção da intensidade da radiação devido à interação com os componentes atmosféricos}
+
+	De acordo com a lei de Bourguer~\cite{muhamad_iqbal}, a intensidade do 
+	feixe de radiação monocromática (medida perpendicularmente à direção de
+	propagação do feixe) sofre uma correção de acordo com a seguinte formula:
+	\begin{equation}
+		I_{\lambda} = I_{\lambda 0}e^{-k_{\lambda}m_{\lambda}} \label{eq:bourguers_law}
+	\end{equation}
+	onde $k_\lambda$ é chamado de \emph{fator de extinção} e $m_\lambda$ é a
+	massa óptica com a qual o feixe interage. Este fator exponencial 
+	\begin{equation}
+		\tau = e^{-k_{\lambda}m_{\lambda}}
+	\end{equation}é chamado de \emph{transmitância} $\tau$ da radiação.
+
+	À medida que a radiação penetra na atmosfera, sua intensidade sofre
+	correção devido a vários processos de absorção e espalhamento. Todos eles
+	se combinam aditivamente para montar a trânsmitância total  $\tau$:
+	$k_{\lambda}m_{\lambda}$:
+	\begin{equation}
+		k_{\lambda}m_{\lambda} = \sum_{i=1}^{j} k_{\lambda i}m_{\lambda i}
+	\end{equation}
+	onde $i$ indica um dos $j$ processos pelos quais ocorre absorção.
+	O que mostra que $\tau$ pode ser escrito como um produtório onde cada fator 
+	dá conta de um efeito responsável por atenuar a intensidade do feixe.
+	Vamos agora listar os principais fatores de extinção e suas respectivas 
+	transmitâncias.
+
+	O fator de extinção devido ao espalhamento da luz de comprimento de onda $\lambda$ 
+	por partículas de diâmetro $d$ tal que $\lambda > 10 d$ é dado pela teoria de Rayleigh.
+	Para ar seco pode ser aproximado por 
+	\begin{equation}
+		k_{\lambda,\ Ray} \approx 0,0087352\lambda^{-4,08}. \label{eq:dry_air_extinc_fac_scat_rayl}
+	\end{equation}
+
+	Temos assim uma transmitância devida ao espelhamento de luz por ar seco dada por
+	\begin{equation}
+		\tau_{\lambda,\ Ray} = e^{0,0087352\lambda^{-4,08}m_a} \label{eq:dry_air_rayl_scat_transm}
+	\end{equation}
+	onde $m_a$ é a massa óptica à pressão atmosférica local ($m_a=1$ para a pressão padrão de $1atm$).
+
+	Para partículas com diâmetro maior do que um décimo do comprimento de onda
+	o fator de espalhamento é calculado pela teoria de Mie para o espalhamento
+	de luz. Neste intervalo de valores se enquadra o espalhamento de luz por
+	partículas de poeira e por gotículas de água.
+
+	O espalhamento por gotículas de água é dado por
+	\begin{eqnarray}
+		k_{\lambda, wd} \approx 0,008635\lambda^{-2},\\
+		\nonumber \\
+		\tau_{\lambda,\ wd} = e^{0,008635\lambda^{-2}w m_r}  \label{eq:wat_droplets_scat_transm}
+	\end{eqnarray}
+	onde $w$ é o tamanho da gotícula de água e $m_r$ é a massa óptica
+	dada pela equação (\ref{eq:dry_air_corr_to_opt_mass}).
+
+	Já o espalhamento por partículas de poeira é dado por
+	\begin{eqnarray}
+		k_{\lambda, dust} \approx 0,08128\lambda^{-0,75}.\\
+		\nonumber \\
+		\tau_{\lambda,\ dust} = e^{0,08128\lambda^{-0,75}\frac{d}{800}m_a}   \label{eq:dust_scat_transm}
+	\end{eqnarray}
+	onde $d$ é a quantidade de partículas de poeira por $cm^3$ e $m_a$ é a 
+	massa óptica à pressão medida.
+
+	Com essas 3 contribuições podemos expressar a transmitância global da
+	radiação direta para luz monocromática devido ao espalhamento $\tau_{\lambda,\ S}$:
+	\begin{equation}%EQUAÇÃO 6.7.2 DO MUHAMAD IQBAL
+		\tau_{\lambda,\ S} = e^{-(k_{\lambda,\ Ray} + k_{\lambda,\ wd}w + k_{\lambda,\ dust}\frac{d}{800} + )m_{\lambda}}
+		\label{eq:global_scatt_transm}
+	\end{equation}
+	onde usamos $m_\lambda$ como símbolo genérico para a massa óptica.
+
+	Quanto à atenuação devido à absorção, a transmitância decorre de 3
+	principais contribuições: mistura de gases ($\tau_{\lambda,\ g}$),
+	vapor de água ($\tau_{\lambda,\ wv}$) e absorção pela camada de ozônio ($\tau_{\lambda,\ O}$). 
+
+	As expressões são as seguintes:
+	\begin{eqnarray}%EQ 6.13.1 IQBAL
+		\tau_{\lambda,\ g} = e^{-1,41 k_{\lambda,\ g}m_a{(1+118,93 k_{\lambda,\ g}m_a)}^{-0,45}}, 
+		\label{eq:gas_mix_absp_transm}
+	\end{eqnarray}
+
+	\begin{eqnarray}%EQ 6.13.2 IQBAL
+		\tau_{\lambda,\ wv} = e^{-0,2385 k_{\lambda,\ wv}w m_r{(1+20,07 k_{\lambda,\ g}w m_r)}^{-0,45}}, 
+		\label{eq:wat_v_absp_transm}
+	\end{eqnarray}
+	e
+	\begin{eqnarray}
+		\tau_{\lambda,\ O} = e^{-k_{\lambda,\ O} l m_r}
+	\end{eqnarray}
+	onde $k_{\lambda,\ O}$ é o fator de atenuação para o ozônio, $m_r$ sua
+	massa óptica e $l$ é a espessura da camada de ozônio.
+
+	No final do dia, as contribuições de atenuação devido a fenômenos de absorção constroem 
+	a transmitância devido a absorção $\tau_{\lambda,\ A}$:
+	\begin{equation}
+		\tau_{\lambda,\ A} = \tau_{\lambda,\ g}\tau_{\lambda,\ wv}\tau_{\lambda,\ O} \label{eq:global_abs_transm}
+	\end{equation}
+
+	Com todas essas contribuições estabelecidas podemos escrever a transmitância global 
+	da radiação direta de comprimento de onda $\lambda$ como um produto entre a transmitância devido 
+	ao espalhamento (\ref{eq:global_scatt_transm}) pela transmitância devido à absorção (\ref{eq:global_abs_transm}):
+	\begin{equation}
+		\tau_{\lambda} = \tau_{\lambda,\ S}\tau_{\lambda,\ A}
+	\end{equation}
+
+
+
+
+
+
+	\bibliographystyle{ieeetr}
+	\bibliography{./refs.bib}
 
 \end{document}
