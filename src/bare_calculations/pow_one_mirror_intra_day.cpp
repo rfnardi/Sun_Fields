@@ -1,6 +1,6 @@
 #include <iostream>
 #include <stdio.h>
-#include "./all_functions.cpp"
+#include "../all_functions.cpp"
 #include <vector>
 
 int main()

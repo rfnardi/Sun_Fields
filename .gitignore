@@ -3,3 +3,6 @@
 *.aux
 *.tkzfonct.table
 *.tkzfonct.gnuplot
+*.xlsx
+*.json
+*.txt

@@ -31,7 +31,7 @@
 			xlabel={array size}, 
 			ylabel={Power ($W$)}, 
 			title={Potência refletida por malha ao longo da direção leste-oeste}]
-			\addplot[mark size=0.5pt, color=red] table[x=array_size, y=power, col sep=semicolon] {../../data/pow_dep_array_size.dat};
+			\addplot[mark size=0.5pt, color=red] table[x=array_size, y=power, col sep=semicolon] {../../../data/bare_data/pow_dep_array_size.dat};
 		\end{axis}
 	\end{tikzpicture}
 	\caption{Potência refletida por uma malha posicionada $10m$ ao sul com número variável de espelhos} 
@@ -51,7 +51,7 @@
 			xlabel={array size}, 
 			ylabel={Power ($W$)}, 
 			title={Incremento de potência refletida por uma malha situada ao longo da direção leste-oeste}]
-			\addplot[mark size=0.5pt, color=blue] table[x=array_size, y=delta, col sep=semicolon] {../../data/pow_dep_array_size.dat};
+			\addplot[mark size=0.5pt, color=blue] table[x=array_size, y=delta, col sep=semicolon] {../../../data/bare_data/pow_dep_array_size.dat};
 		\end{axis}
 	\end{tikzpicture}
 	\caption{Incremento de potência refletida por uma malha posicionada $10m$ ao sul variando com número de espelhos} 
