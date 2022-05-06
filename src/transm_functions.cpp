@@ -1,4 +1,3 @@
-#include <math.h>
 #include <stdio.h>
 #include <cmath>
 #include "./table_functions.cpp"
@@ -97,5 +96,25 @@ float total_transmitance(float lambda, float theta_z, float w, float d, float al
 	return tau_scattering_lambda*tau_absorp_lambda; //transmitância total da radiação direta
 }
 
+float planck_distribution(float T_kelvin, float lambda){
+	
+	//Potência de radiação emitida por unidade transversa de área no comprimento de onda lambda:
+	//http://hyperphysics.phy-astr.gsu.edu/hbase/quantum/radfrac.html#c1
+	// P = 2*pi*h*c^2/(lambda^{5}*(e^{-hc/K*lambda*T} - 1)) 
+	
+
+	//2*pi*h*c^2/lambda^5 = 2*pi*(6.62607015)*3*10^2*c/(n^5) = sigma
+	//onde lambda = n*10^{-6}
+	float sigma = 2*M_PI*(6.62607015)*900000000;
+
+	//h*c/K*lambda = (6.62607015)*3*10/(1.380649*n)
+	//onde lambda = n*10^{-6}
+	float alpha = (6.62607015)*30/(1.380649);
+
+	//aqui estamos assumindo que o parâmetro lamdba que entra na função já é medido em micrôns. 
+	//assim, na expressão abaixo, "lambda = n"
+	return sigma/(pow(lambda,5)*(exp(-alpha/(T_kelvin*lambda)) - 1)); //dimensão: potência; unidade: watt
+
+}
 
 
