@@ -30,11 +30,11 @@
 			minor tick num=4, 
 			xlabel={x}, 
 			ylabel={Power ($W$)}, 
-			title={Potência refletida variando em termos da posição angular}]
-			\addplot[mark size=0.5pt, color=blue] table[x=theta, y=power, col sep=semicolon] {../../data/pow_dep_mirror_angular_pos.dat};
+			title={Potência refletida variando em termos da posição leste-oeste}]
+			\addplot[mark size=0.5pt, color=blue] table[x=x_pos, y=power, col sep=semicolon] {../../../data/bare_data/pow_dep_mirror_pos_along_x_axis.dat};
 		\end{axis}
 	\end{tikzpicture}
-	\caption{Potência refletida por um espelho a $10m$ de distância do ponto focal variando com a posição angular theta} 
+	\caption{Potência refletida por um espelho $10m$ ao sul variando com a posição leste-oste} 
 \end{figure}
 
 
