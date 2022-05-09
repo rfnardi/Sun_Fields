@@ -93,9 +93,12 @@ float total_transmitance(float lambda, float theta_z, float w, float d, float al
 	float tau_scattering_lambda = scattering_transm_lambda(lambda, theta_z, w, d, altitude);
 	float tau_absorp_lambda = absorp_transm_lambda(lambda, theta_z, w, d, altitude);
 
-	return tau_scattering_lambda*tau_absorp_lambda; //transmitância total da radiação direta
+	return tau_scattering_lambda*tau_absorp_lambda; //transmitância total da radiação direta de comprimento de onda lambda
 }
 
+//Esta função dá o espectro de corpo negro.
+//Vamos preferir usar a versão experimental/tabelada 
+//da distribuição de potência de radiação do sol: função table_given_irradiance
 float planck_distribution(float T_kelvin, float lambda_microns){
 	//Iqbal - page 38:
 	//"the intensity of radiation of a surface is the rate of energy
