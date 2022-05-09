@@ -96,10 +96,16 @@ float total_transmitance(float lambda, float theta_z, float w, float d, float al
 	return tau_scattering_lambda*tau_absorp_lambda; //transmitância total da radiação direta
 }
 
-float planck_distribution(float T_kelvin, float lambda){
+float planck_distribution(float T_kelvin, float lambda_microns){
+	//Iqbal - page 38:
+	//"the intensity of radiation of a surface is the rate of energy
+	//propagation in a given direction per unit solid angle and per unit area per­
+	//pendicular to the axis of the solid angle"
 	
 	//Potência de radiação emitida por unidade transversa de área no comprimento de onda lambda:
 	//http://hyperphysics.phy-astr.gsu.edu/hbase/quantum/radfrac.html#c1
+	//na expressão deste site acima aparece a Area multiplicada. 
+	//Aqui estamos considerando a potência POR UNIDADE DE ÁREA. Portanto não deve aparecer A.
 	// P = 2*pi*h*c^2/(lambda^{5}*(e^{-hc/K*lambda*T} - 1)) 
 	
 
@@ -113,7 +119,7 @@ float planck_distribution(float T_kelvin, float lambda){
 
 	//aqui estamos assumindo que o parâmetro lamdba que entra na função já é medido em micrôns. 
 	//assim, na expressão abaixo, "lambda = n"
-	return sigma/(pow(lambda,5)*(exp(-alpha/(T_kelvin*lambda)) - 1)); //dimensão: potência; unidade: watt
+	return (sigma)/(pow(lambda_microns,5)*(exp(-alpha/(T_kelvin*lambda_microns)) - 1)); //dimensão: potência; unidade: watt
 
 }
 
