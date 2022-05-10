@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <cmath>
 #include "./table_functions.cpp"
+#include "./all_functions.cpp"
 
 float dry_air_opt_mass(float theta_z){
 	return 1/(cos(theta_z) + 0.15*pow(93.885 - theta_z,-1.253)) ;
@@ -10,13 +11,23 @@ float water_vapor_opt_mass(float theta_z){
 	return 1/(cos(theta_z) + 0.00548*pow(92.650 - theta_z,-1.452)) ;
 }
 
+float preciptable_water(float rel_air_humid, float temp_Kelvin){
+
+	float partial_pressure_water = exp(26.23 - 5416/temp_Kelvin);
+
+	float w = 0.4930*rel_air_humid*partial_pressure_water/temp_Kelvin;
+
+	return w;
+}
+
 float pressure_given_by_altitude(float altitude){
 	float sea_level_pressure = 1013.25; //pressão em milibars
 	return sea_level_pressure*exp(-0.0001184*altitude);//altitude em metros
 }
 
-float m_a_calc(float pressure, float m_z){
-	return pressure*m_z/1013.25;
+//equation 5.7.3 Iqbal
+float m_a_calc(float pressure, float m_r){
+	return pressure*m_r/1013.25;
 }
 
 float k_Rayleigh_dry_air_scattering_lambda(float lambda){//lambda aqui sempre está medido em micrômetros
@@ -53,7 +64,14 @@ float gas_mix_absorp_transm_lambda(float lambda, float theta_z, float altitude){
 	float m_r = dry_air_opt_mass(theta_z);
 	float pressure = pressure_given_by_altitude(altitude);
 	float m_a = m_a_calc(pressure, m_r);
-	float k_g = table_given_gas_mix_k_g(lambda);
+
+	/* float table_given_gas_mix_k_g(float lambda){ tabela definida de 0.76 a 4.00 microns */
+	float k_g;
+	if(lambda>=0.76 && lambda <= 4.00){
+		k_g = table_given_gas_mix_k_g(lambda);
+	}
+	else { k_g = 0.0; }
+
 	float tau_absorp_lambda = exp(-1.41*k_g*m_a*pow(1+118.93*k_g*m_a, -0.45));
 
 	return tau_absorp_lambda;
@@ -62,7 +80,14 @@ float gas_mix_absorp_transm_lambda(float lambda, float theta_z, float altitude){
 float water_vapor_absorp_transm_lambda(float lambda, float theta_z, float altitude, float w){
 
 	float m_r = dry_air_opt_mass(theta_z);
-	float k_wv = table_given_k_wv(lambda);
+
+	/* float table_given_k_wv(float lambda){ tabela definida de 0.69 a 4.00 microns */
+	float k_wv;
+	if(lambda>=0.690 && lambda <= 4.00){
+		k_wv = table_given_k_wv(lambda);
+	}
+	else { k_wv = 0.0; }
+
 	float tau_absorp_lambda = exp(-0.2385*k_wv*w*m_r*pow(1+20.07*k_wv*w*m_r, -0.45));
 
 	return tau_absorp_lambda;
@@ -71,13 +96,21 @@ float water_vapor_absorp_transm_lambda(float lambda, float theta_z, float altitu
 float ozone_absorp_transm_lambda(float lambda, float theta_z, float altitude, float w){
 
 	float m_r = dry_air_opt_mass(theta_z);
-	float k_O_lambda = table_given_k_O(lambda);
+
+	/* float table_given_k_O(float lambda){ tabela definida de 0.290 a 0.790 microns */
+	float k_O_lambda;
+	if(lambda>=0.290 && lambda <= 0.790){
+		k_O_lambda = table_given_k_O(lambda);
+	}
+	else { k_O_lambda = 0.0; }
+
 	float tau_absorp_lambda = exp(-k_O_lambda*m_r);
 
 	return tau_absorp_lambda;
 }
 
 float absorp_transm_lambda(float lambda, float theta_z, float w, float d, float altitude){
+
 
 	float ozone_transm = ozone_absorp_transm_lambda(lambda, theta_z, altitude, w);
 	float wv_aborp_transm = water_vapor_absorp_transm_lambda(lambda, theta_z, altitude, w);
@@ -126,4 +159,54 @@ float planck_distribution(float T_kelvin, float lambda_microns){
 
 }
 
+
+//d: quantidade de partículas de poeira em suspensão por cm^3.
+//d == 200 é ar limpo. 
+//d == 800 é ar muito sujo.
+float corrected_irradiance(int NDA, 
+		float lat, 
+		float local_time, 
+		float rel_air_humid, 
+		float altitude, 
+		float d, 
+		float temp_Kelvin){
+	
+	float sin_Alt = sin_Alt_calculation(NDA, lat, local_time);
+	float theta_z = acos(sin_Alt);
+
+	float m_r = dry_air_opt_mass(theta_z);
+	float pressure =  pressure_given_by_altitude(altitude);
+	float m_a = m_a_calc(pressure, m_r);
+	float w = preciptable_water(rel_air_humid, temp_Kelvin);
+
+	float tau_lambda  = 0.0;
+	float I_lambda = 0.0;
+	float irradiance = 0.0;
+	float total_irradiance = 0.0;
+	for(float lambda = 0.250; lambda<=25;lambda+=0.01){
+
+		irradiance = table_given_irradiance(lambda);
+		tau_lambda = total_transmitance(lambda, theta_z, w, d, altitude);
+		irradiance = irradiance*tau_lambda;
+		total_irradiance += irradiance;
+	}
+
+	total_irradiance = total_irradiance*elliptic_correction_factor(NDA);
+
+	return total_irradiance;
+}
+
+//potência refletida por um espelho de area mirror_area
+//localizado na posição R
+//quando a posição do sol for s
+float one_mirror_corrected_power(vetor_3d s, vetor_3d R, float J, float mirror_area){
+
+	vetor_3d r(0,0,0);
+	r = get_unitary_vector(R,r);
+
+	vetor_3d n(0,0,0);
+	n = get_normal_vector(s, r, n);
+
+	return J*n.scalar_prod(s)*mirror_area;
+}
 
