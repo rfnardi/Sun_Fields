@@ -186,6 +186,7 @@ float J_elliptic_correction(int NDA){
 	return J;
 }
 
+
 //distância de atmosfera cortada pelo raio de luz em termos do ângulo zenital
 float atm_cross_distance(float zenital_angle){ 
 	float A = 12000; //12 km
@@ -194,10 +195,15 @@ float atm_cross_distance(float zenital_angle){
 	return (pow(A,2) + 2*A*R_t)/(2*R_t*cos(zenital_angle));
 }
 
-float refl_power_from_scalar_product(vetor_3d n, vetor_3d s, float J){
-	float power = 0.47*J*n.scalar_prod(s);
+float refl_power_from_scalar_product(vetor_3d n, vetor_3d s, float J_bare){
+	float power = 0.47*J_bare*n.scalar_prod(s);
 
 	return power;
+}
+
+//só retorna o fator de correção devido à excentricidade da órbita da Terra
+float elliptic_correction_factor(int NDA){ 
+	return (1.000 + 0.033*cos(deg_to_rad(360.0*NDA/365.25)));
 }
 
 float one_mirror_power(vetor_3d s, vetor_3d R, int NDA){
