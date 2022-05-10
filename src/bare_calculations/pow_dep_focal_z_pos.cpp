@@ -1,6 +1,6 @@
 #include <iostream>
 #include <stdio.h>
-#include "../all_functions.cpp"
+#include "../lib/bare_functions.cpp"
 #include <vector>
 
 int main()
