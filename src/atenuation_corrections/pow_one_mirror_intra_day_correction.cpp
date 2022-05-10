@@ -12,15 +12,15 @@ int main()
 	vetor_3d R(0,-10,0); 
 
 	float sin_Alt, sin_Azim;
-	float power;
+	float power = 0.0;
 	float hora_local;
 	float J;
 
-	float rel_air_humid; 
-	float altitude; 
-	float d; 
-	float temp_Kelvin;
-	float mirror_area;
+	float rel_air_humid = 0.70; 
+	float altitude = 70; 
+	float d = 200; 
+	float temp_Kelvin = 393.0;
+	float mirror_area = 1.0;
 
 	/* log_entrada(NDA, lat, hora_local); */
 

@@ -1,3 +1,4 @@
+#include <iostream>
 #include <stdio.h>
 #include <cmath>
 #include "./table_functions.cpp"
@@ -53,7 +54,7 @@ float scattering_transm_lambda(float lambda, float theta_z, float w, float d, fl
 	float pressure = pressure_given_by_altitude(altitude);
 	float m_a = m_a_calc(pressure, m_r);
 	
-	float tau_scattering_lambda = exp(-(k_dry_air*m_a + k_water_droplets*w*m_r + k_dust*(d/800)*m_a));
+	float tau_scattering_lambda = exp(0-(k_dry_air*m_a + k_water_droplets*w*m_r + k_dust*(d/800)*m_a));
 
 	return tau_scattering_lambda;
 }
@@ -66,13 +67,13 @@ float gas_mix_absorp_transm_lambda(float lambda, float theta_z, float altitude){
 	float m_a = m_a_calc(pressure, m_r);
 
 	/* float table_given_gas_mix_k_g(float lambda){ tabela definida de 0.76 a 4.00 microns */
-	float k_g;
+	float k_g = 0.0;
 	if(lambda>=0.76 && lambda <= 4.00){
 		k_g = table_given_gas_mix_k_g(lambda);
 	}
 	else { k_g = 0.0; }
 
-	float tau_absorp_lambda = exp(-1.41*k_g*m_a*pow(1+118.93*k_g*m_a, -0.45));
+	float tau_absorp_lambda = exp(0-(1.41*k_g*m_a)*pow(1+(118.93*k_g*m_a), -0.45));
 
 	return tau_absorp_lambda;
 }
@@ -82,13 +83,13 @@ float water_vapor_absorp_transm_lambda(float lambda, float theta_z, float altitu
 	float m_r = dry_air_opt_mass(theta_z);
 
 	/* float table_given_k_wv(float lambda){ tabela definida de 0.69 a 4.00 microns */
-	float k_wv;
+	float k_wv = 0.0;
 	if(lambda>=0.690 && lambda <= 4.00){
 		k_wv = table_given_k_wv(lambda);
 	}
 	else { k_wv = 0.0; }
 
-	float tau_absorp_lambda = exp(-0.2385*k_wv*w*m_r*pow(1+20.07*k_wv*w*m_r, -0.45));
+	float tau_absorp_lambda = exp(0-(0.2385*k_wv*w*m_r)*pow(1+(20.07*k_wv*w*m_r), -0.45));
 
 	return tau_absorp_lambda;
 }
@@ -98,13 +99,13 @@ float ozone_absorp_transm_lambda(float lambda, float theta_z, float altitude, fl
 	float m_r = dry_air_opt_mass(theta_z);
 
 	/* float table_given_k_O(float lambda){ tabela definida de 0.290 a 0.790 microns */
-	float k_O_lambda;
+	float k_O_lambda = 0.0;
 	if(lambda>=0.290 && lambda <= 0.790){
 		k_O_lambda = table_given_k_O(lambda);
 	}
 	else { k_O_lambda = 0.0; }
 
-	float tau_absorp_lambda = exp(-k_O_lambda*m_r);
+	float tau_absorp_lambda = exp(0-(k_O_lambda*m_r));
 
 	return tau_absorp_lambda;
 }
@@ -163,13 +164,7 @@ float planck_distribution(float T_kelvin, float lambda_microns){
 //d: quantidade de partículas de poeira em suspensão por cm^3.
 //d == 200 é ar limpo. 
 //d == 800 é ar muito sujo.
-float corrected_irradiance(int NDA, 
-		float lat, 
-		float local_time, 
-		float rel_air_humid, 
-		float altitude, 
-		float d, 
-		float temp_Kelvin){
+float corrected_irradiance(int NDA, float lat, float local_time, float rel_air_humid, float altitude, float d, float temp_Kelvin){
 	
 	float sin_Alt = sin_Alt_calculation(NDA, lat, local_time);
 	float theta_z = acos(sin_Alt);
@@ -180,15 +175,16 @@ float corrected_irradiance(int NDA,
 	float w = preciptable_water(rel_air_humid, temp_Kelvin);
 
 	float tau_lambda  = 0.0;
-	float I_lambda = 0.0;
 	float irradiance = 0.0;
 	float total_irradiance = 0.0;
-	for(float lambda = 0.250; lambda<=25;lambda+=0.01){
+	float lambda = 0.250;
+	while(lambda <= 25){
 
 		irradiance = table_given_irradiance(lambda);
 		tau_lambda = total_transmitance(lambda, theta_z, w, d, altitude);
 		irradiance = irradiance*tau_lambda;
 		total_irradiance += irradiance;
+		lambda += 0.01;
 	}
 
 	total_irradiance = total_irradiance*elliptic_correction_factor(NDA);
