@@ -130,8 +130,7 @@ float decl_calculation(int NDA){ //a declinação mede o ângulo da linha Terra-
 
 float sin_Alt_calculation(int NDA, float lat, float local_time){
 
-	float hora_local = local_time;
-	float hor_rad = ang_hor_rad(hora_local);
+	float hor_rad = ang_hor_rad(local_time);
 
 	float lat_rad = deg_to_rad(lat);
 
@@ -144,8 +143,7 @@ float sin_Alt_calculation(int NDA, float lat, float local_time){
 
 float sin_Azim_calculation(int NDA, float lat, float local_time){
 
-	float hora_local = local_time;
-	float hor_rad = ang_hor_rad(hora_local);
+	float hor_rad = ang_hor_rad(local_time);
 
 	float lat_rad = deg_to_rad(lat);
 

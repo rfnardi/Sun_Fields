@@ -86,8 +86,8 @@ float table_given_gas_mix_k_g(float lambda){
 
 	//INTERPOLAÇÃO:
 	float k = 0.0;
-	for(int i = 0; i<38; i++){
-		if(lambda <= table[i][0] && lambda > table[i][0]){
+	for(int i = 0; i<37; i++){
+		if(lambda >= table[i][0] && lambda < table[i+1][0]){
 			k = table[i][1] + ((table[i+1][1]-table[i][1])/(table[i+1][0]-table[i][0]))*(lambda-table[i][0]);
 			break;
 		}
@@ -249,8 +249,8 @@ float table_given_k_wv(float lambda){
 
 	//INTERPOLAÇÃO:
 	float k = 0.0;
-	for(int i = 0; i<72; i++){
-		if(lambda <= table[i][0] && lambda > table[i][0]){
+	for(int i = 0; i<71; i++){
+		if(lambda >= table[i][0] && lambda < table[i+1][0]){
 			k = table[i][1] + ((table[i+1][1]-table[i][1])/(table[i+1][0]-table[i][0]))*(lambda-table[i][0]);
 			break;
 		}
@@ -400,8 +400,8 @@ float table_given_k_O(float lambda){
 
 	//INTERPOLAÇÃO:
 	float k = 0.0;
-	for(int i = 0; i<66; i++){
-		if(lambda <= table[i][0] && lambda > table[i][0]){
+	for(int i = 0; i<65; i++){
+		if(lambda >= table[i][0] && lambda < table[i+1][0]){
 			k = table[i][1] + ((table[i+1][1]-table[i][1])/(table[i+1][0]-table[i][0]))*(lambda-table[i][0]);
 			break;
 		}
@@ -414,7 +414,7 @@ float table_given_k_O(float lambda){
 //tabela 3.3.2 Iqbal
 float table_given_irradiance(float lambda_microns){
 
-	float table[200][2];
+	float table[168][2];
 
 	table[0][0] = 0.250;
 	table[0][1] = 64.56;
@@ -756,8 +756,8 @@ float table_given_irradiance(float lambda_microns){
 
 	//INTERPOLAÇÃO:
 	float I = 0.0;
-	for(int i = 0; i<168; i++){
-		if(lambda_microns <= table[i][0] && lambda_microns > table[i][0]){
+	for(int i = 0; i<167; i++){
+		if(lambda_microns >= table[i][0] && lambda_microns < table[i+1][0]){
 			I = table[i][1] + ((table[i+1][1]-table[i][1])/(table[i+1][0]-table[i][0]))*(lambda_microns-table[i][0]);
 			break;
 		}
