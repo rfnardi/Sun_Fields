@@ -9,7 +9,7 @@ int main()
 	float altitude = 70; 
 	float d = 200; 
 	float temp_Kelvin = 393;
-	float w = preciptable_water(rel_air_humid, temp_Kelvin);
+	float w = preciptable_water(rel_air_humid, temp_Kelvin, altitude);
 
 	float sin_Alt = sin_Alt_calculation(NDA, lat, local_time);
 	float theta_z = acos(sin_Alt);
