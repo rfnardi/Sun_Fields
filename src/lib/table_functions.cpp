@@ -412,9 +412,9 @@ float table_given_k_O(float lambda){
 
 //Extraterrestrial Irradiance (whose integration gives the solar constant)
 //tabela 3.3.2 Iqbal
-float table_given_irradiance(float lambda_microns){
+double table_given_irradiance(float lambda_microns){
 
-	float table[168][2];
+	double table[168][2];
 
 	table[0][0] = 0.250;
 	table[0][1] = 64.56;

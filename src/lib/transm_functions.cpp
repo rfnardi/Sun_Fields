@@ -12,11 +12,16 @@ float water_vapor_opt_mass(float theta_z){
 	return 1/(cos(theta_z) + 0.00548*pow(92.650 - theta_z,-1.452)) ;
 }
 
-float preciptable_water(float rel_air_humid, float temp_Kelvin){
+//Fonte original: equation 5.4.6 Iqbal
+float preciptable_water(float rel_air_humid, float temp_Kelvin, float altitude){
 
-	float partial_pressure_water = exp(26.23 - 5416/temp_Kelvin);
+	float partial_pressure_water = exp(26.23 - (5416/temp_Kelvin));
 
-	float w = 0.4930*rel_air_humid*partial_pressure_water/temp_Kelvin;
+	//Iqbal
+	//float w = (0.4930*rel_air_humid*partial_pressure_water)/temp_Kelvin;
+
+	//Leckner paper, equations 14, 16 and 20
+	float w = (rel_air_humid*partial_pressure_water*exp(-0.439*altitude))/(temp_Kelvin*461.51*0.795);
 
 	return w;
 }
@@ -172,19 +177,20 @@ float corrected_irradiance(int NDA, float lat, float local_time, float rel_air_h
 	float m_r = dry_air_opt_mass(theta_z);
 	float pressure =  pressure_given_by_altitude(altitude);
 	float m_a = m_a_calc(pressure, m_r);
-	float w = preciptable_water(rel_air_humid, temp_Kelvin);
+	float w = preciptable_water(rel_air_humid, temp_Kelvin, altitude );
 
 	float tau_lambda  = 0.0;
 	float irradiance = 0.0;
 	float total_irradiance = 0.0;
 	float lambda = 0.250;
+	float delta = 0.001;
 	while(lambda <= 25){
 
 		irradiance = table_given_irradiance(lambda);
 		tau_lambda = total_transmitance(lambda, theta_z, w, d, altitude);
-		irradiance = irradiance*tau_lambda;
+		irradiance = irradiance*tau_lambda*delta;
 		total_irradiance += irradiance;
-		lambda += 0.01;
+		lambda += delta;
 	}
 
 	total_irradiance = total_irradiance*elliptic_correction_factor(NDA);
