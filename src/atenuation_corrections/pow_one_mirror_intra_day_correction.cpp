@@ -1,6 +1,6 @@
 #include <iostream>
 #include <stdio.h>
-#include "../lib/transm_functions.cpp"
+#include "../lib/transm_functions.h"
 #include <vector>
 
 int main()

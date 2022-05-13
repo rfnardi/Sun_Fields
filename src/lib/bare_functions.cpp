@@ -2,18 +2,15 @@
 #include <cmath>
 #define J_0 1367
 #define M_PI 3.14159265358979323846
+#include "bare_functions.h"
 
-class vetor_3d {
-	public:
-	float coord[3];
-
-	vetor_3d(float v_x, float v_y, float v_z){
+	vetor_3d::vetor_3d(float v_x, float v_y, float v_z){
 		this->coord[0] = v_x;	
 		this->coord[1] = v_y;	
 		this->coord[2] = v_z;	
 	}
 	
-	float scalar_prod(vetor_3d vetor_2){
+	float vetor_3d::scalar_prod(vetor_3d vetor_2){
 		float result = 0.0;
 		for (short i=0; i<3; i++) {
 			result += this->coord[i] * vetor_2.coord[i];
@@ -21,13 +18,13 @@ class vetor_3d {
 		return result;
 	}
 
-	void reset_coord(float x, float y, float z){
+	void vetor_3d::reset_coord(float x, float y, float z){
 		this->coord[0] = x;
 		this->coord[1] = y;
 		this->coord[2] = z;
 	}
 
-	vetor_3d vector_sum(vetor_3d vetor_2, vetor_3d result){
+	vetor_3d vetor_3d::vector_sum(vetor_3d vetor_2, vetor_3d result){
 		result.coord[0] = this->coord[0] + vetor_2.coord[0];	
 		result.coord[1] = this->coord[1] + vetor_2.coord[1];	
 		result.coord[2] = this->coord[2] + vetor_2.coord[2];	
@@ -35,19 +32,18 @@ class vetor_3d {
 		return result;
 	}
 
-	void log_coords(){
+	void vetor_3d::log_coords(){
 		std::cout << "Coordenada x: "<< this->coord[0] << std::endl;
 		std::cout << "Coordenada y: "<< this->coord[1] << std::endl;
 		std::cout << "Coordenada z: "<< this->coord[2] << std::endl;
 	}
 
-	void transf_coord_from_spher_to_cart(float r, float theta_rad, float phi_rad){
+	void vetor_3d::transf_coord_from_spher_to_cart(float r, float theta_rad, float phi_rad){
 		this->coord[0] = r*sin(phi_rad)*cos(theta_rad);
 		this->coord[1] = r*sin(phi_rad)*sin(theta_rad);
 		this->coord[2] = r*cos(phi_rad);
 	}
 
-};
 
 
 int NDA_calculation(int month_day, int month){
@@ -201,6 +197,14 @@ float elliptic_correction_factor(int NDA){
 	return (1.000 + 0.033*cos(deg_to_rad(360.0*NDA/365.25)));
 }
 
+vetor_3d get_sun_position(float NDA, float lat, float hora_local, vetor_3d result){
+		float sin_Alt = sin_Alt_calculation(NDA, lat, hora_local);
+		float sin_Azim = sin_Azim_calculation(NDA, lat, hora_local);
+		result = sun_pos_in_cartesian_coord(sin_Alt, sin_Azim, result);
+
+		return result;
+	}
+
 float one_mirror_power(vetor_3d s, vetor_3d R, int NDA){
 	/* std::cout << "Coordenadas de s unitário:" << std::endl; */
 	/* s.log_coords(); */
@@ -224,11 +228,4 @@ float one_mirror_power(vetor_3d s, vetor_3d R, int NDA){
 	return power;
 }
 
-	vetor_3d get_sun_position(float NDA, float lat, float hora_local, vetor_3d result){
-		float sin_Alt = sin_Alt_calculation(NDA, lat, hora_local);
-		float sin_Azim = sin_Azim_calculation(NDA, lat, hora_local);
-		result = sun_pos_in_cartesian_coord(sin_Alt, sin_Azim, result);
-
-		return result;
-	}
 
