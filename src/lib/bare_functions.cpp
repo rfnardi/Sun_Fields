@@ -127,11 +127,9 @@ float decl_calculation(int NDA){ //a declinação mede o ângulo da linha Terra-
 	return deg_to_rad(decl);
 }
 
-
 float sin_Alt_calculation(int NDA, float lat, float local_time){
 
-	float hora_local = local_time;
-	float hor_rad = ang_hor_rad(hora_local);
+	float hor_rad = ang_hor_rad(local_time);
 
 	float lat_rad = deg_to_rad(lat);
 
@@ -144,8 +142,7 @@ float sin_Alt_calculation(int NDA, float lat, float local_time){
 
 float sin_Azim_calculation(int NDA, float lat, float local_time){
 
-	float hora_local = local_time;
-	float hor_rad = ang_hor_rad(hora_local);
+	float hor_rad = ang_hor_rad(local_time);
 
 	float lat_rad = deg_to_rad(lat);
 
@@ -178,7 +175,6 @@ vetor_3d sun_pos_in_cartesian_coord(float sin_Alt, float sin_Azim, vetor_3d resu
 	return result;
 }
 
-
 //calcula a correção na constante solar devido à variação na distância Terra-Sol ~ (d/D)^2
 float J_elliptic_correction(int NDA){ 
 	float J = J_0*(1.000 + 0.033*cos(deg_to_rad(360.0*NDA/365.25)));
@@ -194,10 +190,15 @@ float atm_cross_distance(float zenital_angle){
 	return (pow(A,2) + 2*A*R_t)/(2*R_t*cos(zenital_angle));
 }
 
-float refl_power_from_scalar_product(vetor_3d n, vetor_3d s, float J){
-	float power = 0.47*J*n.scalar_prod(s);
+float refl_power_from_scalar_product(vetor_3d n, vetor_3d s, float J_bare){
+	float power = 0.47*J_bare*n.scalar_prod(s);
 
 	return power;
+}
+
+//só retorna o fator de correção devido à excentricidade da órbita da Terra
+float elliptic_correction_factor(int NDA){ 
+	return (1.000 + 0.033*cos(deg_to_rad(360.0*NDA/365.25)));
 }
 
 float one_mirror_power(vetor_3d s, vetor_3d R, int NDA){
