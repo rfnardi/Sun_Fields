@@ -1,4 +1,3 @@
-#pragma once
 
 //extinction factor for gas mixture absorption 
 //tabela 6.13.1 Iqbal
@@ -15,3 +14,4 @@ float table_given_k_O(float lambda);
 //Extraterrestrial Irradiance (whose integration gives the solar constant)
 //tabela 3.3.2 Iqbal
 double table_given_irradiance(float lambda_microns);
+
