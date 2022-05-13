@@ -40,6 +40,13 @@ class vetor_3d {
 		std::cout << "Coordenada y: "<< this->coord[1] << std::endl;
 		std::cout << "Coordenada z: "<< this->coord[2] << std::endl;
 	}
+
+	void transf_coord_from_spher_to_cart(float r, float theta_rad, float phi_rad){
+		this->coord[0] = r*sin(phi_rad)*cos(theta_rad);
+		this->coord[1] = r*sin(phi_rad)*sin(theta_rad);
+		this->coord[2] = r*cos(phi_rad);
+	}
+
 };
 
 
@@ -120,11 +127,9 @@ float decl_calculation(int NDA){ //a declinação mede o ângulo da linha Terra-
 	return deg_to_rad(decl);
 }
 
-
 float sin_Alt_calculation(int NDA, float lat, float local_time){
 
-	float hora_local = local_time;
-	float hor_rad = ang_hor_rad(hora_local);
+	float hor_rad = ang_hor_rad(local_time);
 
 	float lat_rad = deg_to_rad(lat);
 
@@ -137,8 +142,7 @@ float sin_Alt_calculation(int NDA, float lat, float local_time){
 
 float sin_Azim_calculation(int NDA, float lat, float local_time){
 
-	float hora_local = local_time;
-	float hor_rad = ang_hor_rad(hora_local);
+	float hor_rad = ang_hor_rad(local_time);
 
 	float lat_rad = deg_to_rad(lat);
 
@@ -171,7 +175,6 @@ vetor_3d sun_pos_in_cartesian_coord(float sin_Alt, float sin_Azim, vetor_3d resu
 	return result;
 }
 
-
 //calcula a correção na constante solar devido à variação na distância Terra-Sol ~ (d/D)^2
 float J_elliptic_correction(int NDA){ 
 	float J = J_0*(1.000 + 0.033*cos(deg_to_rad(360.0*NDA/365.25)));
@@ -187,10 +190,15 @@ float atm_cross_distance(float zenital_angle){
 	return (pow(A,2) + 2*A*R_t)/(2*R_t*cos(zenital_angle));
 }
 
-float refl_power_from_scalar_product(vetor_3d n, vetor_3d s, float J){
-	float power = 0.47*J*n.scalar_prod(s);
+float refl_power_from_scalar_product(vetor_3d n, vetor_3d s, float J_bare){
+	float power = 0.47*J_bare*n.scalar_prod(s);
 
 	return power;
+}
+
+//só retorna o fator de correção devido à excentricidade da órbita da Terra
+float elliptic_correction_factor(int NDA){ 
+	return (1.000 + 0.033*cos(deg_to_rad(360.0*NDA/365.25)));
 }
 
 float one_mirror_power(vetor_3d s, vetor_3d R, int NDA){
@@ -215,4 +223,12 @@ float one_mirror_power(vetor_3d s, vetor_3d R, int NDA){
 
 	return power;
 }
+
+	vetor_3d get_sun_position(float NDA, float lat, float hora_local, vetor_3d result){
+		float sin_Alt = sin_Alt_calculation(NDA, lat, hora_local);
+		float sin_Azim = sin_Azim_calculation(NDA, lat, hora_local);
+		result = sun_pos_in_cartesian_coord(sin_Alt, sin_Azim, result);
+
+		return result;
+	}
 

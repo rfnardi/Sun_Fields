@@ -39,9 +39,9 @@
 			  ]
 				\def\r{2}
 
-				\draw[->,>= stealth, dashed] (0,-\r,0)--(0,\r+1,0) node[pos=1, left] {$Leste$};
-				\draw[->,>= stealth, dashed] (-\r,0,0)--(\r+1,0,0) node[pos=1, right] {$Norte$};
-				\draw[->,>= stealth, dashed] (0,0,0)--(0,0,\r+1) node[pos=1, above] {$Zênite$};
+				\draw[->,>= stealth, dashed] (0,-\r,0)--(0,\r+1,0) node[pos=1, left] {Leste};
+				\draw[->,>= stealth, dashed] (-\r,0,0)--(\r+1,0,0) node[pos=1, right] {Norte};
+				\draw[->,>= stealth, dashed] (0,0,0)--(0,0,\r+1) node[pos=1, above] {Zênite};
 
 				\addplot3+[domain=pi/4:pi,samples=200,samples y=0,no marks, black, thick]
 					({\r*cos(deg(x))}, {\r*sin(deg(x))}, {0});
@@ -83,5 +83,26 @@
 	hora local e também sua dependência com a latitude ($\phi$). Para isso
 	precisamos expressar como os ângulos $\color{red}{z}$ ({\bf distância zenital}) e
 	$\color{blue}{A}$ ({\bf azimute}) dependem dessas variáveis.
+
+	Ou seja,
+
+	\begin{equation}
+		\hat{s} = (s_x({\color{red}{z}},{\color{blue}{A}}),s_y({\color{red}{z}},{\color{blue}{A}}),s_z({\color{red}{z}},{\color{blue}{A}}))
+	\end{equation}
+
+	por sua vez,
+	\begin{eqnarray}
+		{\color{red}{z}}&=&{\color{red}{z}}(NDA,\phi,\text{hora local})\\
+		{\color{blue}{A}}&=&{\color{blue}{A}}(NDA,\phi,\text{hora local})
+	\end{eqnarray}
+
+	Logo, em última instância queremos saber
+
+	\begin{multline}
+		\hat{s} = s_x({\color{red}{z}}(NDA,\phi,H),{\color{blue}{A}}(NDA,\phi,H))\hat{\imath} \\
+		+ s_y({\color{red}{z}}(NDA,\phi,H),{\color{blue}{A}}(NDA,\phi,H))\hat{\jmath} \\
+		+ s_z({\color{red}{z}}(NDA,\phi,H),{\color{blue}{A}}(NDA,\phi,H))\hat{k}
+	\end{multline}
+
 	
 \end{document}

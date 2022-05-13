@@ -1,0 +1,62 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=1.5cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,dsfont,mathtools}
+\usepackage[brazilian]{babel} 
+
+\usepackage{tikz, pgfplots} 
+\usepackage{tkz-fct, tkz-base, tkz-euclide} 
+\pgfplotsset{width=10cm,compat=1.17}
+
+
+\begin{document}
+
+\bigskip
+\bigskip
+\bigskip
+
+\begin{figure}[!htb]
+	\centering 
+	\begin{tikzpicture}
+		\begin{axis}[
+			height=16cm, 
+			width=16cm, 
+			grid=both, 
+			grid style={line width=.1pt, draw=gray!20},
+			major grid style={line width=.2pt,draw=gray!50}, 
+			minor tick num=4, 
+			xlabel={array size}, 
+			ylabel={Power ($W$)}, 
+			title={Potência refletida por malha ao longo da direção leste-oeste}]
+			\addplot[mark size=0.5pt, color=red] table[x=array_size, y=power, col sep=semicolon] {../../../data/bare_data/pow_dep_array_size.dat};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Potência refletida por uma malha posicionada $10m$ ao sul com número variável de espelhos} 
+\end{figure}
+
+
+\begin{figure}[!htb]
+	\centering 
+	\begin{tikzpicture}
+		\begin{axis}[
+			height=16cm, 
+			width=16cm, 
+			grid=both, 
+			grid style={line width=.1pt, draw=gray!20},
+			major grid style={line width=.2pt,draw=gray!50}, 
+			minor tick num=4, 
+			xlabel={array size}, 
+			ylabel={Power ($W$)}, 
+			title={Incremento de potência refletida por uma malha situada ao longo da direção leste-oeste}]
+			\addplot[mark size=0.5pt, color=blue] table[x=array_size, y=delta, col sep=semicolon] {../../../data/bare_data/pow_dep_array_size.dat};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Incremento de potência refletida por uma malha posicionada $10m$ ao sul variando com número de espelhos} 
+\end{figure}
+
+
+
+\end{document}

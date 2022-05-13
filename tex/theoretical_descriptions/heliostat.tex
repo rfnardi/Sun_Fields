@@ -1,0 +1,182 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=1.5cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,dsfont,mathtools}
+\usepackage{cancel}
+\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{bookmark}
+\usepackage{verbatim}
+\onehalfspacing
+\usepackage[brazilian]{babel}
+\usepackage{tikz, pgfplots}
+\usepackage{tikz-3dplot}
+\usepackage{tkz-fct, tkz-base, tkz-euclide} %tkz-fct chama gnuplot --> precisa compilar com a opção -shell-escape depois de pdflatex
+\usepackage{animate}
+\pgfplotsset{width=10cm,compat=1.18}
+\usetikzlibrary{calc,angles,quotes,intersections}
+\usetikzlibrary{decorations.pathmorphing}
+\DeclareMathOperator{\sen}{sen}
+
+\begin{document}
+
+\begin{center} {\bf \Large Movimentos do heliostato} \end{center}
+
+	\begin{figure}[!ht]
+		\centering
+		\begin{animateinline}[poster=first,controls={play,stop,step}]{8}
+			\multiframe{50}{ri=0+2} {
+			\begin{tikzpicture}[scale=1.3]
+				% \useasboundingbox (-1.6, 0) rectangle (8, 8);
+				\begin{axis}[
+					view={-20}{-20}, % {angulo azimutal}{angulo zenital}
+					zmax=3, 
+					xmax=3, 
+					ymax=3,
+					% height=10cm,
+					xtick=\empty, 
+					ytick=\empty, 
+					ztick=\empty,
+					clip=false, 
+					hide axis 
+					]
+					\def\r{1}
+
+					% DISCO (ENGRENAGEM) NO EIXO VERTICAL
+					\addplot3+[domain=pi:2*pi,samples=200,samples y=0,no marks, black, fill=gray!50]
+						({\r*cos(deg(x))}, {\r*sin(deg(x))}, {0});
+
+					%EIXO VERTICAL
+					\def\altEixo{2}
+					\draw[very thick] (0,0,-0.8)--(0,0,\altEixo) ;
+
+					% DISCO (ENGRENAGEM) NO EIXO VERTICAL
+					\addplot3+[domain=0:pi,samples=200,samples y=0,no marks, black, fill=gray!50]
+						({\r*cos(deg(x))}, {\r*sin(deg(x))}, {0});
+
+					\draw[->, >=stealth, dashed, very thin] (0,0,\altEixo)--(0,0,\altEixo + 1.5) ;
+
+					%"GARFO"
+					\def\altTotal{3.5}
+					\FPeval\angPhi{(\ri)*pi/180}
+					\FPeval\senPhi{sin(\angPhi)}
+					\FPeval\cosPhi{cos(\angPhi)}
+					\draw[very thick] (-\cosPhi,\senPhi,\altEixo)--(\cosPhi,-\senPhi,\altEixo) ;
+					\draw[very thick] (-\cosPhi,\senPhi,\altEixo)--(-\cosPhi,\senPhi,\altTotal) ;
+					\draw[very thick] (\cosPhi,-\senPhi,\altEixo)--(\cosPhi,-\senPhi,\altTotal) ;
+
+					% EIXO DE ROTAÇÃO HORIZONTAL
+					\draw[thick] (-\cosPhi,\senPhi,\altTotal)--(\cosPhi,-\senPhi,\altTotal) ;
+
+					\FPeval\angTheta{0+20*pi/180}
+					\FPeval\senTheta{sin(\angTheta)}
+					\FPeval\cosTheta{cos(\angTheta)}
+
+
+					%					(y   , x  , z    )
+					\coordinate (A) at (-0.95*\cosPhi +\senPhi*1.5*\cosTheta,1.5*\cosTheta*\cosPhi +0.95*\senPhi,\altTotal - 1.5*\senTheta);
+					\coordinate (B) at (-0.95*\cosPhi -\senPhi*1.5*\cosTheta,-1.5*\cosTheta*\cosPhi +0.95*\senPhi,\altTotal + 1.5*\senTheta);
+					\coordinate (C) at (0.95*\cosPhi -\senPhi*1.5*\cosTheta,-1.5*\cosTheta*\cosPhi - 0.95*\senPhi,\altTotal + 1.5*\senTheta);
+					\coordinate (D) at (0.95*\cosPhi +\senPhi*1.5*\cosTheta,1.5*\cosTheta*\cosPhi - 0.95*\senPhi,\altTotal - 1.5*\senTheta);
+
+					\draw[thin, fill=blue!10] (A)--(B)--(C)--(D)--cycle;
+
+					% EIXOS HORIZONTAIS
+					\draw[->, >=stealth, dashed, very thin, color=red] (-2,0,0)--(2,0,0) ;
+					\draw[->, >=stealth, dashed, very thin, color=blue] (0,-2,0)--(0,2,0) ;
+
+					% EIXO VERTICAL (PARTE ACIMA DO ESPELHO)
+					\draw[->, >=stealth, dashed, very thin] (0,0,\altEixo+1.5)--(0,0,5) ;
+
+				\end{axis}
+			\end{tikzpicture} }
+		\end{animateinline}
+		\caption{Heliostato --- Movimento no eixo vertical}%
+	\end{figure}
+
+
+	\begin{figure}[!ht]
+		\centering
+		\begin{animateinline}[poster=first,controls={play,stop,step}]{8}
+			\multiframe{20}{ri=0+2}
+			{
+				\begin{tikzpicture}[transform shape, scale=1.3]
+				% \useasboundingbox (-8, -8) rectangle (8, 8); %not working
+					\begin{axis}[view={-20}{-20}, % {angulo azimutal}{angulo zenital}
+						zmax=3,
+						xmax=3,
+						ymax=3,
+						% height=10cm,
+						xtick=\empty,
+						ytick=\empty,
+						ztick=\empty,
+						clip=false,
+						hide axis
+						]
+						\def\r{1}
+
+						% DISCO (ENGRENAGEM) NO EIXO VERTICAL
+						\addplot3+[domain=pi:2*pi,samples=200,samples y=0,no marks, black, fill=gray!50]
+							({\r*cos(deg(x))}, {\r*sin(deg(x))}, {0});
+
+						%LIMITES DO DESENHO 
+						\draw[thin, dashed] (0,0,0)--(0,0,5);
+						\draw[thin, dashed] (-2,0,0)--(2,0,0);
+
+						%EIXO VERTICAL
+						\def\altEixo{2}
+						\draw[very thick] (0,0,-0.8)--(0,0,\altEixo);
+
+						% DISCO (ENGRENAGEM) NO EIXO VERTICAL
+						\addplot3+[domain=0:pi,samples=200,samples y=0,no marks, black, fill=gray!50]
+							({\r*cos(deg(x))}, {\r*sin(deg(x))}, {0});
+
+						%"GARFO"
+						\def\altTotal{3.5}
+						\draw[very thick] (-1,0,\altEixo)--(1,0,\altEixo) ;
+						\draw[very thick] (-1,0,\altEixo)--(-1,0,\altTotal);
+						\draw[very thick] (1,0,\altEixo)--(1,0,\altTotal);
+
+						% EIXO VERTICAL SOB O ESPELHO
+						\draw[->, >=stealth, dashed, very thin] (0,0,\altEixo)--(0,0,\altEixo + 1.5) ;
+
+						% EIXO DE ROTAÇÃO HORIZONTAL
+						\draw[thick] (-1,0,\altTotal)--(1,0,\altTotal) ;
+
+						\FPeval\angTheta{0+\ri*pi/180}
+						\FPeval\senTheta{sin(\angTheta)}
+						\FPeval\cosTheta{cos(\angTheta)}
+
+						%					(y   , x  , z    )
+						\coordinate (A) at (-0.95 ,1.5*\cosTheta,\altTotal - 1.5*\senTheta);
+						\coordinate (B) at (-0.95 ,-1.5*\cosTheta,\altTotal + 1.5*\senTheta);
+						\coordinate (C) at (0.95 ,-1.5*\cosTheta,\altTotal + 1.5*\senTheta);
+						\coordinate (D) at (0.95 ,1.5*\cosTheta,\altTotal - 1.5*\senTheta);
+
+						\draw[thin, fill=blue!10] (A)--(B)--(C)--(D)--cycle;
+
+						% DISCO (ENGRENAGEM) NO EIXO HORIZONTAL
+						\def\raioSup{0.6}
+						\addplot3+[domain=0:2*pi,samples=200,samples y=0,no marks, black, fill=gray!50]
+							({1.2}, {\raioSup*sin(deg(x))}, {\raioSup*cos(deg(x)) + \altTotal} );
+
+						% EIXO DE ROTAÇÃO HORIZONTAL (PARTE VISÍVEL)
+						\draw[thick] (1.2,0,\altTotal)--(1.3,0,\altTotal) ;
+
+						% EIXOS HORIZONTAIS
+						\draw[->, >=stealth, dashed, very thin, color=red] (-2,0,0)--(2,0,0) ;
+						\draw[->, >=stealth, dashed, very thin, color=blue] (0,-2,0)--(0,2,0) ;
+
+						%EIXO VERTICAL SOBRE O ESPELHO
+						\draw[->, >=stealth, dashed, very thin] (0,0,\altEixo+1.5)--(0,0,5) ;
+
+					\end{axis}
+				\end{tikzpicture}
+			}
+		\end{animateinline}
+		\caption{Heliostato --- movimento do eixo horizontal}%
+		\end{figure}
+
+\end{document}
