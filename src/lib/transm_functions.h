@@ -1,4 +1,3 @@
-#pragma once
 
 float dry_air_opt_mass(float theta_z);
 

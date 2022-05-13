@@ -1,5 +1,7 @@
 #include <iostream>
 #include <stdio.h>
+#include "../lib/bare_functions.h"
+#include "../lib/table_functions.h"
 #include "../lib/transm_functions.h"
 #include <vector>
 

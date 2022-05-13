@@ -1,4 +1,3 @@
-
 class vetor_3d {
 	public:
 	float coord[3];
