@@ -1,3 +1,4 @@
+#include "bare_functions.h"
 
 float dry_air_opt_mass(float theta_z);
 

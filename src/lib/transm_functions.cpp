@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <cmath>
 #include "./table_functions.h"
-#include "./bare_functions.h"
 
 float dry_air_opt_mass(float theta_z){
 	return 1/(cos(theta_z) + 0.15*pow(93.885 - theta_z,-1.253)) ;
