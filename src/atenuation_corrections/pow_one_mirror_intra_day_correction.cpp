@@ -1,6 +1,5 @@
 #include <iostream>
 #include <stdio.h>
-#include "../lib/bare_functions.h"
 #include "../lib/table_functions.h"
 #include "../lib/transm_functions.h"
 #include <vector>
@@ -46,7 +45,6 @@ int main()
 		/* 	<< asin(sin_Azim) << ";" */ 
 		/* 	<< sin_Alt << std::endl; */
 		/* } */
-
 	}
 
 	return 0;

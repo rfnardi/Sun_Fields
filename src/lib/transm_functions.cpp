@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <cmath>
+#include "./bare_functions.h"
 #include "./table_functions.h"
 
 float dry_air_opt_mass(float theta_z){
