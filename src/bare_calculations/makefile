@@ -1,12 +1,12 @@
 CC = g++
-LIB = ../lib/bare_functions.cpp ../lib/bare_functions.h
+LIB = ../lib/bare_functions.cpp 
 LIBOBJ = bare_functions.o
-
-pow_dep_array_size.bin : pow_dep_array_size.o $(LIBOBJ)
-	$(CC) pow_dep_array_size.o $(LIBOBJ) -o pow_dep_array_size.bin
 
 $(LIBOBJ) : $(LIB)
 	$(CC) -c $(LIB) 
+
+pow_dep_array_size.bin : pow_dep_array_size.o $(LIBOBJ)
+	$(CC) pow_dep_array_size.o $(LIBOBJ) -o pow_dep_array_size.bin
 
 pow_dep_array_size.o : pow_dep_array_size.cpp $(LIB)
 	$(CC) -c pow_dep_array_size.cpp $(LIB) 

@@ -1,7 +1,7 @@
 CC = g++
-LIB1 = ../lib/bare_functions.cpp ../lib/bare_functions.h
-LIB2 = $(LIB1) ../lib/transm_functions.cpp ../lib/transm_functions.h
-LIBTABLE = ../lib/table_functions.cpp ../lib/table_functions.h
+LIB1 = ../lib/bare_functions.cpp
+LIB2 = $(LIB1) ../lib/transm_functions.cpp
+LIBTABLE = ../lib/table_functions.cpp
 LIB3 = $(LIB2) $(LIBTABLE)
 LIBOBJ = bare_functions.o transm_functions.o table_functions.o
 
