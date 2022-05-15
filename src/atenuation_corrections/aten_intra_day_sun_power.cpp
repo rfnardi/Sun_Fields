@@ -3,7 +3,6 @@
 #include "../lib/table_functions.h"
 #include "../lib/transm_functions.h"
 #include <vector>
-#include <cmath>
 
 int main()
 {
@@ -24,9 +23,6 @@ int main()
 	float temp_Kelvin = 393.0;
 	float mirror_area = 1.0;
 
-	/* log_entrada(NDA, lat, hora_local); */
-
-	std::cout << "HORA_LOCAL" << ";" << "J" << ";"<< "POWER" << ";" << "Reflec_Percent" << ";" << "ZEN" << ";" << "AZIM" << ";" << "S_z" << std::endl;
 	vetor_3d s(0,0,0);
 	for (hora_local = 6.0; hora_local < 18; hora_local += 0.08){
 
@@ -35,20 +31,7 @@ int main()
 		s = sun_pos_in_cartesian_coord(sin_Alt, sin_Azim, s);
 		J = corrected_irradiance(NDA, lat, hora_local,  rel_air_humid, altitude, d, temp_Kelvin);
 
-		/* std::cout <<"Hora local: " << hora_local << " ; S_z: " << s.coord[2] << " ; J: " << J << std::endl; */
-
-		power = one_mirror_corrected_power(s, R, J, mirror_area);
-
-		if (sin_Alt > 0.0){
-			std::cout 
-			<< hora_local << ";" 
-			<< J << ";" 
-			<< power << ";" 
-			<< (100*power)/J << ";" 
-			<< acos(sin_Alt) << ";" 
-			<< asin(sin_Azim) << ";" 
-			<< s.coord[2] << std::endl;
-		}
+		std::cout <<"Hora local: " << hora_local << " ; S_z: " << s.coord[2] << " ; J: " << J << std::endl;
 	}
 
 	return 0;

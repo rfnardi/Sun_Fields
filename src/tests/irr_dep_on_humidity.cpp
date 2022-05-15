@@ -27,6 +27,5 @@ int main() {
 		std::cout << "Umidade relativa do ar: " << rel_air_humid << " ; J: "<< J << std::endl;
 	}
 
-
 	return 0;
 }
