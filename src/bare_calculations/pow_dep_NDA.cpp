@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "../lib/bare_functions.h"
 #include <vector>
+#include <cmath>
 
 int main()
 {

@@ -1,6 +1,11 @@
 CC = g++
 LIB = ../lib/bare_functions.cpp 
 LIBOBJ = bare_functions.o
+FILES1 = pow_dep_array_size.bin pow_dep_focal_z_pos.bin pow_dep_mirror_angular_pos.bin
+FILES2 = $(FILES1) pow_dep_mirror_pos.bin pow_dep_NDA.bin pow_one_mirror_intra_day.bin
+MAIN_FILES = $(FILES2)
+
+all : $(MAIN_FILES)
 
 $(LIBOBJ) : $(LIB)
 	$(CC) -c $(LIB) 
