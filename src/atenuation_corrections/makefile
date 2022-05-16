@@ -6,8 +6,9 @@ LIB3 = $(LIB2) $(LIBTABLE)
 LIBOBJ = bare_functions.o transm_functions.o table_functions.o
 FILES1 = corrected_one_mirror_intra_day.bin corrected_intra_day_sun_power.bin
 FILES2 = $(FILES1) corrected_pow_dep_on_NDA.bin corrected_pow_dep_on_array_size.bin
-FILES3 = $(FILES2) corrected_pow_dep_on_angular_pos.bin
-MAIN_FILES = $(FILES3)
+FILES3 = $(FILES2) corrected_pow_dep_on_angular_pos.bin corrected_J_dep_on_d.bin
+FILES4 = $(FILES3) corrected_J_dep_on_rel_hum.bin
+MAIN_FILES = $(FILES4)
 
 all : $(MAIN_FILES)
 
@@ -35,12 +36,23 @@ corrected_pow_dep_on_array_size.bin : corrected_pow_dep_on_array_size.o $(LIBOBJ
 corrected_pow_dep_on_array_size.o : corrected_pow_dep_on_array_size.cpp $(LIB3) 
 	$(CC) -c corrected_pow_dep_on_array_size.cpp $(LIB3)
 
-
 corrected_pow_dep_on_angular_pos.bin : corrected_pow_dep_on_angular_pos.o $(LIBOBJ) 
 	$(CC) corrected_pow_dep_on_angular_pos.o $(LIBOBJ) -o corrected_pow_dep_on_angular_pos.bin
 
 corrected_pow_dep_on_angular_pos.o : corrected_pow_dep_on_angular_pos.cpp $(LIB3) 
 	$(CC) -c corrected_pow_dep_on_angular_pos.cpp $(LIB3)
+
+corrected_J_dep_on_d.bin : corrected_J_dep_on_d.o $(LIBOBJ) 
+	$(CC) corrected_J_dep_on_d.o $(LIBOBJ) -o corrected_J_dep_on_d.bin
+
+corrected_J_dep_on_d.o : corrected_J_dep_on_d.cpp $(LIB3) 
+	$(CC) -c corrected_J_dep_on_d.cpp $(LIB3)
+
+corrected_J_dep_on_rel_hum.bin : corrected_J_dep_on_rel_hum.o $(LIBOBJ) 
+	$(CC) corrected_J_dep_on_rel_hum.o $(LIBOBJ) -o corrected_J_dep_on_rel_hum.bin
+
+corrected_J_dep_on_rel_hum.o : corrected_J_dep_on_rel_hum.cpp $(LIB3) 
+	$(CC) -c corrected_J_dep_on_rel_hum.cpp $(LIB3)
 
 bare_functions.o : $(LIB1)
 	$(CC) -c $(LIB1)

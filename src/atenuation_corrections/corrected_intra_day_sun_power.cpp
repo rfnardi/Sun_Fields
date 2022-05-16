@@ -17,7 +17,7 @@ int main()
 	float hora_local;
 	float J = 0.0;
 
-	float rel_air_humid = 0.001; 
+	float rel_air_humid = 0.8; 
 	float altitude = 70; 
 	float d = 100; 
 	float temp_Kelvin = 393.0;
