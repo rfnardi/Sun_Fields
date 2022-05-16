@@ -47,4 +47,4 @@ pow_one_mirror_intra_day.o : pow_one_mirror_intra_day.cpp $(LIB)
 	$(CC) -c pow_one_mirror_intra_day.cpp $(LIB)
 
 clean:
-	rm *.o ../lib/*.gch
+	rm *.o 
