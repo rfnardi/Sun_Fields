@@ -21,7 +21,12 @@ float preciptable_water(float rel_air_humid, float temp_Kelvin, float altitude){
 	//float w = (0.4930*rel_air_humid*partial_pressure_water)/temp_Kelvin;
 
 	//Leckner paper, equations 14, 16 and 20
-	float w = (rel_air_humid*partial_pressure_water*exp(-0.439*altitude))/(temp_Kelvin*461.51*0.795);
+	float R = 461.51;
+	float rho_w0 = (rel_air_humid*partial_pressure_water)/(R*temp_Kelvin);
+	// float rho_w(h) = rho_w0*exp(-0.439*altitude); 
+	// w é a integral de rho_w(h') dh' de h até \infty
+	// cujo resultado é:
+	float w = 2.28*rho_w0*exp(-0.439*altitude);
 
 	return w;
 }

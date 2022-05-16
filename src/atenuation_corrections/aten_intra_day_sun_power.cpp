@@ -31,7 +31,9 @@ int main()
 		s = sun_pos_in_cartesian_coord(sin_Alt, sin_Azim, s);
 		J = corrected_irradiance(NDA, lat, hora_local,  rel_air_humid, altitude, d, temp_Kelvin);
 
-		std::cout <<"Hora local: " << hora_local << " ; S_z: " << s.coord[2] << " ; J: " << J << std::endl;
+		if (s.coord[2]>0){
+			std::cout <<"Hora local: " << hora_local << " ; S_z: " << s.coord[2] << " ; J: " << J << std::endl;
+		}
 	}
 
 	return 0;

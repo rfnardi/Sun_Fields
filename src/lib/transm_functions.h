@@ -47,4 +47,3 @@ float corrected_irradiance(int NDA, float lat, float local_time, float rel_air_h
 //localizado na posição R
 //quando a posição do sol for s
 float one_mirror_corrected_power(vetor_3d s, vetor_3d R, float J, float mirror_area);
-
