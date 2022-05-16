@@ -27,6 +27,8 @@ vetor_3d get_normal_vector(vetor_3d s, vetor_3d r, vetor_3d result);
 
 vetor_3d get_unitary_vector(vetor_3d v, vetor_3d result);
 
+float rad_to_deg(float rad);
+
 float deg_to_rad(float deg);
 
 float ang_hor_rad(float hora_local);

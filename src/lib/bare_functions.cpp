@@ -106,8 +106,12 @@ vetor_3d get_unitary_vector(vetor_3d v, vetor_3d result){
 	return result;
 }
 
+float rad_to_deg(float rad){ //transforma radianos em graus 
+	return (360.0*rad)/(2*M_PI);
+}
+
 float deg_to_rad(float deg){ //transforma graus em radianos
-	return 2*M_PI*deg/360.0;
+	return (2*M_PI*deg)/(360.0);
 }
 
 float ang_hor_rad(float hora_local){
