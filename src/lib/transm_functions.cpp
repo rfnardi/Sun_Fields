@@ -104,7 +104,7 @@ float water_vapor_absorp_transm_lambda(float lambda, float theta_z, float altitu
 	return tau_absorp_lambda;
 }
 
-float ozone_absorp_transm_lambda(float lambda, float theta_z, float altitude, float w){
+float ozone_absorp_transm_lambda(float lambda, float theta_z){
 
 	float m_r = dry_air_opt_mass(theta_z);
 
@@ -123,7 +123,7 @@ float ozone_absorp_transm_lambda(float lambda, float theta_z, float altitude, fl
 float absorp_transm_lambda(float lambda, float theta_z, float w, float d, float altitude){
 
 
-	float ozone_transm = ozone_absorp_transm_lambda(lambda, theta_z, altitude, w);
+	float ozone_transm = ozone_absorp_transm_lambda(lambda, theta_z);
 	float wv_aborp_transm = water_vapor_absorp_transm_lambda(lambda, theta_z, altitude, w);
 	float gas_mixt_transm = gas_mix_absorp_transm_lambda(lambda, theta_z, altitude);
 
