@@ -9,7 +9,7 @@ float dry_air_opt_mass(float theta_z){
 }
 
 float water_vapor_opt_mass(float theta_z){
-	return 1/(cos(theta_z) + 0.00548*pow(92.650 - theta_z,-1.452)) ;
+	return 1/(cos(theta_z) + 0.00548*pow(92.650 - theta_z,0-1.452)) ;
 }
 
 //Fonte original: equation 5.4.6 Iqbal
@@ -26,31 +26,31 @@ float preciptable_water(float rel_air_humid, float temp_Kelvin, float altitude){
 	// float rho_w(h) = rho_w0*exp(-0.439*altitude); 
 	// w é a integral de rho_w(h') dh' de h até \infty
 	// cujo resultado é:
-	float w = 2.28*rho_w0*exp(-0.439*altitude);
+	float w = 2.28*rho_w0*exp(0-0.439*altitude);
 
 	return w;
 }
 
 float pressure_given_by_altitude(float altitude){
 	float sea_level_pressure = 1013.25; //pressão em milibars
-	return sea_level_pressure*exp(-0.0001184*altitude);//altitude em metros
+	return sea_level_pressure*exp(0-0.0001184*altitude);//altitude em metros
 }
 
 //equation 5.7.3 Iqbal
 float m_a_calc(float pressure, float m_r){
-	return pressure*m_r/1013.25;
+	return (pressure*m_r)/1013.25;
 }
 
 float k_Rayleigh_dry_air_scattering_lambda(float lambda){//lambda aqui sempre está medido em micrômetros
-	return 0.0087352*pow(lambda,-4.08);
+	return 0.0087352*pow(lambda,0-4.08);
 }
 
 float k_Mie_water_droplets_scattering_lambda(float lambda){
-	return 0.008635*pow(lambda,-2);
+	return 0.008635*pow(lambda,0-2);
 }
 
 float k_Mie_dust_scattering_lambda(float lambda){
-	return 0.08128*pow(lambda,-0.75);
+	return 0.08128*pow(lambda,0-0.75);
 }
 
 //d: amount of dust particles in a cm^3 (200 is clean air; 800 is very dirty air)
@@ -83,7 +83,7 @@ float gas_mix_absorp_transm_lambda(float lambda, float theta_z, float altitude){
 	}
 	else { k_g = 0.0; }
 
-	float tau_absorp_lambda = exp(0-(1.41*k_g*m_a)*pow(1+(118.93*k_g*m_a), -0.45));
+	float tau_absorp_lambda = exp(0-(1.41*k_g*m_a)*pow(1+(118.93*k_g*m_a), 0-0.45));
 
 	return tau_absorp_lambda;
 }
