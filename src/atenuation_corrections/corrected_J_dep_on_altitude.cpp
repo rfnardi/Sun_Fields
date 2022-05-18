@@ -14,11 +14,10 @@ int main()
 	float J0 = corrected_irradiance(NDA, lat, hora_local,  rel_air_humid, altitude, d, temp_Kelvin);
 
 	std::cout <<"altitude;J;Percent_transm" << std::endl;
-	for (altitude = 0.0; altitude <= 500; altitude += 1.0){
+	for (altitude = 0.0; altitude <= 1000; altitude += 1.0){
 		J = corrected_irradiance(NDA, lat, hora_local,  rel_air_humid, altitude, d, temp_Kelvin);
 		std::cout << altitude << ";" << J  << ";" << (100*J)/(J0) << std::endl;
 	}
 
 	return 0;
 }
-

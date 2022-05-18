@@ -8,7 +8,7 @@ int main()
 	float hora_local = 12.0;
 	float J = 0.0;
 	float rel_air_humid = 0.01; 
-	float altitude = 0.0; 
+	float altitude = 700.0; 
 	float d = 200.0; 
 	float temp_Kelvin = 393.0;
 	float J0 = corrected_irradiance(NDA, lat, hora_local,  rel_air_humid, altitude, d, temp_Kelvin);

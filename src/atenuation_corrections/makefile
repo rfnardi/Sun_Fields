@@ -1,4 +1,5 @@
 CCX = g++
+FLAGS = -O3 -Wall
 LIB = ../lib/*.cpp
 LIBOBJ = bare_functions.o transm_functions.o table_functions.o
 SRC = $(wildcard *.cpp)
@@ -9,22 +10,22 @@ FILENAMES = $(SRC:.cpp='')
 all : MAIN_BIN MAIN_OBJ $(LIBOBJ)
 
 bare_functions.o : $(LIB)
-	$(CCX) -c '../lib/'$*'.cpp' -o $*'.o'
+	$(CCX) $(FLAGS) -c '../lib/'$*'.cpp' -o $*'.o'
 
 transm_functions.o : $(LIB)
-	$(CCX) -c '../lib/'$*'.cpp' -o $*'.o'
+	$(CCX) $(FLAGS) -c '../lib/'$*'.cpp' -o $*'.o'
 
 table_functions.o :  $(LIB) 
-	$(CCX) -c '../lib/'$*'.cpp' -o $*'.o'
+	$(CCX) $(FLAGS) -c '../lib/'$*'.cpp' -o $*'.o'
 
 MAIN_OBJ : $(LIB) $(SRC)
 	for file in $(SRC); do\
-		$(CCX) -c $$file ;\
+		$(CCX) $(FLAGS) -c $$file ;\
 	done
 
 MAIN_BIN : $(OBJ_FILES) $(LIBOBJ)
 	for file in $(FILENAMES); do\
-		$(CCX) $$file'.o' $(LIBOBJ) -o $$file'.bin';\
+		$(CCX) $(FLAGS) $$file'.o' $(LIBOBJ) -o $$file'.bin';\
 	done
 
 clean :

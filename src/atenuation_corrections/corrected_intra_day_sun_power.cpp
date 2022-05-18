@@ -13,7 +13,6 @@ int main()
 	vetor_3d R(0,-10,0); 
 
 	float sin_Alt, sin_Azim;
-	float power = 0.0;
 	float hora_local;
 	float J = 0.0;
 
@@ -21,7 +20,6 @@ int main()
 	float altitude = 70; 
 	float d = 100; 
 	float temp_Kelvin = 393.0;
-	float mirror_area = 1.0;
 
 	vetor_3d s(0,0,0);
 	for (hora_local = 6.0; hora_local < 18; hora_local += 0.08){
