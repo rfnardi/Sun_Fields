@@ -621,7 +621,7 @@ double table_given_irradiance(float lambda_microns){
 	table[101][0] = 0.900;
 	table[101][1] = 913.00;
 	table[102][0] = 0.910;
-	table[102][1] = 876,00;
+	table[102][1] = 876.00;
 	table[103][0] = 0.920;
 	table[103][1] = 841.00;
 	table[104][0] = 0.930;

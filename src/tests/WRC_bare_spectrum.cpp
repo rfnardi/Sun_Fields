@@ -1,4 +1,6 @@
-# include "../lib/transm_functions.cpp"
+#include <iostream>
+# include "../lib/transm_functions.h"
+# include "../lib/table_functions.h"
 
 
 //integração do espectro pelo método de barras

@@ -5,7 +5,7 @@ float dry_air_opt_mass(float theta_z);
 float water_vapor_opt_mass(float theta_z);
 
 //Fonte original: equation 5.4.6 Iqbal
-float preciptable_water(float rel_air_humid, float temp_Kelvin, float altitude);
+float preciptable_water(float rel_air_humid, float temp_Kelvin);
 
 float pressure_given_by_altitude(float altitude);
 
@@ -26,7 +26,7 @@ float gas_mix_absorp_transm_lambda(float lambda, float theta_z, float altitude);
 
 float water_vapor_absorp_transm_lambda(float lambda, float theta_z, float altitude, float w);
 
-float ozone_absorp_transm_lambda(float lambda, float theta_z, float altitude, float w);
+float ozone_absorp_transm_lambda(float lambda, float theta_z);
 
 float absorp_transm_lambda(float lambda, float theta_z, float w, float d, float altitude);
 
