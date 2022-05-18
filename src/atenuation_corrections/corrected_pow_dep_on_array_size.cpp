@@ -9,8 +9,6 @@ int main()
 	float lat = -18.9051; //Jaguaré em graus
 	/* float lat = -14.7973; //Ilhéus em graus */
 
-	float sin_Alt = 0.0;
-	float sin_Azim = 0.0;
 	float power = 0.0;
 	float hora_local = 12.0;
 
@@ -46,7 +44,7 @@ int main()
 	float delta = 0.0;
 	power = one_mirror_corrected_power(s, malha[0], J, mirror_area);
 	std::cout << "array_size" << ";" << "power" << ";" << "delta" << std::endl;
-	for(int i = 2; i < malha.size(); i+=2){
+	for(int i = 2; i < (int) malha.size(); i+=2){
 		delta = 0.0;
 		delta = one_mirror_corrected_power(s, malha[i], J, mirror_area) + one_mirror_corrected_power(s, malha[i-1], J, mirror_area);
 		power += delta;

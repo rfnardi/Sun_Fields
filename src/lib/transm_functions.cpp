@@ -13,20 +13,21 @@ float water_vapor_opt_mass(float theta_z){
 }
 
 //Fonte original: equation 5.4.6 Iqbal
-float preciptable_water(float rel_air_humid, float temp_Kelvin, float altitude){
+float preciptable_water(float rel_air_humid, float temp_Kelvin){
 
 	float partial_pressure_water = exp(26.23 - (5416/temp_Kelvin));
 
-	//Iqbal
-	//float w = (0.4930*rel_air_humid*partial_pressure_water)/temp_Kelvin;
+	//Iqbal (erro do paper de Leckner foi carregado para o Iqbal. Valor corrigido para o fator: 0.00493 e não 0.493)
+	//float w = (0.4930*rel_air_humid*partial_pressure_water)/temp_Kelvin; <----- ERRADO
+	float w = (0.004930*rel_air_humid*partial_pressure_water)/temp_Kelvin; 
 
 	//Leckner paper, equations 14, 16 and 20
-	float R = 461.51;
-	float rho_w0 = (rel_air_humid*partial_pressure_water)/(R*temp_Kelvin);
+	//float R = 461.51;
+	//float rho_w0 = (rel_air_humid*partial_pressure_water)/(R*temp_Kelvin);
 	// float rho_w(h) = rho_w0*exp(-0.439*altitude); 
 	// w é a integral de rho_w(h') dh' de h até \infty
 	// cujo resultado é:
-	float w = 2.28*rho_w0*exp(0-0.439*altitude);
+	//float w = 2.28*rho_w0*exp(0-0.439*altitude);
 
 	return w;
 }
@@ -182,7 +183,7 @@ float corrected_irradiance(int NDA, float lat, float local_time, float rel_air_h
 	float m_r = dry_air_opt_mass(theta_z);
 	float pressure =  pressure_given_by_altitude(altitude);
 	float m_a = m_a_calc(pressure, m_r);
-	float w = preciptable_water(rel_air_humid, temp_Kelvin, altitude );
+	float w = preciptable_water(rel_air_humid, temp_Kelvin);
 
 	float tau_lambda  = 0.0;
 	float irradiance = 0.0;

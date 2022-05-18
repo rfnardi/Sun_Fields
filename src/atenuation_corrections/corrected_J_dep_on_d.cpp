@@ -15,7 +15,6 @@ int main()
 	float altitude = 70; 
 	float d = 0.0; 
 	float temp_Kelvin = 393.0;
-	float mirror_area = 1.0;
 
 	float J_0 = corrected_irradiance(NDA, lat, hora_local,  rel_air_humid, altitude, d, temp_Kelvin);
 	std::cout <<"Number of dust particles in cm^3" << ";J" << ";Refl_Percent" << std::endl;
