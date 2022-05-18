@@ -21,7 +21,7 @@ int main()
 	while (z_pos > -20.1) {
 		mirror_place.reset_coord(0.0,-south_distance,z_pos);
 		power = one_mirror_power(s, mirror_place, NDA);
-		/* std::cout << -z_pos << ";" << power << std::endl; */
+		std::cout << -z_pos << ";" << power << std::endl;
 		z_pos -= 0.1;
 	}
 

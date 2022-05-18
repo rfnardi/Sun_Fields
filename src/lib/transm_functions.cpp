@@ -179,19 +179,14 @@ float corrected_irradiance(int NDA, float lat, float local_time, float rel_air_h
 	
 	float sin_Alt = sin_Alt_calculation(NDA, lat, local_time);
 	float theta_z = acos(sin_Alt);
-
-	float m_r = dry_air_opt_mass(theta_z);
-	float pressure =  pressure_given_by_altitude(altitude);
-	float m_a = m_a_calc(pressure, m_r);
 	float w = preciptable_water(rel_air_humid, temp_Kelvin);
-
 	float tau_lambda  = 0.0;
 	float irradiance = 0.0;
 	float total_irradiance = 0.0;
 	float lambda = 0.250;
 	float delta = 0.001;
-	while(lambda <= 25){
 
+	while(lambda <= 25){
 		irradiance = table_given_irradiance(lambda);
 		tau_lambda = total_transmitance(lambda, theta_z, w, d, altitude);
 		irradiance = irradiance*tau_lambda*delta;

@@ -1,4 +1,6 @@
-#include "../lib/transm_functions.cpp"
+#include <iostream>
+#include <cmath>
+#include "../lib/transm_functions.h"
 
 int main()
 {
@@ -7,9 +9,8 @@ int main()
 	float lat = 14; 
 	float rel_air_humid = 0.7; 
 	float altitude = 70; 
-	float d = 200; 
 	float temp_Kelvin = 393;
-	float w = preciptable_water(rel_air_humid, temp_Kelvin, altitude);
+	float w = preciptable_water(rel_air_humid, temp_Kelvin);
 
 	float sin_Alt = sin_Alt_calculation(NDA, lat, local_time);
 	float theta_z = acos(sin_Alt);
@@ -19,7 +20,7 @@ int main()
 
 	std::cout << "-------------------------------------------------------" << std::endl;
 	std::cout << "lambda: " << lambda << std::endl;
-	float ozone_transm = ozone_absorp_transm_lambda(lambda, theta_z, altitude, w);
+	float ozone_transm = ozone_absorp_transm_lambda(lambda, theta_z);
 	std::cout << "transmitância do ozônio: " << ozone_transm << std::endl;
 	float wv_aborp_transm = water_vapor_absorp_transm_lambda(lambda, theta_z, altitude, w);
 	std::cout << "transmitância do vapor de água: " << wv_aborp_transm << std::endl;
