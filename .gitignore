@@ -6,3 +6,6 @@
 *.xlsx
 *.json
 *.txt
+*.o
+*.gch
+*.bin

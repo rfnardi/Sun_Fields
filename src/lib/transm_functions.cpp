@@ -1,51 +1,57 @@
 #include <iostream>
 #include <stdio.h>
 #include <cmath>
-#include "./table_functions.cpp"
-#include "./bare_functions.cpp"
+#include "./bare_functions.h"
+#include "./table_functions.h"
 
 float dry_air_opt_mass(float theta_z){
 	return 1/(cos(theta_z) + 0.15*pow(93.885 - theta_z,-1.253)) ;
 }
 
 float water_vapor_opt_mass(float theta_z){
-	return 1/(cos(theta_z) + 0.00548*pow(92.650 - theta_z,-1.452)) ;
+	return 1/(cos(theta_z) + 0.00548*pow(92.650 - theta_z,0-1.452)) ;
 }
 
 //Fonte original: equation 5.4.6 Iqbal
-float preciptable_water(float rel_air_humid, float temp_Kelvin, float altitude){
+float preciptable_water(float rel_air_humid, float temp_Kelvin){
 
 	float partial_pressure_water = exp(26.23 - (5416/temp_Kelvin));
 
-	//Iqbal
-	//float w = (0.4930*rel_air_humid*partial_pressure_water)/temp_Kelvin;
+	//Iqbal (erro do paper de Leckner foi carregado para o Iqbal. Valor corrigido para o fator: 0.00493 e não 0.493)
+	//float w = (0.4930*rel_air_humid*partial_pressure_water)/temp_Kelvin; <----- ERRADO
+	float w = (0.004930*rel_air_humid*partial_pressure_water)/temp_Kelvin; 
 
 	//Leckner paper, equations 14, 16 and 20
-	float w = (rel_air_humid*partial_pressure_water*exp(-0.439*altitude))/(temp_Kelvin*461.51*0.795);
+	//float R = 461.51;
+	//float rho_w0 = (rel_air_humid*partial_pressure_water)/(R*temp_Kelvin);
+	// float rho_w(h) = rho_w0*exp(-0.439*altitude); 
+	// w é a integral de rho_w(h') dh' de h até \infty
+	// cujo resultado é:
+	//float w = 2.28*rho_w0*exp(0-0.439*altitude);
 
 	return w;
 }
 
 float pressure_given_by_altitude(float altitude){
 	float sea_level_pressure = 1013.25; //pressão em milibars
-	return sea_level_pressure*exp(-0.0001184*altitude);//altitude em metros
+	return sea_level_pressure*exp(0-0.0001184*altitude);//altitude em metros
 }
 
 //equation 5.7.3 Iqbal
 float m_a_calc(float pressure, float m_r){
-	return pressure*m_r/1013.25;
+	return (pressure*m_r)/1013.25;
 }
 
 float k_Rayleigh_dry_air_scattering_lambda(float lambda){//lambda aqui sempre está medido em micrômetros
-	return 0.0087352*pow(lambda,-4.08);
+	return 0.0087352*pow(lambda,0-4.08);
 }
 
 float k_Mie_water_droplets_scattering_lambda(float lambda){
-	return 0.008635*pow(lambda,-2);
+	return 0.008635*pow(lambda,0-2);
 }
 
 float k_Mie_dust_scattering_lambda(float lambda){
-	return 0.08128*pow(lambda,-0.75);
+	return 0.08128*pow(lambda,0-0.75);
 }
 
 //d: amount of dust particles in a cm^3 (200 is clean air; 800 is very dirty air)
@@ -78,7 +84,7 @@ float gas_mix_absorp_transm_lambda(float lambda, float theta_z, float altitude){
 	}
 	else { k_g = 0.0; }
 
-	float tau_absorp_lambda = exp(0-(1.41*k_g*m_a)*pow(1+(118.93*k_g*m_a), -0.45));
+	float tau_absorp_lambda = exp(0-(1.41*k_g*m_a)*pow(1+(118.93*k_g*m_a), 0-0.45));
 
 	return tau_absorp_lambda;
 }
@@ -99,7 +105,7 @@ float water_vapor_absorp_transm_lambda(float lambda, float theta_z, float altitu
 	return tau_absorp_lambda;
 }
 
-float ozone_absorp_transm_lambda(float lambda, float theta_z, float altitude, float w){
+float ozone_absorp_transm_lambda(float lambda, float theta_z){
 
 	float m_r = dry_air_opt_mass(theta_z);
 
@@ -118,7 +124,7 @@ float ozone_absorp_transm_lambda(float lambda, float theta_z, float altitude, fl
 float absorp_transm_lambda(float lambda, float theta_z, float w, float d, float altitude){
 
 
-	float ozone_transm = ozone_absorp_transm_lambda(lambda, theta_z, altitude, w);
+	float ozone_transm = ozone_absorp_transm_lambda(lambda, theta_z);
 	float wv_aborp_transm = water_vapor_absorp_transm_lambda(lambda, theta_z, altitude, w);
 	float gas_mixt_transm = gas_mix_absorp_transm_lambda(lambda, theta_z, altitude);
 
@@ -173,19 +179,14 @@ float corrected_irradiance(int NDA, float lat, float local_time, float rel_air_h
 	
 	float sin_Alt = sin_Alt_calculation(NDA, lat, local_time);
 	float theta_z = acos(sin_Alt);
-
-	float m_r = dry_air_opt_mass(theta_z);
-	float pressure =  pressure_given_by_altitude(altitude);
-	float m_a = m_a_calc(pressure, m_r);
-	float w = preciptable_water(rel_air_humid, temp_Kelvin, altitude );
-
+	float w = preciptable_water(rel_air_humid, temp_Kelvin);
 	float tau_lambda  = 0.0;
 	float irradiance = 0.0;
 	float total_irradiance = 0.0;
 	float lambda = 0.250;
 	float delta = 0.001;
-	while(lambda <= 25){
 
+	while(lambda <= 25){
 		irradiance = table_given_irradiance(lambda);
 		tau_lambda = total_transmitance(lambda, theta_z, w, d, altitude);
 		irradiance = irradiance*tau_lambda*delta;

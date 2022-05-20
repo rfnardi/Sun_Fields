@@ -1,4 +1,7 @@
-#include "../lib/transm_functions.cpp"
+#include <iostream>
+#include "../lib/transm_functions.h"
+#include "../lib/table_functions.h"
+#include <cmath>
 
 int main() {
 
@@ -12,7 +15,6 @@ int main() {
 	/* std::cout << "hora_local = " << hora_local << std::endl; */
 	/* std::cout << "--------------------------" << std::endl; */
 
-	double J = 0.0;
 	double d = 200;
 	double rel_air_humid = 0.0;
 	double temp_Kelvin = 393.0;
@@ -24,7 +26,7 @@ int main() {
 	double I_lambda = 0.00;
 	double tau = 0.0;
 
-	double w = preciptable_water(rel_air_humid, temp_Kelvin, altitude);
+	double w = preciptable_water(rel_air_humid, temp_Kelvin);
 	double sin_Alt = sin_Alt_calculation(NDA, lat, hora_local);
 	double theta_z = acos(sin_Alt);
 

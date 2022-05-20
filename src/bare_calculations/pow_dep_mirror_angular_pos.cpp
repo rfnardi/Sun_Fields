@@ -1,7 +1,8 @@
 #include <iostream>
 #include <stdio.h>
-#include "../lib/bare_functions.cpp"
+#include "../lib/bare_functions.h"
 #include <vector>
+#include <cmath>
 
 int main()
 {
