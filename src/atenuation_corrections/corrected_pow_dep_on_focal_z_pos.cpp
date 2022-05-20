@@ -25,7 +25,7 @@ int main()
 
 	float J = corrected_irradiance(NDA, lat, hora_local,  rel_air_humid, altitude, d, temp_Kelvin);
 	s = get_sun_position(NDA, lat, hora_local,s);
-	std::cout << "theta_deg" << ";" << "power" << ";" << "Reflec_Percent" << std::endl;
+	std::cout << "zpos" << ";" << "power" <<  std::endl;
 	while (z_pos > -20.1) {
 		mirror_place.reset_coord(0.0,-south_distance,z_pos);
 		power = one_mirror_corrected_power(s, mirror_place, J, mirror_area);

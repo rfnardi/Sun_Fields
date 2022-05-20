@@ -1,4 +1,4 @@
-rel_air_humid;J;Percent_transm
+relAirHumid;J;PercentTransm
 0.01;1053.9;100
 0.02;1040.07;98.687
 0.03;1030.19;97.75

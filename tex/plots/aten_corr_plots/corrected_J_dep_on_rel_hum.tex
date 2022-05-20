@@ -1,0 +1,72 @@
+
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=1.5cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,dsfont,mathtools}
+\usepackage[brazilian]{babel} 
+
+\usepackage{tikz, pgfplots} 
+\usepackage{tkz-fct, tkz-base, tkz-euclide} 
+\pgfplotsset{width=10cm,compat=1.18}
+
+
+\begin{document}
+
+\bigskip
+\bigskip
+\bigskip
+
+\begin{figure}[!htb]
+	\centering 
+	\begin{tikzpicture}
+		\begin{axis}[
+			height=16cm, 
+			width=16cm, 
+			grid=both, 
+			grid style={line width=.1pt, draw=gray!20},
+			major grid style={line width=.2pt,draw=gray!50}, 
+			minor tick num=4, 
+			xlabel={Umidade relativa do ar}, 
+			ylabel={Intensidade da radiação direta $(W)$}, 
+			% title={Intensidade da radiação de comprimento de onda $\lambda$}
+			]
+			\addplot[mark size=0.5pt, color=blue] table[x=relAirHumid, y=J, col sep=semicolon] 
+				{../../../data/aten_corr_data/corrected_J_dep_on_rel_hum.dat};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Dependência da potência de radiação direta com a umidade relativa do ar.} 
+\end{figure}
+
+\bigskip
+
+
+\begin{figure}[!htb]
+	\centering 
+	\begin{tikzpicture}
+		\begin{axis}[
+			height=16cm, 
+			width=16cm, 
+			grid=both, 
+			grid style={line width=.1pt, draw=gray!20},
+			major grid style={line width=.2pt,draw=gray!50}, 
+			minor tick num=4, 
+			xlabel={Umidade relativa do ar}, 
+			ylabel={Percentual transmitido}, 
+			% title={Intensidade da radiação de comprimento de onda $\lambda$}
+			]
+			\addplot[mark size=0.5pt, color=blue] table[x=relAirHumid, y=PercentTransm, col sep=semicolon] 
+				{../../../data/aten_corr_data/corrected_J_dep_on_rel_hum.dat};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Dependência da potência de radiação direta com a umidade relativa do ar.} 
+\end{figure}
+
+
+% relAirHumid;J;PercentTransm
+% 0.01;1053.9;100
+% 0.02;1040.07;98.687
+
+\end{document}

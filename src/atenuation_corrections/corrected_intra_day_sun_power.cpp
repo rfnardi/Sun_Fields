@@ -22,6 +22,7 @@ int main()
 	float temp_Kelvin = 393.0;
 
 	vetor_3d s(0,0,0);
+	std::cout <<"Horalocal;Sz;J" << std::endl;
 	for (hora_local = 6.0; hora_local < 18; hora_local += 0.08){
 
 		sin_Alt = sin_Alt_calculation(NDA, lat, hora_local);
@@ -30,7 +31,7 @@ int main()
 		J = corrected_irradiance(NDA, lat, hora_local,  rel_air_humid, altitude, d, temp_Kelvin);
 
 		if (s.coord[2]>0){
-			std::cout <<"Hora local: " << hora_local << " ; S_z: " << s.coord[2] << " ; J: " << J << std::endl;
+			std::cout << hora_local << ";" << s.coord[2] << ";" << J << std::endl;
 		}
 	}
 

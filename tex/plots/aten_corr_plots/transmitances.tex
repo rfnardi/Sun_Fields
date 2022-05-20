@@ -1,0 +1,44 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=1.5cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,dsfont,mathtools}
+\usepackage[brazilian]{babel} 
+
+\usepackage{tikz, pgfplots} 
+\usepackage{tkz-fct, tkz-base, tkz-euclide} 
+\pgfplotsset{width=10cm,compat=1.18}
+
+
+\begin{document}
+
+\bigskip
+\bigskip
+\bigskip
+
+\begin{figure}[!htb]
+	\centering 
+	\begin{tikzpicture}
+		\begin{axis}[
+			height=16cm, 
+			width=16cm, 
+			grid=both, 
+			grid style={line width=.1pt, draw=gray!20},
+			major grid style={line width=.2pt,draw=gray!50}, 
+			minor tick num=4, 
+			xlabel={$\lambda(\mu m)$}, 
+			ylabel={$I_\lambda (W m^{-2} {\mu m}^{-1})$}, 
+			title={Intensidade da radiação de comprimento de onda $\lambda$}]
+			\addplot[mark size=0.5pt, color=blue] table[x=lambda, y=Ibare, col sep=semicolon] 
+				{../../../data/aten_corr_data/spectrum.dat};
+			\addplot[mark size=0.5pt, color=red] table[x=lambda, y=Icorr, col sep=semicolon] 
+				{../../../data/aten_corr_data/spectrum.dat};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Atenuação do espectro WRC na atmosfera.} 
+\end{figure}
+
+
+\end{document}
