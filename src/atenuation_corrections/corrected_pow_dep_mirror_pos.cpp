@@ -25,7 +25,7 @@ int main()
 
 
 	float J = corrected_irradiance(NDA, lat, hora_local,  rel_air_humid, altitude, d, temp_Kelvin);
-	std::cout << "x_pos" << ";" << "power" << ";" << "Refl_Percent"<< std::endl;
+	std::cout << "xpos" << ";" << "power" << ";" << "ReflPercent"<< std::endl;
 	while (x_pos < 100.1) {
 		mirror_place.reset_coord(x_pos,-south_distance,0.0);
 		power = one_mirror_corrected_power(s, mirror_place, J, mirror_area);

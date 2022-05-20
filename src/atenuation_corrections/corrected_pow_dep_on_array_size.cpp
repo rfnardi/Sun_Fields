@@ -43,7 +43,7 @@ int main()
 
 	float delta = 0.0;
 	power = one_mirror_corrected_power(s, malha[0], J, mirror_area);
-	std::cout << "array_size" << ";" << "power" << ";" << "delta" << std::endl;
+	std::cout << "arraySize" << ";" << "power" << ";" << "delta" << std::endl;
 	for(int i = 2; i < (int) malha.size(); i+=2){
 		delta = 0.0;
 		delta = one_mirror_corrected_power(s, malha[i], J, mirror_area) + one_mirror_corrected_power(s, malha[i-1], J, mirror_area);
