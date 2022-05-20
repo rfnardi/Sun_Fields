@@ -26,7 +26,7 @@ int main()
 	vetor_3d s(0,0,0);
 
 	float theta_z = 0.0;
-	std::cout << "NDA" << ";" << "J" << ";" << "POWER" << ";" << "Refl_percent" << ";" << "ZEN" << ";" << "S_z" << std::endl;
+	std::cout << "NDA" << ";" << "J" << ";" << "POWER" << ";" << "ReflPercent" << ";" << "ZEN" << ";" << "Sz" << std::endl;
 
 	for (NDA = 1; NDA<=365; NDA++){
 		sin_Alt = sin_Alt_calculation(NDA, lat, hora_local);

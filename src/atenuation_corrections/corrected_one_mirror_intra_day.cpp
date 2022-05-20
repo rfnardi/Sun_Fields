@@ -26,7 +26,7 @@ int main()
 
 	/* log_entrada(NDA, lat, hora_local); */
 
-	std::cout << "HORA_LOCAL" << ";" << "J" << ";"<< "POWER" << ";" << "Reflec_Percent" << ";" << "ZEN" << ";" << "AZIM" << ";" << "S_z" << std::endl;
+	std::cout << "HORALOCAL" << ";" << "J" << ";"<< "POWER" << ";" << "ReflecPercent" << ";" << "ZEN" << ";" << "AZIM" << ";" << "Sz" << std::endl;
 	vetor_3d s(0,0,0);
 	for (hora_local = 6.0; hora_local < 18; hora_local += 0.08){
 
