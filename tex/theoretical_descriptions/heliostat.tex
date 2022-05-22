@@ -24,7 +24,15 @@
 
 \begin{center} {\bf \Large Movimentos do heliostato} \end{center}
 
-	\begin{figure}[!ht]
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+	\begin{figure}[!htb]
 		\centering
 		\begin{animateinline}[poster=first,controls={play,stop,step}]{8}
 			\multiframe{50}{ri=0+2} {
@@ -96,8 +104,19 @@
 		\caption{Heliostato --- Movimento no eixo vertical}%
 	\end{figure}
 
+	\newpage
 
-	\begin{figure}[!ht]
+\begin{center} {\bf \Large Movimentos do heliostato} \end{center}
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+	\begin{figure}[!htb]
 		\centering
 		\begin{animateinline}[poster=first,controls={play,stop,step}]{8}
 			\multiframe{20}{ri=0+2}
@@ -177,6 +196,174 @@
 			}
 		\end{animateinline}
 		\caption{Heliostato --- movimento do eixo horizontal}%
+		\end{figure}
+
+		\newpage
+
+\begin{center} {\bf \Large Movimentos do heliostato} \end{center}
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+		\begin{figure}[!htb]
+			\centering
+			\begin{tikzpicture}[transform shape, scale=1.3]
+				\begin{axis}[view={-20}{-20}, % {angulo azimutal}{angulo zenital}
+					zmax=3,
+					xmax=3,
+					ymax=3,
+					% height=10cm,
+					xtick=\empty,
+					ytick=\empty,
+					ztick=\empty,
+					clip=false,
+					hide axis
+					]
+					\def\r{1}
+
+					%BASE 1
+					\coordinate (BASE1_sub_a) at (-1.5,-1.5,-0.7);
+					\coordinate (BASE1_sub_b) at (1.5,-1.5,-0.7);
+					\coordinate (BASE1_sub_c) at (1.5,1.5,-0.7);
+					\coordinate (BASE1_sub_d) at (-1.5,1.5,-0.7);
+					\coordinate (BASE1_a) at (-1.5,-1.5,-0.6);
+					\coordinate (BASE1_b) at (1.5,-1.5,-0.6);
+					\coordinate (BASE1_c) at (1.5,1.5,-0.6);
+					\coordinate (BASE1_d) at (-1.5,1.5,-0.6);
+					\coordinate (BASE1_inner_a) at (-1.4,-1.4,-0.7);
+					\coordinate (BASE1_inner_b) at (1.4,-1.4,-0.7);
+					\coordinate (BASE1_inner_c) at (1.4,1.4,-0.7);
+					\coordinate (BASE1_inner_d) at (-1.4,1.4,-0.7);
+
+					\tkzDrawSegment(BASE1_a,BASE1_b)
+					\tkzDrawSegment(BASE1_a,BASE1_d)
+					\tkzDrawSegment(BASE1_inner_a,BASE1_inner_b)
+					\tkzDrawSegment(BASE1_inner_a,BASE1_inner_d)
+					\tkzDrawSegment(BASE1_sub_a,BASE1_sub_b)
+					\tkzDrawSegment(BASE1_sub_a,BASE1_sub_d)
+					\path[fill=gray!30] (BASE1_sub_b)--(BASE1_inner_b)--(BASE1_inner_a)--(BASE1_sub_a)--cycle;
+					\path[fill=gray!30] (BASE1_sub_d)--(BASE1_inner_d)--(BASE1_inner_a)--(BASE1_sub_a)--cycle;
+					\tkzDrawSegment(BASE1_sub_a,BASE1_a)
+
+					%BASE 2
+					\coordinate (BASE2_sup_a) at (-1.5,-1.5,1.1);
+					\coordinate (BASE2_sup_b) at (1.5,-1.5,1.1);
+					\coordinate (BASE2_sup_c) at (1.5,1.5,1.1);
+					\coordinate (BASE2_sup_d) at (-1.5,1.5,1.1);
+					\coordinate (BASE2_a) at (-1.5,-1.5,1.0);
+					\coordinate (BASE2_b) at (1.5,-1.5,1.0);
+					\coordinate (BASE2_c) at (1.5,1.5,1.0);
+					\coordinate (BASE2_d) at (-1.5,1.5,1.0);
+					\coordinate (BASE2_inner_a) at (-1.4,-1.4,1.1);
+					\coordinate (BASE2_inner_b) at (1.4,-1.4,1.1);
+					\coordinate (BASE2_inner_c) at (1.4,1.4,1.1);
+					\coordinate (BASE2_inner_d) at (-1.4,1.4,1.1);
+					\tkzDrawSegment(BASE2_a,BASE2_b)
+					\tkzDrawSegment(BASE2_a,BASE2_d)
+					\tkzDrawSegment(BASE2_sup_a,BASE2_sup_b)
+					\tkzDrawSegment(BASE2_sup_a,BASE2_sup_d)
+					\tkzDrawSegment(BASE2_sup_a,BASE2_a)
+
+					\tkzDrawSegment(BASE1_a,BASE2_a)
+
+					% DISCO (ENGRENAGEM) NO EIXO VERTICAL
+					\addplot3+[domain=pi:2*pi,samples=200,samples y=0,no marks, black, fill=gray!50]
+						({\r*cos(deg(x))}, {\r*sin(deg(x))}, {0});
+
+					%LIMITES DO DESENHO 
+					\draw[thin, dashed] (0,0,0)--(0,0,5);
+					\draw[thin, dashed] (-2,0,0)--(2,0,0);
+
+					%EIXO VERTICAL
+					\def\altEixo{2}
+					\draw[very thick] (0,0,-0.8)--(0,0,\altEixo);
+
+					% DISCO (ENGRENAGEM) NO EIXO VERTICAL
+					\addplot3+[domain=0:pi,samples=200,samples y=0,no marks, black, fill=gray!50]
+						({\r*cos(deg(x))}, {\r*sin(deg(x))}, {0});
+
+					%"GARFO"
+					\def\altTotal{3.5}
+					\draw[very thick] (-1,0,\altEixo)--(1,0,\altEixo) ;
+					\draw[very thick] (-1,0,\altEixo)--(-1,0,\altTotal);
+					\draw[very thick] (1,0,\altEixo)--(1,0,\altTotal);
+
+					% EIXO VERTICAL SOB O ESPELHO
+					\draw[->, >=stealth, dashed, very thin] (0,0,\altEixo)--(0,0,\altEixo + 1.5) ;
+
+					% EIXO DE ROTAÇÃO HORIZONTAL
+					\draw[thick] (-1,0,\altTotal)--(1,0,\altTotal) ;
+
+					\def\ri{30}
+					\FPeval\angTheta{0+\ri*pi/180}
+					\FPeval\senTheta{sin(\angTheta)}
+					\FPeval\cosTheta{cos(\angTheta)}
+
+					%					(y   , x  , z    )
+					\coordinate (A) at (-0.95 ,1.5*\cosTheta,\altTotal - 1.5*\senTheta);
+					\coordinate (B) at (-0.95 ,-1.5*\cosTheta,\altTotal + 1.5*\senTheta);
+					\coordinate (C) at (0.95 ,-1.5*\cosTheta,\altTotal + 1.5*\senTheta);
+					\coordinate (D) at (0.95 ,1.5*\cosTheta,\altTotal - 1.5*\senTheta);
+
+					\draw[thin, fill=blue!10] (A)--(B)--(C)--(D)--cycle;
+
+					% DISCO (ENGRENAGEM) NO EIXO HORIZONTAL
+					\def\raioSup{0.6}
+					\addplot3+[domain=0:2*pi,samples=200,samples y=0,no marks, black, fill=gray!50]
+						({1.2}, {\raioSup*sin(deg(x))}, {\raioSup*cos(deg(x)) + \altTotal} );
+
+					% EIXO DE ROTAÇÃO HORIZONTAL (PARTE VISÍVEL)
+					\draw[thick] (1.2,0,\altTotal)--(1.3,0,\altTotal) ;
+
+					% EIXOS HORIZONTAIS
+					\draw[->, >=stealth, dashed, very thin, color=red] (-2,0,0)--(2,0,0) ;
+					\draw[->, >=stealth, dashed, very thin, color=blue] (0,-2,0)--(0,2,0) ;
+
+					%EIXO VERTICAL SOBRE O ESPELHO
+					\draw[->, >=stealth, dashed, very thin] (0,0,\altEixo+1.5)--(0,0,5) ;
+
+					\coordinate (BASE1_center_ad) at (-1.5,0,-0.6);
+					\coordinate (BASE1_center_ab) at (1.5,0,-0.6);
+					\coordinate (BASE1_sub_center_ad) at (-1.5,0,-0.7);
+					\coordinate (BASE1_sub_center_ab) at (1.5,0,-0.7);
+					\coordinate (BASE1_center) at (0,0,-0.6);
+					\coordinate (BASE1_sub_center) at (0,0,-0.7);
+					\path[draw, fill=white] (BASE1_sub_center)--(BASE1_center)--(BASE1_center_ab)--(BASE1_sub_center_ab)--cycle;
+					\path[draw, fill=white] (BASE1_sub_center)--(BASE1_center)--(BASE1_center_ad)--(BASE1_sub_center_ad)--cycle;
+
+					\path[draw, fill=white] (BASE1_c)--(BASE1_sub_c)--(BASE1_sub_d) --(BASE1_d)--cycle;
+					\path[draw, fill=white] (BASE1_c)--(BASE1_sub_c)--(BASE1_sub_b) --(BASE1_b)--cycle;
+
+					\coordinate (BASE2_center_ad) at (0,-1.5,1.0);
+					\coordinate (BASE2_center_ab) at (0,1.5,1.0);
+					\coordinate (BASE2_sub_center_ad) at (0,-1.5,1.1);
+					\coordinate (BASE2_sub_center_ab) at (0,1.5,1.1);
+					\coordinate (BASE2_center) at (0,0,1.0);
+					\coordinate (BASE2_sub_center) at (0,0,1.1);
+					\path[draw, fill=white] (BASE2_sub_center)--(BASE2_center)--(BASE2_center_ab)--(BASE2_sub_center_ab)--cycle;
+					\path[draw, fill=white] (BASE2_sub_center)--(BASE2_center)--(BASE2_center_ad)--(BASE2_sub_center_ad)--cycle;
+
+					\path[draw, fill=white] (BASE2_c)--(BASE2_sup_c)--(BASE2_sup_d) --(BASE2_d)--cycle;
+					\path[draw, fill=white] (BASE2_c)--(BASE2_sup_c)--(BASE2_sup_b) --(BASE2_b)--cycle;
+
+					% \path[draw, fill=gray!20] (BASE2_sup_b)--(BASE2_inner_b)--(BASE2_inner_a)--(BASE2_sup_a)--cycle;
+					% \path[draw, fill=gray!20] (BASE2_sup_b)--(BASE2_inner_b)--(BASE2_inner_c)--(BASE2_sup_c)--cycle;
+					% \path[draw, fill=gray!20] (BASE2_sup_d)--(BASE2_inner_d)--(BASE2_inner_a)--(BASE2_sup_a)--cycle;
+					% \path[draw, fill=gray!20] (BASE2_sup_d)--(BASE2_inner_d)--(BASE2_inner_c)--(BASE2_sup_c)--cycle;
+
+					\tkzDrawSegment[thin](BASE1_b,BASE2_b)
+					\tkzDrawSegment[thin](BASE1_c,BASE2_c)
+					\tkzDrawSegment[thin](BASE1_d,BASE2_d)
+
+
+				\end{axis}
+			\end{tikzpicture}
+			\caption{Heliostato --- detalhes da base}%
 		\end{figure}
 
 \end{document}
