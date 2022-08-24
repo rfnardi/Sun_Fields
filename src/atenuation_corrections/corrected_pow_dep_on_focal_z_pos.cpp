@@ -11,7 +11,7 @@ int main()
 	/* float lat = -14.7973; //Ilhéus em graus */
 
 	float power = 0.0;
-	float hora_local = 12.0;
+	float local_time = 12.0;
 	vetor_3d mirror_place(0,0,0);
 	vetor_3d s(0,0,0);
 
@@ -23,8 +23,8 @@ int main()
 	float z_pos = 0.0;
 	float south_distance = 10.0;
 
-	float J = corrected_irradiance(NDA, lat, hora_local,  rel_air_humid, altitude, d, temp_Kelvin);
-	s = get_sun_position(NDA, lat, hora_local,s);
+	float J = corrected_irradiance(NDA, lat, local_time,  rel_air_humid, altitude, d, temp_Kelvin);
+	s = get_sun_position(NDA, lat, local_time,s);
 	std::cout << "zpos" << ";" << "power" <<  std::endl;
 	while (z_pos > -20.1) {
 		mirror_place.reset_coord(0.0,-south_distance,z_pos);
