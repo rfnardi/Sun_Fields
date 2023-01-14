@@ -18,10 +18,23 @@
 		return result;
 	}
 
+void vetor_3d::get_unitary_vector(){
+	float norm = sqrt(pow(this->coord[0],2) + pow(this->coord[1],2) + pow(this->coord[2],2));
+	this->coord[0] = this->coord[0]/norm; 
+	this->coord[1] = this->coord[1]/norm; 
+	this->coord[2] = this->coord[2]/norm; 
+}
+
 	void vetor_3d::reset_coord(float x, float y, float z){
 		this->coord[0] = x;
 		this->coord[1] = y;
 		this->coord[2] = z;
+	}
+
+	void vetor_3d::invert_direction(){
+		this->coord[0] = -1*this->coord[0];
+		this->coord[1] = -1*this->coord[1];
+		this->coord[2] = -1*this->coord[2];
 	}
 
 	vetor_3d vetor_3d::vector_sum(vetor_3d vetor_2, vetor_3d result){
@@ -232,4 +245,31 @@ float one_mirror_power(vetor_3d s, vetor_3d R, int NDA){
 	return power;
 }
 
+//retorna true se o heliostato estiver na sombra da torre
+bool tower_shadow_cil_aprox(float tower_radius, float tower_height, vetor_3d helios_pos, vetor_3d sun){
+
+	bool result = true;
+
+	float C = pow(helios_pos.coord[0],2) + pow(helios_pos.coord[1],2) - pow(tower_radius,2);
+	float B = 2*(helios_pos.coord[0]*sun.coord[0] + helios_pos.coord[1]*sun.coord[1]);
+	float A = pow(sun.coord[0],2) + pow(sun.coord[1],2);
+
+
+	float t_plus = ((-1)*B + sqrt(pow(B,2) - 4*A*C))/(2*A);
+
+	float t_minus = ((-1)*B - sqrt(pow(B,2) - 4*A*C))/(2*A);
+
+	float z_minus = helios_pos.coord[2] + sun.coord[2]*t_minus;
+
+	float z_plus = helios_pos.coord[2] + sun.coord[2]*t_plus;
+
+	if ((z_plus >= 0 && z_plus <= tower_height) || (z_minus >= 0 && z_minus <= tower_height)) {
+		result = true;
+	}
+	else {
+		result = false;
+	}
+
+	return result;
+}
 
