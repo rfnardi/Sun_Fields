@@ -211,7 +211,7 @@ float one_mirror_corrected_power(vetor_3d s, vetor_3d R, vetor_3d Focus, float J
 	r.get_unitary_vector();
 
 	vetor_3d n(0,0,0);
-	n = get_normal_vector(s, r, n);
+	n = get_normal_vector(s, R, Focus, n);
 
 	return J*n.scalar_prod(s)*mirror_area;
 }

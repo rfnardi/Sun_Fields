@@ -89,18 +89,26 @@ void log_sun_position(vetor_3d s){
 	std::cout << "Valor da Projeção norte-sul: "<< s.coord[1] << std::endl; //positivo ao norte
 }
 
-vetor_3d get_normal_vector(vetor_3d s, vetor_3d r, vetor_3d result){
+vetor_3d get_normal_vector(vetor_3d sun_pos, vetor_3d helios_pos, vetor_3d focus_pos, vetor_3d result){
+	
+	sun_pos.get_unitary_vector();//normalizando vetor
+	focus_pos.invert_direction();
+	vetor_3d r = helios_pos.vector_sum(focus_pos, r);//posição a partir do foco
+	r.get_unitary_vector();//normalizando
 
-	float prod_escalar = s.scalar_prod(r);
-	/* std::cout << "Valor do produto escalar: "<< prod_escalar << std::endl; */
-	float denominador = sqrt(2)*sqrt(1 - prod_escalar);
-	/* std::cout << "valor do denominador: "<< denominador << std::endl; */
-	float n[3];
-	for (short i = 0; i < 3; i++) {
-		n[i] = (s.coord[i] - r.coord[i])/denominador; 
-	}
+	r.invert_direction();
+	vetor_3d normal_vector = r.vector_sum(sun_pos, normal_vector);
 
-	vetor_3d normal_vector(n[0],n[1],n[2]);
+	/* float prod_escalar = s.scalar_prod(r); */
+	/* /1* std::cout << "Valor do produto escalar: "<< prod_escalar << std::endl; *1/ */
+	/* float denominador = sqrt(2)*sqrt(1 - prod_escalar); */
+	/* /1* std::cout << "valor do denominador: "<< denominador << std::endl; *1/ */
+	/* float n[3]; */
+	/* for (short i = 0; i < 3; i++) { */
+	/* 	n[i] = (s.coord[i] - r.coord[i])/denominador; */ 
+	/* } */
+
+	/* vetor_3d normal_vector(n[0],n[1],n[2]); */
 
 	result = normal_vector;
 
@@ -222,7 +230,7 @@ vetor_3d get_sun_position(float NDA, float lat, float hora_local, vetor_3d resul
 		return result;
 	}
 
-float one_mirror_power(vetor_3d s, vetor_3d R, int NDA){
+float one_mirror_power(vetor_3d s, vetor_3d R,vetor_3d focus_pos, int NDA){
 	/* std::cout << "Coordenadas de s unitário:" << std::endl; */
 	/* s.log_coords(); */
 
@@ -232,7 +240,7 @@ float one_mirror_power(vetor_3d s, vetor_3d R, int NDA){
 	/* r.log_coords(); */
 
 	vetor_3d n(0,0,0);
-	n = get_normal_vector(s, r, n);
+	n = get_normal_vector(s, r, focus_pos, n);
 	/* std::cout << "Coordenadas do vetor normal à superfície n unitário:" << std::endl; */
 	/* n.log_coords(); */
 
