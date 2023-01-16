@@ -27,7 +27,7 @@ void log_angulos(float * sin_Alt_sin_Azim_Array );
 
 void log_sun_position(vetor_3d s);
 
-vetor_3d get_normal_vector(vetor_3d s, vetor_3d r, vetor_3d result);
+vetor_3d get_normal_vector(vetor_3d sun_pos, vetor_3d helios_pos, vetor_3d focus_pos, vetor_3d result);
 
 vetor_3d get_unitary_vector(vetor_3d v, vetor_3d result);
 
