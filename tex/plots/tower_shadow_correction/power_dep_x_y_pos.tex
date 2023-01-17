@@ -1,0 +1,37 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=1.5cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,dsfont,mathtools}
+\usepackage[brazilian]{babel} 
+
+\usepackage{tikz, pgfplots} 
+\usepackage{tkz-fct, tkz-base, tkz-euclide} 
+\pgfplotsset{width=10cm,compat=1.17}
+
+
+\begin{document}
+
+\bigskip
+\bigskip
+\bigskip
+
+\begin{figure}[!htb]
+	\centering 
+	\begin{tikzpicture}
+		\begin{axis}[
+			grid=both, 
+			xlabel={x}, 
+			ylabel={y}, 
+			zlabel={Power}
+			title={Potência refletida em termos da posição (x,y)}]
+			\addplot3[surf,mesh/rows=100] table[x=x, y=y, z=power, col sep=colon] {../../../data/tower_shadow_correction/square_grid.dat};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Contribuição de uma malha quadrada de heliostatos ao meio dia.} 
+\end{figure}
+
+
+\end{document}
