@@ -98,17 +98,7 @@ vetor_3d get_normal_vector(vetor_3d sun_pos, vetor_3d helios_pos, vetor_3d focus
 
 	r.invert_direction();
 	vetor_3d normal_vector = r.vector_sum(sun_pos, normal_vector);
-
-	/* float prod_escalar = s.scalar_prod(r); */
-	/* /1* std::cout << "Valor do produto escalar: "<< prod_escalar << std::endl; *1/ */
-	/* float denominador = sqrt(2)*sqrt(1 - prod_escalar); */
-	/* /1* std::cout << "valor do denominador: "<< denominador << std::endl; *1/ */
-	/* float n[3]; */
-	/* for (short i = 0; i < 3; i++) { */
-	/* 	n[i] = (s.coord[i] - r.coord[i])/denominador; */ 
-	/* } */
-
-	/* vetor_3d normal_vector(n[0],n[1],n[2]); */
+	normal_vector.get_unitary_vector();
 
 	result = normal_vector;
 
