@@ -18,10 +18,23 @@
 		return result;
 	}
 
+void vetor_3d::get_unitary_vector(){
+	float norm = sqrt(pow(this->coord[0],2) + pow(this->coord[1],2) + pow(this->coord[2],2));
+	this->coord[0] = this->coord[0]/norm; 
+	this->coord[1] = this->coord[1]/norm; 
+	this->coord[2] = this->coord[2]/norm; 
+}
+
 	void vetor_3d::reset_coord(float x, float y, float z){
 		this->coord[0] = x;
 		this->coord[1] = y;
 		this->coord[2] = z;
+	}
+
+	void vetor_3d::invert_direction(){
+		this->coord[0] = -1*this->coord[0];
+		this->coord[1] = -1*this->coord[1];
+		this->coord[2] = -1*this->coord[2];
 	}
 
 	vetor_3d vetor_3d::vector_sum(vetor_3d vetor_2, vetor_3d result){
@@ -76,18 +89,16 @@ void log_sun_position(vetor_3d s){
 	std::cout << "Valor da Projeção norte-sul: "<< s.coord[1] << std::endl; //positivo ao norte
 }
 
-vetor_3d get_normal_vector(vetor_3d s, vetor_3d r, vetor_3d result){
+vetor_3d get_normal_vector(vetor_3d sun_pos, vetor_3d helios_pos, vetor_3d focus_pos, vetor_3d result){
+	
+	sun_pos.get_unitary_vector();//normalizando vetor
+	focus_pos.invert_direction();
+	vetor_3d r = helios_pos.vector_sum(focus_pos, r);//posição a partir do foco
+	r.get_unitary_vector();//normalizando
 
-	float prod_escalar = s.scalar_prod(r);
-	/* std::cout << "Valor do produto escalar: "<< prod_escalar << std::endl; */
-	float denominador = sqrt(2)*sqrt(1 - prod_escalar);
-	/* std::cout << "valor do denominador: "<< denominador << std::endl; */
-	float n[3];
-	for (short i = 0; i < 3; i++) {
-		n[i] = (s.coord[i] - r.coord[i])/denominador; 
-	}
-
-	vetor_3d normal_vector(n[0],n[1],n[2]);
+	r.invert_direction();
+	vetor_3d normal_vector = r.vector_sum(sun_pos, normal_vector);
+	normal_vector.get_unitary_vector();
 
 	result = normal_vector;
 
@@ -209,7 +220,7 @@ vetor_3d get_sun_position(float NDA, float lat, float hora_local, vetor_3d resul
 		return result;
 	}
 
-float one_mirror_power(vetor_3d s, vetor_3d R, int NDA){
+float one_mirror_power(vetor_3d s, vetor_3d R,vetor_3d focus_pos, int NDA){
 	/* std::cout << "Coordenadas de s unitário:" << std::endl; */
 	/* s.log_coords(); */
 
@@ -219,7 +230,7 @@ float one_mirror_power(vetor_3d s, vetor_3d R, int NDA){
 	/* r.log_coords(); */
 
 	vetor_3d n(0,0,0);
-	n = get_normal_vector(s, r, n);
+	n = get_normal_vector(s, r, focus_pos, n);
 	/* std::cout << "Coordenadas do vetor normal à superfície n unitário:" << std::endl; */
 	/* n.log_coords(); */
 
@@ -232,4 +243,31 @@ float one_mirror_power(vetor_3d s, vetor_3d R, int NDA){
 	return power;
 }
 
+//retorna true se o heliostato estiver na sombra da torre
+bool tower_shadow_cil_aprox(float tower_radius, float tower_height, vetor_3d helios_pos, vetor_3d sun){
+
+	bool result = true;
+
+	float C = pow(helios_pos.coord[0],2) + pow(helios_pos.coord[1],2) - pow(tower_radius,2);
+	float B = 2*(helios_pos.coord[0]*sun.coord[0] + helios_pos.coord[1]*sun.coord[1]);
+	float A = pow(sun.coord[0],2) + pow(sun.coord[1],2);
+
+
+	float t_plus = ((-1)*B + sqrt(pow(B,2) - 4*A*C))/(2*A);
+
+	float t_minus = ((-1)*B - sqrt(pow(B,2) - 4*A*C))/(2*A);
+
+	float z_minus = helios_pos.coord[2] + sun.coord[2]*t_minus;
+
+	float z_plus = helios_pos.coord[2] + sun.coord[2]*t_plus;
+
+	if ((z_plus >= 0 && z_plus <= tower_height) || (z_minus >= 0 && z_minus <= tower_height)) {
+		result = true;
+	}
+	else {
+		result = false;
+	}
+
+	return result;
+}
 

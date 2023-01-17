@@ -202,13 +202,16 @@ float corrected_irradiance(int NDA, float lat, float local_time, float rel_air_h
 //potência refletida por um espelho de area mirror_area
 //localizado na posição R
 //quando a posição do sol for s
-float one_mirror_corrected_power(vetor_3d s, vetor_3d R, float J, float mirror_area){
+//e quando a posição do foco for Focus
+float one_mirror_corrected_power(vetor_3d s, vetor_3d R, vetor_3d Focus, float J, float mirror_area){
 
-	vetor_3d r(0,0,0);
-	r = get_unitary_vector(R,r);
+	/* vetor_3d r(0,0,0); */
+	/* R.invert_direction(); */
+	/* r = R.vector_sum(Focus, r); */
+	/* r.get_unitary_vector(); */
 
 	vetor_3d n(0,0,0);
-	n = get_normal_vector(s, r, n);
+	n = get_normal_vector(s, R, Focus, n);
 
 	return J*n.scalar_prod(s)*mirror_area;
 }
