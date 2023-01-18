@@ -4,6 +4,12 @@
 #define M_PI 3.14159265358979323846
 #include "bare_functions.h"
 
+	vetor_3d::vetor_3d(){
+		this->coord[0] = 0;	
+		this->coord[1] = 0;	
+		this->coord[2] = 0;	
+	}
+	
 	vetor_3d::vetor_3d(float v_x, float v_y, float v_z){
 		this->coord[0] = v_x;	
 		this->coord[1] = v_y;	

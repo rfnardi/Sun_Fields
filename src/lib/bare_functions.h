@@ -4,6 +4,8 @@ class vetor_3d {
 
 	vetor_3d(float v_x, float v_y, float v_z);
 
+	vetor_3d();
+
 	void invert_direction();
 
 	void get_unitary_vector();
