@@ -77,6 +77,9 @@ int main()
 			power += delta;
 			std::cout << i << "," << scalar_prod << ","<< azimut_angle << "," << x << "," << y << "," << delta << "," << power << std::endl;
 		}
+		else {
+			std::cout << i << "," << scalar_prod << ","<< azimut_angle << "," << x << "," << y << "," << 0.0 << "," << power << std::endl;
+		}
 	}
 
 	return 0;
