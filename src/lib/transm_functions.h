@@ -60,7 +60,7 @@ class Heliostato {
 		float zenit;
 
 		//dados necessários para estabelecer o movimento:
-		float mesured_azim;
+		float measured_azim;
 		float measured_zenit;
 		float delta_azim;
 		float delta_zenit;

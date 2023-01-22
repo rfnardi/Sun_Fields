@@ -1,5 +1,5 @@
 CCX = g++
-FLAGS = -O3 -Wall
+FLAGS = -O3 -Wall -std=c++11
 LIB = ../lib/*.cpp
 LIBOBJ = bare_functions.o transm_functions.o table_functions.o
 SRC = $(wildcard *.cpp)
