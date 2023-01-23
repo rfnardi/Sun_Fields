@@ -24,7 +24,7 @@ int main()
 	float tower_height = focus_pos.coord[2], *tower_height_ptr = &tower_height;
 	float heliost_gap = 1.5;
 
-	int row_size = 20; //quantidade total de heliostatos por linha dividido por 2
+	int row_size = 100; //quantidade total de heliostatos por linha
 	vetor_3d malha[row_size][row_size];
 	vetor_3d mirror_place(0,0,0);
 
@@ -58,7 +58,7 @@ int main()
 	//-------------------------- Paralelizando: -----------------------------------
 	//-----------------------------------------------------------------------------
 
-	int num_children = 2;
+	int num_children = 8;
 	int child_status;
 
 

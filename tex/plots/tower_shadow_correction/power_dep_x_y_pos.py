@@ -8,16 +8,19 @@ import matplotlib.pyplot as plt
 
 colunas_desejadas = ['x','y','power']
 
-full_data = pd.read_csv('../../../data/tower_shadow_correction/square_grid_along_day.dat',usecols=colunas_desejadas)
+# full_data = pd.read_csv('../../../data/tower_shadow_correction/square_grid_along_day.dat',usecols=colunas_desejadas)
+# full_data = pd.read_csv('../../../data/tower_shadow_correction/dados.dat',usecols=colunas_desejadas)
 
-# dados = pd.read_csv('../../../data/tower_shadow_correction/square_grid_8am.dat',usecols=colunas_desejadas)
+full_data = pd.read_csv('../../../data/tower_shadow_correction/square_grid_8am.dat',usecols=colunas_desejadas)
 
-# dados = pd.read_csv('../../../data/tower_shadow_correction/square_grid_12am.dat',usecols=colunas_desejadas)
+# full_data = pd.read_csv('../../../data/tower_shadow_correction/square_grid_12am.dat',usecols=colunas_desejadas)
 
 max_power = full_data['power'].max()
 
-dados = full_data[ full_data['power'] > 0.90*max_power]
+dados = full_data[ full_data['power'] > 0.95*max_power]
+# dados = full_data[ full_data['power'] < 100]
 # dados = full_data
+min_power = dados['power'].min()
 
 x_data = dados['x']
 y_data = dados['y']
@@ -44,8 +47,11 @@ ax.view_init(azim=61, elev=12)
 # plt.savefig('square_grid_12am', dpi=300)
 # plt.savefig('square_grid_8am', dpi=300)
 
-# plt.show()
+print("Max: ", max_power)
+print("Min: ", min_power)
+print("Quantidade de pontos selecionados: ", dados['x'].count())
+# print("Quantidade total de pontos: ", full_data['x'].count())
+print("Potência total recolhida nos heliostatos selecionados: ", dados['power'].sum())
 
-print(dados['x'].count())
-print(full_data['x'].count())
+plt.show()
 
