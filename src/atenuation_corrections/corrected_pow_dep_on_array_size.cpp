@@ -34,6 +34,7 @@ int main()
 	vetor_3d s(0,0,0);
 
 	s = get_sun_position(NDA, lat, hora_local,s);
+	vetor_3d focus_pos(0,0,20);
 	float rel_air_humid = 0.8;
 	float altitude = 70;
 	float temp_Kelvin = 393.0;
@@ -42,11 +43,11 @@ int main()
 	float J = corrected_irradiance(NDA, lat, hora_local, rel_air_humid, altitude, d, temp_Kelvin);
 
 	float delta = 0.0;
-	power = one_mirror_corrected_power(s, malha[0], J, mirror_area);
+	power = one_mirror_corrected_power(s, malha[0], focus_pos, J, mirror_area);
 	std::cout << "arraySize" << ";" << "power" << ";" << "delta" << std::endl;
 	for(int i = 2; i < (int) malha.size(); i+=2){
 		delta = 0.0;
-		delta = one_mirror_corrected_power(s, malha[i], J, mirror_area) + one_mirror_corrected_power(s, malha[i-1], J, mirror_area);
+		delta = one_mirror_corrected_power(s, malha[i], focus_pos, J, mirror_area) + one_mirror_corrected_power(s, malha[i-1], focus_pos, J, mirror_area);
 		power += delta;
 		std::cout << 1 + i << ";" << power << ";" << delta << std::endl;
 	}

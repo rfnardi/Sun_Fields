@@ -28,6 +28,7 @@ int main()
 
 	std::cout << "HORALOCAL" << ";" << "J" << ";"<< "POWER" << ";" << "ReflecPercent" << ";" << "ZEN" << ";" << "AZIM" << ";" << "Sz" << std::endl;
 	vetor_3d s(0,0,0);
+	vetor_3d focus_pos(0,0,20);
 	for (hora_local = 6.0; hora_local < 18; hora_local += 0.08){
 
 		sin_Alt = sin_Alt_calculation(NDA, lat, hora_local);
@@ -37,7 +38,7 @@ int main()
 
 		/* std::cout <<"Hora local: " << hora_local << " ; S_z: " << s.coord[2] << " ; J: " << J << std::endl; */
 
-		power = one_mirror_corrected_power(s, R, J, mirror_area);
+		power = one_mirror_corrected_power(s, R, focus_pos, J, mirror_area);
 
 		if (sin_Alt > 0.0){
 			std::cout 

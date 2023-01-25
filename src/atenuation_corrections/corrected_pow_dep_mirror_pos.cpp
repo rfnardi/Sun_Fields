@@ -15,6 +15,7 @@ int main()
 	float south_distance = 10.0;
 	float x_pos = -100.0;
 	vetor_3d s(0,0,0);
+	vetor_3d focus_pos(0,0,20);
 
 	s = get_sun_position(NDA, lat, hora_local,s);
 	float rel_air_humid = 0.8;
@@ -28,7 +29,7 @@ int main()
 	std::cout << "xpos" << ";" << "power" << ";" << "ReflPercent"<< std::endl;
 	while (x_pos < 100.1) {
 		mirror_place.reset_coord(x_pos,-south_distance,0.0);
-		power = one_mirror_corrected_power(s, mirror_place, J, mirror_area);
+		power = one_mirror_corrected_power(s, mirror_place, focus_pos, J, mirror_area);
 		std::cout << x_pos << ";" << power << ";" << (100*power)/J << std::endl;
 		x_pos += 0.1;
 	}
