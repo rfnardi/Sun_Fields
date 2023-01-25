@@ -14,6 +14,7 @@ int main()
 	float local_time = 12.0;
 	vetor_3d mirror_place(0,0,0);
 	vetor_3d s(0,0,0);
+	vetor_3d focus_pos(0,0,20);
 
 	float rel_air_humid = 0.001; 
 	float altitude = 70; 
@@ -28,7 +29,7 @@ int main()
 	std::cout << "zpos" << ";" << "power" <<  std::endl;
 	while (z_pos > -20.1) {
 		mirror_place.reset_coord(0.0,-south_distance,z_pos);
-		power = one_mirror_corrected_power(s, mirror_place, J, mirror_area);
+		power = one_mirror_corrected_power(s, mirror_place, focus_pos, J, mirror_area);
 		std::cout << -z_pos << ";" << power << std::endl;
 		z_pos -= 0.1;
 	}

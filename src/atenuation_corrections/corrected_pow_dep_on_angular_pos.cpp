@@ -16,6 +16,7 @@ int main()
 	float r = 10.0;
 	float theta = M_PI;
 	vetor_3d s(0,0,0);
+	vetor_3d focus_pos(0,0,20);
 
 	float rel_air_humid = 0.001; 
 	float altitude = 70; 
@@ -31,7 +32,7 @@ int main()
 	std::cout << "thetaDeg" << ";" << "power" << ";" << "ReflecPercent" << std::endl;
 	while (theta < 2*M_PI) {
 		mirror_place.transf_coord_from_spher_to_cart(r,theta,M_PI/2);
-		power = one_mirror_corrected_power(s, mirror_place, J, mirror_area);
+		power = one_mirror_corrected_power(s, mirror_place, focus_pos, J, mirror_area);
 		/* std::cout << rad_to_deg(theta) - 3*90 << ";" << power << ";" << 100*power/J << std::endl; */
 		refl_power.push_back(power);
 		angles_deg.push_back(rad_to_deg(theta) - 3*90);

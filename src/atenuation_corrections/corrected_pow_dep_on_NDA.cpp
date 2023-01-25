@@ -24,6 +24,7 @@ int main()
 	float J =0.0;
 
 	vetor_3d s(0,0,0);
+	vetor_3d focus_pos(0,0,20);
 
 	float theta_z = 0.0;
 	std::cout << "NDA" << ";" << "J" << ";" << "POWER" << ";" << "ReflPercent" << ";" << "ZEN" << ";" << "Sz" << std::endl;
@@ -34,7 +35,7 @@ int main()
 		theta_z = acos(s.coord[2]);
 		s =	sun_pos_in_cartesian_coord(sin_Alt, sin_Azim, s); 
 		J = corrected_irradiance(NDA, lat, hora_local, rel_air_humid, altitude, d, temp_Kelvin);
-		power = one_mirror_corrected_power(s, R, J, mirror_area);
+		power = one_mirror_corrected_power(s, R, focus_pos, J, mirror_area);
 
 		std::cout << NDA << ";" << J << ";" << power << ";" << 100*power/J << ";"<< theta_z << ";" <<  s.coord[2] << std::endl;
 	}
