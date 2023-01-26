@@ -6,4 +6,7 @@
 \beamer@subsectionintoc {1}{5}{Fotovoltaica e CSP - Comparativo\unhbox \voidb@x \cleaders \hbox to0.8em{\hss .\hss }\hfill \kern \z@ 9}{13}{0}{1}
 \beamer@sectionintoc {2}{Modelo de Torre Central\unhbox \voidb@x \cleaders \hbox to0.8em{\hss .\hss }\hfill \kern \z@ 13}{17}{0}{2}
 \beamer@subsectionintoc {2}{1}{Características gerais\unhbox \voidb@x \cleaders \hbox to0.8em{\hss .\hss }\hfill \kern \z@ 13}{17}{0}{2}
-\beamer@subsectionintoc {2}{2}{Parâmetros envolvidos na produção de energia\unhbox \voidb@x \cleaders \hbox to0.8em{\hss .\hss }\hfill \kern \z@ 14}{25}{0}{2}
+\beamer@subsectionintoc {2}{2}{Parâmetros envolvidos na produção de energia\unhbox \voidb@x \cleaders \hbox to0.8em{\hss .\hss }\hfill \kern \z@ 15}{26}{0}{2}
+\beamer@subsectionintoc {2}{3}{Atenuação da radiação por absorção atmosférica\unhbox \voidb@x \cleaders \hbox to0.8em{\hss .\hss }\hfill \kern \z@ 16}{29}{0}{2}
+\beamer@subsectionintoc {2}{4}{Distribuição espacial da potência refletida\unhbox \voidb@x \cleaders \hbox to0.8em{\hss .\hss }\hfill \kern \z@ 21}{34}{0}{2}
+\beamer@subsectionintoc {2}{5}{Variação da potência com a altura da torre\unhbox \voidb@x \cleaders \hbox to0.8em{\hss .\hss }\hfill \kern \z@ 33}{46}{0}{2}

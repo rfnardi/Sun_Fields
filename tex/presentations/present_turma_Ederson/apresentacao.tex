@@ -10,8 +10,6 @@
 \institute{UFSB}
 \date{Janeiro/2023}
 
-
-
 \begin{document}
 
 {
@@ -178,7 +176,7 @@
 
 	\begin{figure}[ht]
 		\centering
-		\includegraphics[scale=0.65]{./parab_dishes_1.jpeg}
+		\includegraphics[scale=0.62]{./parab_dishes_1.jpeg}
 	\end{figure}
 
 \end{frame}
@@ -250,7 +248,14 @@
 
 \subsection{Características gerais}
 
-\begin{frame}
+\begin{frame}%esquema usina
+	\begin{figure}
+		\centering
+		\includegraphics[scale=0.268]{./sistema_usina.png}
+	\end{figure}
+\end{frame}
+
+\begin{frame}%Resumo do estado da arte das 'Solar Power Towers'
 	\begin{itemize}
 		\item Princípio de funcionamento: uma malha de espelhos (heliostatos)
 			refletem a luz do sol num único ponto focal. O calor produzido é
@@ -280,8 +285,7 @@
 				\item Latitude
 				\item Altitude
 				\item Vapor de água
-				\item Poeira em suspensão
-				\item Aerosol
+				\item Poeira em suspensão/Aerosol
 				\item Absorção por ar seco
 			\end{itemize} \pause
 			\bigskip
@@ -299,6 +303,8 @@
 			\end{itemize}
 	\end{itemize}
 \end{frame}
+
+\subsection{Atenuação da radiação por absorção atmosférica}
 
 \begin{frame}%Iqbal e caminho optico na atmosfera
 	Para modelagem de absorção atmosférica usamos a teoria exposta no livro ``\emph{An
@@ -446,10 +452,12 @@
 
 \end{frame}
 
+\subsection{Distribuição espacial da potência refletida}
+
 \begin{frame}%Square grid at 12am
 	\begin{figure}[htpb]
 		\centering
-		\includegraphics[width=0.8\textwidth]{../../plots/tower_shadow_correction/square_grid_12am.png}
+		\includegraphics[width=0.7\textwidth]{../../plots/tower_shadow_correction/square_grid_12am.png}
 		% \caption{Potência refletida numa torre de $20$m de altura ao meio dia}
 		\label{fig:heliost_field_at_12pm}
 	\end{figure}
@@ -458,19 +466,117 @@
 \begin{frame}%Square grid at 8am
 	\begin{figure}[htpb]
 		\centering
-		\includegraphics[width=0.8\textwidth]{../../plots/tower_shadow_correction/square_grid_8am.png}
+		\includegraphics[width=0.7\textwidth]{../../plots/tower_shadow_correction/square_grid_8am.png}
 		% \caption{Potência refletida numa torre de $20$m de altura ao meio dia}
 		\label{fig:heliost_field_at_8am}
 	\end{figure}
 \end{frame}
 
-\begin{frame}%Média ao longo do dia
+\begin{frame}%Média ao longo do dia torre 20m
 	\begin{figure}[htpb]
 		\centering
-		\includegraphics[width=0.8\textwidth]{../../plots/tower_shadow_correction/square_grid_along_day.png}
+		\includegraphics[width=0.7\textwidth]{../../plots/tower_shadow_correction/square_grid_along_day_20mfull_grid.png}
 		% \caption{Potência refletida numa torre de $20$m de altura ao meio dia}
-		\label{fig:heliost_field_average}
+		\label{fig:heliost_field_average_20m}
 	\end{figure}
+\end{frame}
+
+\begin{frame}%Média ao longo do dia torre 20m - top 5%
+	\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=0.7\textwidth]{../../plots/tower_shadow_correction/square_grid_along_day_20mtop_5_most_powerfull.png}
+		% \caption{Potência refletida numa torre de $20$m de altura ao meio dia}
+		\label{fig:heliost_field_average_20m_top5}
+	\end{figure}
+\end{frame}
+
+\begin{frame}%Média ao longo do dia torre 40m
+	\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=0.7\textwidth]{../../plots/tower_shadow_correction/square_grid_along_day_40mfull_grid.png}
+		% \caption{Potência refletida numa torre de $20$m de altura ao meio dia}
+		\label{fig:heliost_field_average_40m}
+	\end{figure}
+\end{frame}
+
+\begin{frame}%Média ao longo do dia torre 40m - top 5%
+	\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=0.7\textwidth]{../../plots/tower_shadow_correction/square_grid_along_day_40mtop_5_most_powerfull.png}
+		% \caption{Potência refletida numa torre de $20$m de altura ao meio dia}
+		\label{fig:heliost_field_average_40m_top5}
+	\end{figure}
+\end{frame}
+
+\begin{frame}%Média ao longo do dia torre 60m
+	\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=0.7\textwidth]{../../plots/tower_shadow_correction/square_grid_along_day_60mfull_grid.png}
+		% \caption{Potência refletida numa torre de $20$m de altura ao meio dia}
+		\label{fig:heliost_field_average_60m_top5}
+	\end{figure}
+\end{frame}
+
+\begin{frame}%Média ao longo do dia torre 20m - top 5%
+	\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=0.7\textwidth]{../../plots/tower_shadow_correction/square_grid_along_day_60mtop_5_most_powerfull.png}
+		% \caption{Potência refletida numa torre de $20$m de altura ao meio dia}
+		\label{fig:heliost_field_average_60m}
+	\end{figure}
+\end{frame}
+
+\begin{frame}%Média ao longo do dia torre 70m - top 5%
+	\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=0.7\textwidth]{../../plots/tower_shadow_correction/square_grid_along_day_70mfull_grid.png}
+		% \caption{Potência refletida numa torre de $20$m de altura ao meio dia}
+		\label{fig:heliost_field_average_60m}
+	\end{figure}
+\end{frame}
+
+\begin{frame}%Média ao longo do dia torre 70m - top 5%
+	\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=0.7\textwidth]{../../plots/tower_shadow_correction/square_grid_along_day_70mtop_5_most_powerfull.png}
+		% \caption{Potência refletida numa torre de $20$m de altura ao meio dia}
+		\label{fig:heliost_field_average_60m}
+	\end{figure}
+\end{frame}
+
+\begin{frame}%Média ao longo do dia torre 80m
+	\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=0.7\textwidth]{../../plots/tower_shadow_correction/square_grid_along_day_80mfull_grid.png}
+		% \caption{Potência refletida numa torre de $20$m de altura ao meio dia}
+		\label{fig:heliost_field_average_80m}
+	\end{figure}
+\end{frame}
+
+\begin{frame}%Média ao longo do dia torre 80m - top 5%
+	\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=0.7\textwidth]{../../plots/tower_shadow_correction/square_grid_along_day_80mtop_5_most_powerfull.png}
+		% \caption{Potência refletida numa torre de $20$m de altura ao meio dia}
+		\label{fig:heliost_field_average_80m}
+	\end{figure}
+\end{frame}
+
+\subsection{Variação da potência com a altura da torre}
+
+\begin{frame}%Tabela - altura da torre
+	\begin{table}
+		\begin{tabular}{ccc}
+			\toprule
+			Altura da Torre (m) & Heliostatos $5\%$ mais potentes & Potência total (kW) \\
+			\midrule
+			20 & 3080 & 1864,51 \\ 
+			40 & 5803 & 3543,20 \\ 
+			60 & 6580 & 4044,84 \\ 
+			70 & 6462 & 3984,15 \\ 
+			80 & 6283 & 3881,83 \\ 
+		\end{tabular}
+	\end{table}
 \end{frame}
 
 \end{document}
