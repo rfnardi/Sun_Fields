@@ -18,7 +18,7 @@ int main()
 
 
 	//setting tower parameters:
-	vetor_3d focus_pos(0,0,20);
+	vetor_3d focus_pos(0,0,70);
 	vetor_3d *focus_pos_ptr = &focus_pos;
 	float tower_radius = 3.0, *tower_radius_ptr = &tower_radius;
 	float tower_height = focus_pos.coord[2], *tower_height_ptr = &tower_height;
@@ -112,7 +112,7 @@ int main()
 
 	std::cout << "Coletando trabalhos." << std::endl;
 	
-	std::ofstream outfile("dados.dat");
+	std::ofstream outfile("average_tower_70m.dat");
 	outfile  << "i,j,x,y,power" << std::endl;
 
 	std::string child_file_names[num_children];
