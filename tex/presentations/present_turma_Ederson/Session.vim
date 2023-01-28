@@ -27,6 +27,7 @@ silent! normal! zE
 58,70fold
 72,85fold
 89,102fold
+109,118fold
 104,118fold
 122,139fold
 141,161fold
@@ -38,30 +39,33 @@ silent! normal! zE
 217,230fold
 232,245fold
 184,245fold
-251,256fold
-258,277fold
-281,305fold
-309,351fold
-353,377fold
-379,403fold
-405,428fold
-430,453fold
+251,257fold
+259,278fold
+282,306fold
+310,352fold
+354,378fold
+380,404fold
+406,429fold
 309,453fold
-457,464fold
-466,473fold
-475,482fold
-475,482fold
-484,491fold
-493,500fold
-502,509fold
-511,518fold
-520,527fold
-529,536fold
-538,545fold
-547,554fold
-556,563fold
-457,563fold
-567,580fold
+309,454fold
+458,465fold
+467,474fold
+476,483fold
+475,483fold
+485,492fold
+494,501fold
+503,510fold
+512,519fold
+521,528fold
+530,537fold
+539,546fold
+548,555fold
+557,564fold
+458,564fold
+568,581fold
+585,602fold
+606,614fold
+619,622fold
 let &fdl = &fdl
 17
 normal! zc
@@ -73,6 +77,8 @@ normal! zc
 normal! zc
 89
 normal! zc
+104
+normal! zo
 104
 normal! zc
 122
@@ -99,60 +105,60 @@ normal! zc
 normal! zc
 251
 normal! zc
-258
+259
 normal! zc
-281
+282
 normal! zc
 309
 normal! zo
 309
-normal! zc
-353
-normal! zc
-379
-normal! zc
-405
-normal! zc
-430
-normal! zc
-457
 normal! zo
-457
+309
 normal! zc
-466
+458
+normal! zo
+458
+normal! zc
+467
 normal! zc
 475
 normal! zo
-484
+485
 normal! zc
-493
+494
 normal! zc
-502
+503
 normal! zc
-511
+512
 normal! zc
-520
+521
 normal! zc
-529
+530
 normal! zc
-538
+539
 normal! zc
-547
+548
 normal! zc
-556
+557
 normal! zc
-457
+458
 normal! zc
-567
+568
 normal! zc
-let s:l = 581 - ((333 * winheight(0) + 16) / 32)
+585
+normal! zc
+606
+normal! zc
+619
+normal! zc
+let s:l = 623 - ((344 * winheight(0) + 16) / 32)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 581
+keepjumps 623
 normal! 0
 tabnext 1
-badd +482 apresentacao.tex
+badd +619 apresentacao.tex
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif
