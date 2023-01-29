@@ -10,5 +10,6 @@
 \beamer@subsectionintoc {2}{3}{Atenuação da radiação por absorção atmosférica\unhbox \voidb@x \cleaders \hbox to0.8em{\hss .\hss }\hfill \kern \z@ 16}{29}{0}{2}
 \beamer@subsectionintoc {2}{4}{Distribuição espacial da potência refletida\unhbox \voidb@x \cleaders \hbox to0.8em{\hss .\hss }\hfill \kern \z@ 21}{34}{0}{2}
 \beamer@subsectionintoc {2}{5}{Variação da potência com a altura da torre\unhbox \voidb@x \cleaders \hbox to0.8em{\hss .\hss }\hfill \kern \z@ 33}{46}{0}{2}
-\beamer@subsectionintoc {2}{6}{Perspectivas de desenvolvimento do mercado\footnote {\href {https://reader.elsevier.com/reader/sd/pii/S1364032121010923}{High temperature central tower plants for concentrated solar power: 2021 overview}}\unhbox \voidb@x \cleaders \hbox to0.8em{\hss .\hss }\hfill \kern \z@ 34}{47}{0}{2}
-\beamer@subsectionintoc {2}{7}{Próximas etapas\unhbox \voidb@x \cleaders \hbox to0.8em{\hss .\hss }\hfill \kern \z@ 35}{50}{0}{2}
+\beamer@subsectionintoc {2}{6}{Perspectivas de desenvolvimento do mercado\footnote {\href {https://reader.elsevier.com/reader/sd/pii/S1364032121010923}{High temperature central tower plants for concentrated solar power: 2021 overview}}\unhbox \voidb@x \cleaders \hbox to0.8em{\hss .\hss }\hfill \kern \z@ 34}{48}{0}{2}
+\beamer@subsectionintoc {2}{7}{Próximas etapas\unhbox \voidb@x \cleaders \hbox to0.8em{\hss .\hss }\hfill \kern \z@ 35}{51}{0}{2}
+\beamer@subsectionintoc {2}{8}{Produção de cerâmica: estimativa\unhbox \voidb@x \cleaders \hbox to0.8em{\hss .\hss }\hfill \kern \z@ 36}{55}{0}{2}
