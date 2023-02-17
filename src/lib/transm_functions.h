@@ -1,3 +1,6 @@
+#ifndef TRANSM_FUNCTIONS_H
+#define TRANSM_FUNCTIONS_H
+
 #include "bare_functions.h"
 
 float dry_air_opt_mass(float theta_z);
@@ -49,27 +52,4 @@ float corrected_irradiance(int NDA, float lat, float local_time, float rel_air_h
 //e quando o foco for Focus
 float one_mirror_corrected_power(vetor_3d s, vetor_3d R, vetor_3d Focus, float J, float mirror_area);
 
-class Heliostato {
-	public:
-		//posição do heliostato é determinada no construtor
-		vetor_3d pos;
-
-		//normal e ângulos azim e zenital são calculados no método 'set_normal'
-		vetor_3d normal;
-		float azim;
-		float zenit;
-
-		//dados necessários para estabelecer o movimento:
-		float measured_azim;
-		float measured_zenit;
-		float delta_azim;
-		float delta_zenit;
-
-		Heliostato(float x, float y, float z);
-		void set_normal(vetor_3d sun_pos, vetor_3d focus_pos);
-
-		//troca de informações com o arduino:
-		void measure_angles();
-		void set_movements(vetor_3d normal);
-
-};
+#endif /* end of include guard: TRANSM_FUNCTIONS_H */

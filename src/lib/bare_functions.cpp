@@ -4,25 +4,36 @@
 #define M_PI 3.14159265358979323846
 #include "bare_functions.h"
 
-	vetor_3d::vetor_3d(){
-		this->coord[0] = 0;	
-		this->coord[1] = 0;	
-		this->coord[2] = 0;	
+vetor_3d::vetor_3d(){
+	this->coord[0] = 0;	
+	this->coord[1] = 0;	
+	this->coord[2] = 0;	
+}
+
+vetor_3d::vetor_3d(float v_x, float v_y, float v_z){
+	this->coord[0] = v_x;	
+	this->coord[1] = v_y;	
+	this->coord[2] = v_z;	
+}
+
+float vetor_3d::scalar_prod(vetor_3d vetor_2){
+	float result = 0.0;
+	for (short i=0; i<3; i++) {
+		result += this->coord[i] * vetor_2.coord[i];
 	}
-	
-	vetor_3d::vetor_3d(float v_x, float v_y, float v_z){
-		this->coord[0] = v_x;	
-		this->coord[1] = v_y;	
-		this->coord[2] = v_z;	
-	}
-	
-	float vetor_3d::scalar_prod(vetor_3d vetor_2){
-		float result = 0.0;
-		for (short i=0; i<3; i++) {
-			result += this->coord[i] * vetor_2.coord[i];
-		}
-		return result;
-	}
+	return result;
+}
+
+vetor_3d vector_product(vetor_3d v1, vetor_3d v2, vetor_3d result){
+
+	float rx = v1.coord[1]*v2.coord[2] - v1.coord[2]*v2.coord[1];
+	float ry = v1.coord[2]*v2.coord[0] - v1.coord[0]*v2.coord[2];
+	float rz = v1.coord[0]*v2.coord[1] - v1.coord[1]*v2.coord[0];
+
+	result.reset_coord(rx, ry, rz);
+
+	return result;
+}
 
 void vetor_3d::get_unitary_vector(){
 	float norm = sqrt(pow(this->coord[0],2) + pow(this->coord[1],2) + pow(this->coord[2],2));
@@ -31,37 +42,43 @@ void vetor_3d::get_unitary_vector(){
 	this->coord[2] = this->coord[2]/norm; 
 }
 
-	void vetor_3d::reset_coord(float x, float y, float z){
-		this->coord[0] = x;
-		this->coord[1] = y;
-		this->coord[2] = z;
-	}
+void vetor_3d::reset_coord(float x, float y, float z){
+	this->coord[0] = x;
+	this->coord[1] = y;
+	this->coord[2] = z;
+}
 
-	void vetor_3d::invert_direction(){
-		this->coord[0] = -1*this->coord[0];
-		this->coord[1] = -1*this->coord[1];
-		this->coord[2] = -1*this->coord[2];
-	}
+void vetor_3d::invert_direction(){
+	this->coord[0] = -1*this->coord[0];
+	this->coord[1] = -1*this->coord[1];
+	this->coord[2] = -1*this->coord[2];
+}
 
-	vetor_3d vetor_3d::vector_sum(vetor_3d vetor_2, vetor_3d result){
-		result.coord[0] = this->coord[0] + vetor_2.coord[0];	
-		result.coord[1] = this->coord[1] + vetor_2.coord[1];	
-		result.coord[2] = this->coord[2] + vetor_2.coord[2];	
+vetor_3d vetor_3d::vector_sum(vetor_3d vetor_2, vetor_3d result){
+	result.coord[0] = this->coord[0] + vetor_2.coord[0];	
+	result.coord[1] = this->coord[1] + vetor_2.coord[1];	
+	result.coord[2] = this->coord[2] + vetor_2.coord[2];	
 
-		return result;
-	}
+	return result;
+}
 
-	void vetor_3d::log_coords(){
-		std::cout << "Coordenada x: "<< this->coord[0] << std::endl;
-		std::cout << "Coordenada y: "<< this->coord[1] << std::endl;
-		std::cout << "Coordenada z: "<< this->coord[2] << std::endl;
-	}
+void vetor_3d::multiply_by_scalar(float lambda){
+	this->coord[0] = this->coord[0]*lambda;
+	this->coord[1] = this->coord[1]*lambda;
+	this->coord[2] = this->coord[2]*lambda;
+}
 
-	void vetor_3d::transf_coord_from_spher_to_cart(float r, float theta_rad, float phi_rad){
-		this->coord[0] = r*sin(phi_rad)*cos(theta_rad);
-		this->coord[1] = r*sin(phi_rad)*sin(theta_rad);
-		this->coord[2] = r*cos(phi_rad);
-	}
+void vetor_3d::log_coords(){
+	std::cout << "Coordenada x: "<< this->coord[0] << std::endl;
+	std::cout << "Coordenada y: "<< this->coord[1] << std::endl;
+	std::cout << "Coordenada z: "<< this->coord[2] << std::endl;
+}
+
+void vetor_3d::transf_coord_from_spher_to_cart(float r, float theta_rad, float phi_rad){
+	this->coord[0] = r*sin(phi_rad)*cos(theta_rad);
+	this->coord[1] = r*sin(phi_rad)*sin(theta_rad);
+	this->coord[2] = r*cos(phi_rad);
+}
 
 
 
@@ -78,7 +95,7 @@ int NDA_calculation(int month_day, int month){
 }
 
 void log_entrada(int NDA, float latitude, float local_time){
-	
+
 	std::cout << "Latitude: " << latitude << std::endl;
 	/* std::cout << "Hora local: " << local_time << std::endl; */
 	std::cout << "NDA: "<< NDA << std::endl;
@@ -95,8 +112,8 @@ void log_sun_position(vetor_3d s){
 	std::cout << "Valor da Projeção norte-sul: "<< s.coord[1] << std::endl; //positivo ao norte
 }
 
-vetor_3d get_normal_vector(vetor_3d sun_pos, vetor_3d helios_pos, vetor_3d focus_pos, vetor_3d result){
-	
+vetor_3d get_normal_vector(vetor_3d sun_pos, vetor_3d mirror_pos, vetor_3d focus_pos, vetor_3d result){
+
 	sun_pos.get_unitary_vector();//normalizando vetor
 	focus_pos.invert_direction();
 	vetor_3d r = helios_pos.vector_sum(focus_pos, r);//posição a partir do foco
@@ -132,7 +149,7 @@ float deg_to_rad(float deg){ //transforma graus em radianos
 }
 
 float ang_hor_rad(float hora_local){
-	
+
 	float ang_hor_deg = (12.00 - hora_local)*15.00; //em graus 
 	return deg_to_rad(ang_hor_deg);
 }
@@ -219,12 +236,12 @@ float elliptic_correction_factor(int NDA){
 }
 
 vetor_3d get_sun_position(float NDA, float lat, float hora_local, vetor_3d result){
-		float sin_Alt = sin_Alt_calculation(NDA, lat, hora_local);
-		float sin_Azim = sin_Azim_calculation(NDA, lat, hora_local);
-		result = sun_pos_in_cartesian_coord(sin_Alt, sin_Azim, result);
+	float sin_Alt = sin_Alt_calculation(NDA, lat, hora_local);
+	float sin_Azim = sin_Azim_calculation(NDA, lat, hora_local);
+	result = sun_pos_in_cartesian_coord(sin_Alt, sin_Azim, result);
 
-		return result;
-	}
+	return result;
+}
 
 float one_mirror_power(vetor_3d s, vetor_3d R,vetor_3d focus_pos, int NDA){
 	/* std::cout << "Coordenadas de s unitário:" << std::endl; */

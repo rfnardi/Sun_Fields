@@ -1,3 +1,5 @@
+ #ifndef TABLE_FUNCTIONS_H_QD6AY3DP
+#define TABLE_FUNCTIONS_H_QD6AY3DP
 
 //extinction factor for gas mixture absorption 
 //tabela 6.13.1 Iqbal
@@ -15,3 +17,4 @@ float table_given_k_O(float lambda);
 //tabela 3.3.2 Iqbal
 double table_given_irradiance(float lambda_microns);
 
+#endif /* end of include guard: TABLE_FUNCTIONS_H_QD6AY3DP */

@@ -1,3 +1,7 @@
+#ifndef BARE_FUNCTIONS_H
+#define BARE_FUNCTIONS_H
+
+
 class vetor_3d {
 	public:
 	float coord[3];
@@ -16,6 +20,8 @@ class vetor_3d {
 
 	vetor_3d vector_sum(vetor_3d vetor_2, vetor_3d result);
 
+	void multiply_by_scalar(float lambda);
+
 	void log_coords();
 
 	void transf_coord_from_spher_to_cart(float r, float theta_rad, float phi_rad);
@@ -29,9 +35,11 @@ void log_angulos(float * sin_Alt_sin_Azim_Array );
 
 void log_sun_position(vetor_3d s);
 
-vetor_3d get_normal_vector(vetor_3d sun_pos, vetor_3d helios_pos, vetor_3d focus_pos, vetor_3d result);
-
 vetor_3d get_unitary_vector(vetor_3d v, vetor_3d result);
+
+vetor_3d vector_product(vetor_3d v1, vetor_3d v2, vetor_3d result);
+
+vetor_3d get_normal_vector(vetor_3d sun_pos, vetor_3d mirror_pos, vetor_3d focus_pos, vetor_3d result);
 
 float rad_to_deg(float rad);
 
@@ -64,3 +72,6 @@ float one_mirror_power(vetor_3d s, vetor_3d R, int NDA);
 
 //retorna true se o heliostato estiver na sombra da torre
 bool tower_shadow_cil_aprox(float tower_radius, float tower_height, vetor_3d helios_pos, vetor_3d sun);
+
+
+#endif /* end of include guard: BARE_FUNCTIONS_H */

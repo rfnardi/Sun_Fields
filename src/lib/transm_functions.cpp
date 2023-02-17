@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <cmath>
-/* #include "./bare_functions.h" */
+#include "./bare_functions.h"
 #include "./transm_functions.h"
 #include "./table_functions.h"
 
@@ -216,50 +216,3 @@ float one_mirror_corrected_power(vetor_3d s, vetor_3d R, vetor_3d Focus, float J
 
 	return J*n.scalar_prod(s)*mirror_area;
 }
-
-//-----------------------------------------------------------------------------------
-//--------------------------- Classe Heliostato -------------------------------------
-//-----------------------------------------------------------------------------------
-
-Heliostato::Heliostato(float x, float y, float z){
-	this->pos.coord[0] = x;
-	this->pos.coord[1] = y;
-	this->pos.coord[2] = z;
-
-	
-	//dados necessários para estabelecer o movimento:
-	this->measured_azim = 0.0;
-	this->measured_zenit = 0.0;
-	this->delta_azim = 0.0;
-	this->delta_zenit = 0.0;
-}
-
-//calcula a normal do espelho e os ângulos azimutal e zenital teóricos
-void Heliostato::set_normal(vetor_3d sun_pos, vetor_3d focus_pos){
-	this->normal = get_normal_vector(sun_pos, this->pos, focus_pos, this->normal);
-	//projeção no plano xy:
-	float normal_x = this->normal.coord[0];
-	float normal_y = this->normal.coord[1];
-	float norm_2d = sqrt(pow(normal_x,2) + pow(normal_y,2));
-	normal_x = normal_x/norm_2d;
-	normal_y = normal_y/norm_2d;
-
-	if (normal_x > 0) { acos(normal_y); }//vetor 2_dim no hemisfério leste
-	else if (normal_x < 0) { this->azim = (-1)*acos(normal_y) ;}//vetor 2_dim no hemisf oeste
-	else { this->azim = 0.0; }
-
-	this->zenit = acos(this->normal.coord[2]);
-}
-
-void Heliostato::set_movements(vetor_3d normal){
-	this->delta_azim = this->azim - this->measured_azim;
-	this->delta_zenit = this->zenit - this->measured_zenit;
-	//após calcular os valores dos deltas, enviá-los ao arduino para acionar os motores
-}
-
-// mexer nesse método para captar dados do potenciômetro com o arduino
-void Heliostato::measure_angles(){
-	this->measured_zenit = 0.0;
-	this->measured_azim = 0.0;
-}
-
