@@ -19,6 +19,20 @@ Heliostato::Heliostato(float x, float y, float z, float vert_axis_height, float 
 	this->delta_zenit = 0.0;
 }
 
+Heliostato::Heliostato(vetor_3d base_pos, float vert_axis_height, float mirror_height, float mirror_width){
+
+	this->base_pos = base_pos;
+	this->vert_axis_height = vert_axis_height;
+	this->mirror_height = mirror_height;
+	this->mirror_width = mirror_width;
+	
+	//dados necessários para estabelecer o movimento (all set to 0):
+	this->measured_azim = 0.0;
+	this->measured_zenit = 0.0;
+	this->delta_azim = 0.0;
+	this->delta_zenit = 0.0;
+}
+
 //calcula a normal do espelho e os ângulos azimutal e zenital teóricos
 void Heliostato::set_normal(vetor_3d sun_pos, vetor_3d focus_pos){
 	vetor_3d mirror_pos = this->base_pos;
@@ -27,7 +41,7 @@ void Heliostato::set_normal(vetor_3d sun_pos, vetor_3d focus_pos){
 	//projeção no plano xy:
 	float normal_x = this->normal.coord[0];
 	float normal_y = this->normal.coord[1];
-	float norm_2d = sqrt(pow(normal_x,2) + pow(normal_y,2));
+	float norm_2d = sqrt(std::pow(normal_x,2) + std::pow(normal_y,2));
 	normal_x = normal_x/norm_2d;
 	normal_y = normal_y/norm_2d;
 
@@ -57,7 +71,7 @@ vetor_3d Heliostato::pick_point_inside_mirror_region(float eta_par_unit, float x
 	vetor_3d eta;
 
 	{
-		float eta_x = 1/sqrt(1-pow(normal.coord[0]/normal.coord[1],2));
+		float eta_x = 1/sqrt(1-std::pow(normal.coord[0]/normal.coord[1],2));
 		float eta_y = -(normal.coord[0]/normal.coord[1])*eta_x;
 
 		eta.reset_coord(eta_x, eta_y, 0);

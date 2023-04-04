@@ -28,6 +28,7 @@ class Heliostato {
 
 	public:
 		Heliostato(float x, float y, float z, float vert_axis_height, float mirror_height, float mirror_width);
+		Heliostato(vetor_3d base_pos, float vert_axis_height, float mirror_height, float mirror_width);
 		void set_normal(vetor_3d sun_pos, vetor_3d focus_pos);
 
 		//troca de informações com sensores:
