@@ -10,8 +10,8 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-$argadd bare_functions.cpp
-edit bare_functions.cpp
+$argadd heliostato.cpp
+edit heliostato.cpp
 argglobal
 setlocal fdm=manual
 setlocal fde=0
@@ -23,14 +23,14 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 100 - ((0 * winheight(0) + 16) / 32)
+let s:l = 1 - ((0 * winheight(0) + 16) / 32)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 100
+keepjumps 1
 normal! 0
 tabnext 1
-badd +0 bare_functions.cpp
+badd +1 heliostato.cpp
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif

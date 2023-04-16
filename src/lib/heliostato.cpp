@@ -94,7 +94,7 @@ vetor_3d Heliostato::pick_point_inside_mirror_region(float eta_par_unit, float x
 	vetor_3d result;
 
 	result = mirror_center_pos.vector_sum(eta, result);
-	result = mirror_center_pos.vector_sum(xi, result);
+	result = result.vector_sum(xi, result);
 
 	return result;
 }
