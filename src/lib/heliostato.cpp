@@ -45,19 +45,11 @@ void Heliostato::set_normal(vetor_3d sun_pos, vetor_3d focus_pos){
 	normal_x = normal_x/norm_2d;
 	normal_y = normal_y/norm_2d;
 
-<<<<<<< HEAD
 	if (normal_x > 0) { std::acos(normal_y); }//vetor 2_dim no hemisfério leste
 	else if (normal_x < 0) { this->azim = (-1)*std::acos(normal_y) ;}//vetor 2_dim no hemisf oeste
 	else { this->azim = 0.0; }
 
 	this->zenit = std::acos(this->normal.coord[2]);
-=======
-	if (normal_x > 0) { acos(normal_y); }//vetor 2_dim no hemisfério leste
-	else if (normal_x < 0) { this->azim = (-1)*acos(normal_y) ;}//vetor 2_dim no hemisf oeste
-	else { this->azim = 0.0; }
-
-	this->zenit = acos(this->normal.coord[2]);
->>>>>>> 31f652d65432333ff09b2c2af77cc7bc92d0c3ee
 }
 
 void Heliostato::set_movements(vetor_3d normal){
