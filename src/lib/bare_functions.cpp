@@ -116,11 +116,12 @@ vetor_3d get_normal_vector(vetor_3d sun_pos, vetor_3d mirror_pos, vetor_3d focus
 
 	sun_pos.get_unitary_vector();//normalizando vetor
 	focus_pos.invert_direction();
-	vetor_3d r = helios_pos.vector_sum(focus_pos, r);//posição a partir do foco
+	vetor_3d r = mirror_pos.vector_sum(focus_pos, r);//posição a partir do foco
 	r.get_unitary_vector();//normalizando
 
 	r.invert_direction();
-	vetor_3d normal_vector = r.vector_sum(sun_pos, normal_vector);
+	vetor_3d normal_vector;
+	normal_vector = r.vector_sum(sun_pos, normal_vector);
 	normal_vector.get_unitary_vector();
 
 	result = normal_vector;
