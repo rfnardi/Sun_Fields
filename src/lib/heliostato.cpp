@@ -1,6 +1,6 @@
 
-#include "heliostato.h"
-#include "bare_functions.h"
+#include "./heliostato.h"
+#include "./bare_functions.h"
 #include <cmath>
 
 Heliostato::Heliostato(){
@@ -9,8 +9,8 @@ Heliostato::Heliostato(){
 	this->base_pos.coord[2] = 0;
 }
 
-void Heliostato::Setpick_point_inside_mirror_region(float eta_par_unit, float xi_par_unit){
-     float pick_point_inside_mirror_region[]={eta_par_unit, xi_par_unit};
+void Heliostato::set_point_inside_mirror_region(float eta_par_unit, float xi_par_unit){
+	float parameters[] = {eta_par_unit, xi_par_unit};
 }
 
 Heliostato::Heliostato(float x, float y, float z, float vert_axis_height, float mirror_height, float mirror_width){
