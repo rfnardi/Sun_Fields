@@ -75,7 +75,7 @@ void Heliostato::measure_angles(){
 }
 
 //os parâmetros eta_unit e xi_unit devem ser fornecidos com valores entre 0 e 1
-vetor_3d Heliostato::pick_point_inside_mirror_region(float eta_par_unit, float xi_par_unit){
+vetor_3d Heliostato::pick_point_inside_mirror_region(float eta_par_unit, float xi_par_unit, vetor_3d result){
 
 	//setting local base versors (eta and xi):
 	vetor_3d eta;
@@ -101,7 +101,7 @@ vetor_3d Heliostato::pick_point_inside_mirror_region(float eta_par_unit, float x
 	eta.multiply_by_scalar(eta_par);
 	xi.multiply_by_scalar(xi_par);
 
-	vetor_3d result;
+	/* vetor_3d result; */
 
 	result = mirror_center_pos.vector_sum(eta, result);
 	result = result.vector_sum(xi, result);

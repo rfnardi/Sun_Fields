@@ -23,15 +23,15 @@ class Heliostato {
 		float delta_azim;
 		float delta_zenit;
 
-		//os parâmetros eta_par_unit e xi_par_unit devem ser fornecidos com valores entre 0 e 1
-		vetor_3d pick_point_inside_mirror_region(float eta_par_unit, float xi_par_unit);
-
 	public:
 	  Heliostato();
 		Heliostato(float x, float y, float z, float vert_axis_height, float mirror_height, float mirror_width);
 		Heliostato(vetor_3d base_pos, float vert_axis_height, float mirror_height, float mirror_width);
 		void set_normal(vetor_3d sun_pos, vetor_3d focus_pos);
 		void set_point_inside_mirror_region(float eta_par_unit, float xi_par_unit);
+
+		//os parâmetros eta_par_unit e xi_par_unit devem ser fornecidos com valores entre 0 e 1
+		vetor_3d pick_point_inside_mirror_region(float eta_par_unit, float xi_par_unit, vetor_3d result);
 
 		//troca de informações com sensores:
 		void measure_angles();
