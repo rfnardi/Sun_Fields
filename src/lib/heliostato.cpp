@@ -100,13 +100,12 @@ vetor_3d Heliostato::pick_point_inside_mirror_region(float eta_par_unit, float x
 	vetor_3d mirror_center_pos = this->base_pos;
 	mirror_center_pos.coord[2] = mirror_center_pos.coord[2] + this->vert_axis_height;
 
-	float eta_par = this->mirror_width*(eta_par_unit - 0.5);
-	float xi_par = this->mirror_height*(xi_par_unit - 0.5);
+	//translação da origem do sistema de coordenadas dentro do plano:
+	float eta_par = this->mirror_width*(-1 + 2*eta_par_unit)/2;
+	float xi_par = this->mirror_height*(-1 + 2*xi_par_unit)/2;
 
 	eta.multiply_by_scalar(eta_par);
 	xi.multiply_by_scalar(xi_par);
-
-	/* vetor_3d result; */
 
 	result = mirror_center_pos.vector_sum(eta, result);
 	result = result.vector_sum(xi, result);
