@@ -78,18 +78,23 @@ void Heliostato::measure_angles(){
 vetor_3d Heliostato::pick_point_inside_mirror_region(float eta_par_unit, float xi_par_unit, vetor_3d result){
 
 	//setting local base versors (eta and xi):
+	//eta e xi formam uma base que expande o espaço linear do plano em que o espelho se encontra
 	vetor_3d eta;
 
 	{
-		float eta_x = 1/sqrt(1-std::pow(normal.coord[0]/normal.coord[1],2));
-		float eta_y = -(normal.coord[0]/normal.coord[1])*eta_x;
+		//coordenada x do vetor eta está sendo calculada como: 1 / sqrt(1 - (n_0/n_1)^2)
+		//eta é um vetor puramente na horizontal. Portanto possui coordenada z nula.
+		//eta é ortogonal à normal do espelho 
+		//eta é unitário
+		float eta_x = 1/sqrt(1+std::pow(this->normal.coord[0]/this->normal.coord[1],2));
+		float eta_y = -(this->normal.coord[0]/this->normal.coord[1])*eta_x;
 
 		eta.reset_coord(eta_x, eta_y, 0);
 		eta.get_unitary_vector();
 	}
 
 	vetor_3d xi;
-	xi = vector_product(normal, eta, xi);
+	xi = vector_product(this->normal, eta, xi);
 	xi.get_unitary_vector();
 
 	vetor_3d mirror_center_pos = this->base_pos;
