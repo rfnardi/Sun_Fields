@@ -7,7 +7,7 @@
 class Heliostato {
 	private:
 		//posição da base do heliostato e altura do eixo vertical são determinadas no construtor
-		vetor_3d base_pos;
+	
 		float vert_axis_height;
 		float mirror_height;//espelho retangular
 		float mirror_width;
@@ -23,15 +23,21 @@ class Heliostato {
 		float delta_azim;
 		float delta_zenit;
 
-		//os parâmetros eta_par_unit e xi_par_unit devem ser fornecidos com valores entre 0 e 1
-		vetor_3d pick_point_inside_mirror_region(float eta_par_unit, float xi_par_unit);
-
 	public:
-	    Heliostato();
+	  Heliostato();
+	  
+	  /*alterações para teste*****************************************************/
+	  
+	  	vetor_3d base_pos;//OBS:jogar no privado depois dos testes(posição da base do heliostato e altura do eixo vertical são determinadas no construtor)
+	  	
+	  	/*alterações para testes**************************************************/
 		Heliostato(float x, float y, float z, float vert_axis_height, float mirror_height, float mirror_width);
 		Heliostato(vetor_3d base_pos, float vert_axis_height, float mirror_height, float mirror_width);
 		void set_normal(vetor_3d sun_pos, vetor_3d focus_pos);
-		void Setpick_point_inside_mirror_region(float eta_par_unit, float xi_par_unit);
+		void set_point_inside_mirror_region(float eta_par_unit, float xi_par_unit);
+
+		//os parâmetros eta_par_unit e xi_par_unit devem ser fornecidos com valores entre 0 e 1
+		vetor_3d pick_point_inside_mirror_region(float eta_par_unit, float xi_par_unit, vetor_3d result);
 
 		//troca de informações com sensores:
 		void measure_angles();

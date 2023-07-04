@@ -1,6 +1,6 @@
-
-#include "heliostato.h"
-#include "bare_functions.h"
+#include <iostream>
+#include "./heliostato.h"
+#include "./bare_functions.h"
 #include <cmath>
 
 Heliostato::Heliostato(){
@@ -9,8 +9,12 @@ Heliostato::Heliostato(){
 	this->base_pos.coord[2] = 0;
 }
 
-void Heliostato::Setpick_point_inside_mirror_region(float eta_par_unit, float xi_par_unit){
-     float pick_point_inside_mirror_region[]={eta_par_unit, xi_par_unit};
+void Heliostato::set_point_inside_mirror_region(float eta_par_unit, float xi_par_unit){
+	float parameters[] = {eta_par_unit, xi_par_unit};
+		
+	
+		std::cout << "set_point_inside_mirror_region parameters: " << parameters << std::endl;
+	return;
 }
 
 Heliostato::Heliostato(float x, float y, float z, float vert_axis_height, float mirror_height, float mirror_width){
@@ -44,7 +48,7 @@ Heliostato::Heliostato(vetor_3d base_pos, float vert_axis_height, float mirror_h
 }
 
 //calcula a normal do espelho e os ângulos azimutal e zenital teóricos
-void Heliostato::set_normal(vetor_3d sun_pos, vetor_3d focus_pos){
+ void Heliostato::set_normal(vetor_3d sun_pos, vetor_3d focus_pos){
 	vetor_3d mirror_pos = this->base_pos;
 	mirror_pos.coord[2] = mirror_pos.coord[2] + vert_axis_height;
 	this->normal = get_normal_vector(sun_pos, mirror_pos, focus_pos, this->normal);
@@ -60,12 +64,21 @@ void Heliostato::set_normal(vetor_3d sun_pos, vetor_3d focus_pos){
 	else { this->azim = 0.0; }
 
 	this->zenit = std::acos(this->normal.coord[2]);
+	
+	std::cout << "normal x: " << normal_x << std::endl;
+	std::cout << "normal y: " << normal_y << std::endl;
+	 std::cout << "zenital: " << zenit << std::endl;
+	 std::cout << "azimutal: " << zenit << std::endl;
+	 
+	 return;// alteração
 }
 
 void Heliostato::set_movements(vetor_3d normal){
 	this->delta_azim = this->azim - this->measured_azim;
 	this->delta_zenit = this->zenit - this->measured_zenit;
 	//após calcular os valores dos deltas, enviá-los ao arduino para acionar os motores
+	
+	
 }
 
 // mexer nesse método para captar dados do potenciômetro com o arduino
@@ -75,33 +88,37 @@ void Heliostato::measure_angles(){
 }
 
 //os parâmetros eta_unit e xi_unit devem ser fornecidos com valores entre 0 e 1
-vetor_3d Heliostato::pick_point_inside_mirror_region(float eta_par_unit, float xi_par_unit){
+vetor_3d Heliostato::pick_point_inside_mirror_region(float eta_par_unit, float xi_par_unit, vetor_3d result){
 
 	//setting local base versors (eta and xi):
+	//eta e xi formam uma base que expande o espaço linear do plano em que o espelho se encontra
 	vetor_3d eta;
 
 	{
-		float eta_x = 1/sqrt(1-std::pow(normal.coord[0]/normal.coord[1],2));
-		float eta_y = -(normal.coord[0]/normal.coord[1])*eta_x;
+		//coordenada x do vetor eta está sendo calculada como: 1 / sqrt(1 - (n_0/n_1)^2)
+		//eta é um vetor puramente na horizontal. Portanto possui coordenada z nula.
+		//eta é ortogonal à normal do espelho 
+		//eta é unitário
+		float eta_x = 1/sqrt(1+std::pow(this->normal.coord[0]/this->normal.coord[1],2));
+		float eta_y = -(this->normal.coord[0]/this->normal.coord[1])*eta_x;
 
 		eta.reset_coord(eta_x, eta_y, 0);
 		eta.get_unitary_vector();
 	}
 
 	vetor_3d xi;
-	xi = vector_product(normal, eta, xi);
+	xi = vector_product(this->normal, eta, xi);
 	xi.get_unitary_vector();
 
 	vetor_3d mirror_center_pos = this->base_pos;
 	mirror_center_pos.coord[2] = mirror_center_pos.coord[2] + this->vert_axis_height;
 
-	float eta_par = this->mirror_width*(eta_par_unit - 0.5);
-	float xi_par = this->mirror_height*(xi_par_unit - 0.5);
+	//translação da origem do sistema de coordenadas dentro do plano:
+	float eta_par = this->mirror_width*(-1 + 2*eta_par_unit)/2;
+	float xi_par = this->mirror_height*(-1 + 2*xi_par_unit)/2;
 
 	eta.multiply_by_scalar(eta_par);
 	xi.multiply_by_scalar(xi_par);
-
-	vetor_3d result;
 
 	result = mirror_center_pos.vector_sum(eta, result);
 	result = result.vector_sum(xi, result);
