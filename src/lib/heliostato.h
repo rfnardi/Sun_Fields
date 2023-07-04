@@ -5,7 +5,7 @@
 #include "transm_functions.h"
 
 class Heliostato {
-	private:
+	public:
 		//posição da base do heliostato e altura do eixo vertical são determinadas no construtor
 	
 		float vert_axis_height;
@@ -23,7 +23,6 @@ class Heliostato {
 		float delta_azim;
 		float delta_zenit;
 
-	public:
 	  Heliostato();
 	  
 	  /*alterações para teste*****************************************************/
@@ -33,7 +32,7 @@ class Heliostato {
 	  	/*alterações para testes**************************************************/
 		Heliostato(float x, float y, float z, float vert_axis_height, float mirror_height, float mirror_width);
 		Heliostato(vetor_3d base_pos, float vert_axis_height, float mirror_height, float mirror_width);
-		void set_normal(vetor_3d sun_pos, vetor_3d focus_pos);
+		int set_normal(vetor_3d sun_pos, vetor_3d focus_pos);
 		void set_point_inside_mirror_region(float eta_par_unit, float xi_par_unit);
 
 		//os parâmetros eta_par_unit e xi_par_unit devem ser fornecidos com valores entre 0 e 1
