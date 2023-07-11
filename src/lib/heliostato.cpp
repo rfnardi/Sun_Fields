@@ -130,8 +130,21 @@ vetor_3d Heliostato::pick_point_inside_mirror_region(float eta_par_unit, float x
 Construir reta ao longo da direção dos raios do sol a partir do ponto de um dos espelhos, ver onde essa reta cruza o plano de outro espelho.
 contruir função que calcaula a intersenção de um plano com uma reta (retorna um vetor 3d)
 */
-vetor_3d intersec_plano_reta(vetor_3d pick_point_inside_mirror_region, vetor_3d result){
+vetor_3d intersec_plano_reta(vetor_3d vetor_origem_da_reta, vetor_3d sun_direction, vetor_3d normal_do_espelho_cortado_pela_reta, float d){
     
+	// equação da reta:
+	// bi-dimensional: y = a*x + b 
+	// 3-dimensional: (v_x, v_y, v_z)*t = p 
+	// Plano:
+	// a*x + b*y + c*z + d = 0 
+	// onde a, b e c são as componentes da normal do plano. E d é a constante que dá a altura plano.
+	//
+	// Afirmação: p é um ponto do plano!
+	// componente x de p: v_x*t
+	// componente y de p: v_y*t
+	// componente z de p: v_z*t
+	// a*(v_x*t) + b*(v_y*t) + c*(v_z*t) + d = 0 ---> encontrar o valor de t ---> escrever o valor de p.
+	//
     vetor_3d plano;
     vetor_3d intersec;
     vetor_3d reta = pick_point_inside_mirror_region;
