@@ -134,15 +134,15 @@ vetor_3d intersec_plano_reta(vetor_3d vetor_origem_da_reta, vetor_3d sun_directi
     
 	// equação da reta:
 	// bi-dimensional: y = a*x + b 
-	// 3-dimensional: (v_x, v_y, v_z)*t = p 
+	// 3-dimensional: (v_x, v_y, v_z)*t + vetor_origem = p 
 	// Plano:
 	// a*x + b*y + c*z + d = 0 
 	// onde a, b e c são as componentes da normal do plano. E d é a constante que dá a altura plano.
 	//
 	// Afirmação: p é um ponto do plano!
-	// componente x de p: v_x*t
-	// componente y de p: v_y*t
-	// componente z de p: v_z*t
+	// componente x de p: v_x*t + vetor_origem_x
+	// componente y de p: v_y*t + vetor_origem_y
+	// componente z de p: v_z*t + vetor_origem_z
 	// a*(v_x*t) + b*(v_y*t) + c*(v_z*t) + d = 0 ---> encontrar o valor de t ---> escrever o valor de p.
 	//
     vetor_3d plano;
