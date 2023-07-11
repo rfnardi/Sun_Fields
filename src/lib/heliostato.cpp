@@ -48,24 +48,29 @@ Heliostato::Heliostato(vetor_3d base_pos, float vert_axis_height, float mirror_h
 }
 
 //calcula a normal do espelho e os ângulos azimutal e zenital teóricos
- int Heliostato::set_normal(vetor_3d sun_pos, vetor_3d focus_pos){
-	 vetor_3d mirror_pos = this->base_pos;
-	 mirror_pos.coord[2] = mirror_pos.coord[2] + vert_axis_height;
-	 this->normal = get_normal_vector(sun_pos, mirror_pos, focus_pos, this->normal);
-	 //projeção no plano xy:
-	 float normal_x = this->normal.coord[0];
-	 float normal_y = this->normal.coord[1];
-	 float norm_2d = sqrt(std::pow(normal_x,2) + std::pow(normal_y,2));
-	 normal_x = normal_x/norm_2d;
-	 normal_y = normal_y/norm_2d;
+ void Heliostato::set_normal(vetor_3d sun_pos, vetor_3d focus_pos){
+	vetor_3d mirror_pos = this->base_pos;
+	mirror_pos.coord[2] = mirror_pos.coord[2] + vert_axis_height;
+	this->normal = get_normal_vector(sun_pos, mirror_pos, focus_pos, this->normal);
+	//projeção no plano xy:
+	float normal_x = this->normal.coord[0];
+	float normal_y = this->normal.coord[1];
+	float norm_2d = sqrt(std::pow(normal_x,2) + std::pow(normal_y,2));
+	normal_x = normal_x/norm_2d;
+	normal_y = normal_y/norm_2d;
 
-	 if (normal_x > 0) { std::acos(normal_y); }//vetor 2_dim no hemisfério leste
-	 else if (normal_x < 0) { this->azim = (-1)*std::acos(normal_y) ;}//vetor 2_dim no hemisf oeste
-	 else { this->azim = 0.0; }
+	if (normal_x > 0) { std::acos(normal_y); }//vetor 2_dim no hemisfério leste
+	else if (normal_x < 0) { this->azim = (-1)*std::acos(normal_y) ;}//vetor 2_dim no hemisf oeste
+	else { this->azim = 0.0; }
 
-	 this->zenit = std::acos(this->normal.coord[2]);
-
-	 return 0;// alteração
+	this->zenit = std::acos(this->normal.coord[2]);
+	
+	std::cout << "normal x: " << normal_x << std::endl;
+	std::cout << "normal y: " << normal_y << std::endl;
+	 std::cout << "zenital: " << zenit << std::endl;
+	 std::cout << "azimutal: " << zenit << std::endl;
+	 
+	 return;// alteração
 }
 
 void Heliostato::set_movements(vetor_3d normal){
@@ -87,16 +92,19 @@ vetor_3d Heliostato::pick_point_inside_mirror_region(float eta_par_unit, float x
 
 	//setting local base versors (eta and xi):
 	//eta e xi formam uma base que expande o espaço linear do plano em que o espelho se encontra
+	vetor_3d eta;
 
-	//coordenada x do vetor eta está sendo calculada como: 1 / sqrt(1 - (n_0/n_1)^2)
-	//eta é um vetor puramente na horizontal. Portanto possui coordenada z nula.
-	//eta é ortogonal à normal do espelho 
-	//eta é unitário
-	float eta_x = 1/sqrt(1+std::pow(this->normal.coord[0]/this->normal.coord[1],2));
-	float eta_y = -(this->normal.coord[0]/this->normal.coord[1])*eta_x;
+	{
+		//coordenada x do vetor eta está sendo calculada como: 1 / sqrt(1 - (n_0/n_1)^2)
+		//eta é um vetor puramente na horizontal. Portanto possui coordenada z nula.
+		//eta é ortogonal à normal do espelho 
+		//eta é unitário
+		float eta_x = 1/sqrt(1+std::pow(this->normal.coord[0]/this->normal.coord[1],2));
+		float eta_y = -(this->normal.coord[0]/this->normal.coord[1])*eta_x;
 
-	vetor_3d eta(eta_x, eta_y, 0);
-	eta.get_unitary_vector();
+		eta.reset_coord(eta_x, eta_y, 0);
+		eta.get_unitary_vector();
+	}
 
 	vetor_3d xi;
 	xi = vector_product(this->normal, eta, xi);
@@ -116,4 +124,28 @@ vetor_3d Heliostato::pick_point_inside_mirror_region(float eta_par_unit, float x
 	result = result.vector_sum(xi, result);
 
 	return result;
+}
+
+/*
+Construir reta ao longo da direção dos raios do sol a partir do ponto de um dos espelhos, ver onde essa reta cruza o plano de outro espelho.
+contruir função que calcaula a intersenção de um plano com uma reta (retorna um vetor 3d)
+*/
+vetor_3d intersec_plano_reta(vetor_3d pick_point_inside_mirror_region, vetor_3d result){
+    
+    vetor_3d plano;
+    vetor_3d intersec;
+    vetor_3d reta = pick_point_inside_mirror_region;
+    
+   plano.coord[0] = 1;
+   plano.coord[1] = 1;
+   plano.coord[2] = 1;
+    
+   intersec.coord[0] = plano.coord[0]* reta.coord[0];
+   intersec.coord[1] = plano.coord[1]* reta.coord[1];
+   intersec.coord[2] = plano.coord[2]* reta.coord[2];
+   
+   result = intersec;
+
+    	return result;
+    	
 }
