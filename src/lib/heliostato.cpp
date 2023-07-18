@@ -67,7 +67,7 @@ Heliostato::Heliostato(vetor_3d base_pos, float vert_axis_height, float mirror_h
 	
 	std::cout << "normal x: " << normal_x << std::endl;
 	std::cout << "normal y: " << normal_y << std::endl;
-	 std::cout << "zenital: " << zenit << std::endl;
+	std::cout << "zenital: " << zenit << std::endl;
 	 std::cout << "azimutal: " << zenit << std::endl;
 	 
 	 return;// alteração
@@ -131,12 +131,12 @@ Construir reta ao longo da direção dos raios do sol a partir do ponto de um do
 contruir função que calcaula a intersenção de um plano com uma reta (retorna um vetor 3d)
 */
 vetor_3d intersec_plano_reta(vetor_3d vetor_origem_da_reta, vetor_3d sun_direction, vetor_3d normal_do_espelho_cortado_pela_reta, float d){
-    
-    vetor_3d result_p;
-    
+
+	vetor_3d result_p;
+
 	// equação da reta:
 	// bi-dimensional: y = a*x + b 
-	// 3-dimensional: (v_x, v_y, v_z)*t + vetor_origem = p 
+	// 3-dimensional: (v_x, v_y, v_z)*t + V_o = p 
 	// Plano:
 	// a*x + b*y + c*z + d = 0 
 	// onde a, b e c são as componentes da normal do plano. E d é a constante que dá a altura plano.
@@ -145,46 +145,40 @@ vetor_3d intersec_plano_reta(vetor_3d vetor_origem_da_reta, vetor_3d sun_directi
 	// componente x de p: v_x*t + vetor_origem_x
 	// componente y de p: v_y*t + vetor_origem_y
 	// componente z de p: v_z*t + vetor_origem_z
-	// a*(v_x*t) + b*(v_y*t) + c*(v_z*t) + d = 0 ---> encontrar o valor de t ---> escrever o valor de p.
+	// a*(v_x*t + V_o_x) + b*(v_y*t + V_o_y) + c*(v_z*t + V_o_z) + d = 0 ---> encontrar o valor de t ---> escrever o valor de p.
 	//
-   
-/****************************************************************
-ex.1) 
-plano 2x+3y-5z=8
-reta <2,0,1> +t<1,3,-2>
-t=3/7
 
-ex.2) 
-plano 2x+3y-5z=8
-reta <1,3,5> +t<-5,4,-4>
-t=0
+	/****************************************************************
+		ex.1) 
+		plano 2x+3y-5z=8
+		reta <2,0,1> +t<1,3,-2> = P
+		t=3/7
 
-ex.3) 
-plano 3x-9y+2z=7
-reta <1,2,1> +t<-2,0,1>
-t=-5 
-*******************************************************************/
-   d = 7; 
-   
-   vetor_origem_da_reta ={0,0,0};//x,y,z
-   vetor_3d plano ={3,-9,2}; //a,b,c,d
-   vetor_3d reta_coord ={1,2,1}; //x,y,z
-   vetor_3d reta_t ={-2,0,1}; //t_x,t_y,t_z
-   float intersec[2];
-   
-   //calcula o valor de t
-   for(int i=0; i<3;i++){
-      
-    intersec[0] += plano.coord[i] *(reta_coord.coord[i] + vetor_origem_da_reta.coord [i]); 
-    intersec[1] += plano.coord [i]*reta_t.coord [i];
-    
-   }
-   
- float result_t = ((intersec[0]-d)/intersec[1])*-1;
- 
- //calcula as coordenadas do ponto p
-  for(int i=0; i<3;i++) result_p.coord[i] = reta_coord.coord[i]+(reta_t.coord [i]*result_t); 
+		ex.2) 
+		plano 2x+3y-5z=8
+		reta <1,3,5> +t<-5,4,-4> = P
+		t=0
 
-    	return result_p ;
-    	
+		ex.3) 
+		plano 3x-9y+2z=7
+		reta <1,2,1> +t<-2,0,1> = P
+		t=-5 
+	 *******************************************************************/
+	d = 7; 
+
+	vetor_3d normal_do_plano(3,-9,2); //a,b,c,d
+	vetor_3d origem_da_reta(1,2,1); //x,y,z
+	vetor_3d direcao_da_reta(-2,0,1); //t_x,t_y,t_z
+
+	//calcula o valor de t
+	float A = normal_do_plano.scalar_prod(direcao_da_reta);
+	float B = normal_do_plano.scalar_prod(origem_da_reta);
+	float t = -(d + B)/A;
+
+	// calcula o ponto P em que a reta corta o plano do espelho:
+	direcao_da_reta.multiply_by_scalar(t);
+	vetor_3d P(0,0,0);
+	origem_da_reta.vector_sum(direcao_da_reta, P);
+
+	return P ;
 }
