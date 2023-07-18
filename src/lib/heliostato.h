@@ -44,7 +44,7 @@ class Heliostato {
 		void set_movements(vetor_3d normal);
 		
 		//calcula a intersenção de um plano com uma reta (retorna um vetor 3d)
-		vetor_3d intersec_plano_reta(vetor_3d result);
+	vetor_3d intersec_plano_reta(vetor_3d vetor_origem_da_reta, vetor_3d sun_direction, vetor_3d normal_do_espelho_cortado_pela_reta, float d);
 
 };
 

@@ -132,6 +132,8 @@ contruir função que calcaula a intersenção de um plano com uma reta (retorna
 */
 vetor_3d intersec_plano_reta(vetor_3d vetor_origem_da_reta, vetor_3d sun_direction, vetor_3d normal_do_espelho_cortado_pela_reta, float d){
     
+    vetor_3d result_p;
+    
 	// equação da reta:
 	// bi-dimensional: y = a*x + b 
 	// 3-dimensional: (v_x, v_y, v_z)*t + vetor_origem = p 
@@ -145,20 +147,44 @@ vetor_3d intersec_plano_reta(vetor_3d vetor_origem_da_reta, vetor_3d sun_directi
 	// componente z de p: v_z*t + vetor_origem_z
 	// a*(v_x*t) + b*(v_y*t) + c*(v_z*t) + d = 0 ---> encontrar o valor de t ---> escrever o valor de p.
 	//
-    vetor_3d plano;
-    vetor_3d intersec;
-    vetor_3d reta = pick_point_inside_mirror_region;
-    
-   plano.coord[0] = 1;
-   plano.coord[1] = 1;
-   plano.coord[2] = 1;
-    
-   intersec.coord[0] = plano.coord[0]* reta.coord[0];
-   intersec.coord[1] = plano.coord[1]* reta.coord[1];
-   intersec.coord[2] = plano.coord[2]* reta.coord[2];
    
-   result = intersec;
+/****************************************************************
+ex.1) 
+plano 2x+3y-5z=8
+reta <2,0,1> +t<1,3,-2>
+t=3/7
 
-    	return result;
+ex.2) 
+plano 2x+3y-5z=8
+reta <1,3,5> +t<-5,4,-4>
+t=0
+
+ex.3) 
+plano 3x-9y+2z=7
+reta <1,2,1> +t<-2,0,1>
+t=-5 
+*******************************************************************/
+   d = 7; 
+   
+   vetor_origem_da_reta ={0,0,0};//x,y,z
+   vetor_3d plano ={3,-9,2}; //a,b,c,d
+   vetor_3d reta_coord ={1,2,1}; //x,y,z
+   vetor_3d reta_t ={-2,0,1}; //t_x,t_y,t_z
+   float intersec[2];
+   
+   //calcula o valor de t
+   for(int i=0; i<3;i++){
+      
+    intersec[0] += plano.coord[i] *(reta_coord.coord[i] + vetor_origem_da_reta.coord [i]); 
+    intersec[1] += plano.coord [i]*reta_t.coord [i];
+    
+   }
+   
+ float result_t = ((intersec[0]-d)/intersec[1])*-1;
+ 
+ //calcula as coordenadas do ponto p
+  for(int i=0; i<3;i++) result_p.coord[i] = reta_coord.coord[i]+(reta_t.coord [i]*result_t); 
+
+    	return result_p ;
     	
 }
