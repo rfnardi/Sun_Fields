@@ -164,21 +164,21 @@ vetor_3d intersec_plano_reta(vetor_3d vetor_origem_da_reta, vetor_3d sun_directi
 		reta <1,2,1> +t<-2,0,1> = P
 		t=-5 
 	 *******************************************************************/
-	d = 7; 
 
-	vetor_3d normal_do_plano(3,-9,2); //a,b,c,d
-	vetor_3d origem_da_reta(1,2,1); //x,y,z
-	vetor_3d direcao_da_reta(-2,0,1); //t_x,t_y,t_z
+
+	normal_do_espelho_cortado_pela_reta; //a,b,c,d
+	vetor_origem_da_reta; //x,y,z
+    sun_direction; //t_x,t_y,t_z
 
 	//calcula o valor de t
-	float A = normal_do_plano.scalar_prod(direcao_da_reta);
-	float B = normal_do_plano.scalar_prod(origem_da_reta);
+	float A = normal_do_espelho_cortado_pela_reta.scalar_prod(sun_direction);
+	float B = normal_do_espelho_cortado_pela_reta.scalar_prod(vetor_origem_da_reta);
 	float t = -(d + B)/A;
 
 	// calcula o ponto P em que a reta corta o plano do espelho:
-	direcao_da_reta.multiply_by_scalar(t);
+	sun_direction.multiply_by_scalar(t);
 	vetor_3d P(0,0,0);
-	origem_da_reta.vector_sum(direcao_da_reta, P);
+	vetor_origem_da_reta.vector_sum(sun_direction, P);
 
 	return P ;
 }
