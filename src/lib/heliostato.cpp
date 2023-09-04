@@ -88,9 +88,11 @@ void Heliostato::measure_angles(){
 }
 
 //os parâmetros eta_unit e xi_unit devem ser fornecidos com valores entre 0 e 1
+//eta_par_unit e xi_par_unit: localização do ponto dentro do espelho
+// recebe como parametro uma coordenada bidimensional e retorna a localização tridimensional deste ponto
 vetor_3d Heliostato::pick_point_inside_mirror_region(float eta_par_unit, float xi_par_unit, vetor_3d result){
 
-	//setting local base versors (eta and xi):
+	//setting local base versors (eta and xi): 
 	//eta e xi formam uma base que expande o espaço linear do plano em que o espelho se encontra
 	vetor_3d eta;
 
@@ -110,10 +112,11 @@ vetor_3d Heliostato::pick_point_inside_mirror_region(float eta_par_unit, float x
 	xi = vector_product(this->normal, eta, xi);
 	xi.get_unitary_vector();
 
-	vetor_3d mirror_center_pos = this->base_pos;
-	mirror_center_pos.coord[2] = mirror_center_pos.coord[2] + this->vert_axis_height;
+	vetor_3d mirror_center_pos = this->base_pos;//armazena a posição do centro do espelho
+	mirror_center_pos.coord[2] = mirror_center_pos.coord[2] + this->vert_axis_height;// vert_axis_height:altura do heliostato
 
 	//translação da origem do sistema de coordenadas dentro do plano:
+	//transformando as coordenadas que vão de 0-1 para coordenadas que vão de -1/2 a 1/2
 	float eta_par = this->mirror_width*(-1 + 2*eta_par_unit)/2;
 	float xi_par = this->mirror_height*(-1 + 2*xi_par_unit)/2;
 
@@ -130,9 +133,9 @@ vetor_3d Heliostato::pick_point_inside_mirror_region(float eta_par_unit, float x
 Construir reta ao longo da direção dos raios do sol a partir do ponto de um dos espelhos, ver onde essa reta cruza o plano de outro espelho.
 contruir função que calcaula a intersenção de um plano com uma reta (retorna um vetor 3d)
 */
-vetor_3d intersec_plano_reta(vetor_3d vetor_origem_da_reta, vetor_3d sun_direction, vetor_3d normal_do_espelho_cortado_pela_reta, float d){
+vetor_3d Heliostato::intersec_plano_reta(vetor_3d vetor_origem_da_reta, vetor_3d sun_direction, vetor_3d normal_do_espelho_cortado_pela_reta, float d){
 
-	vetor_3d result_p;
+	//vetor_3d result_p;
 
 	// equação da reta:
 	// bi-dimensional: y = a*x + b 
@@ -148,24 +151,6 @@ vetor_3d intersec_plano_reta(vetor_3d vetor_origem_da_reta, vetor_3d sun_directi
 	// a*(v_x*t + V_o_x) + b*(v_y*t + V_o_y) + c*(v_z*t + V_o_z) + d = 0 ---> encontrar o valor de t ---> escrever o valor de p.
 	//
 
-	/****************************************************************
-		ex.1) 
-		plano 2x+3y-5z=8
-		reta <2,0,1> +t<1,3,-2> = P
-		t=3/7
-
-		ex.2) 
-		plano 2x+3y-5z=8
-		reta <1,3,5> +t<-5,4,-4> = P
-		t=0
-
-		ex.3) 
-		plano 3x-9y+2z=7
-		reta <1,2,1> +t<-2,0,1> = P
-		t=-5 
-	 *******************************************************************/
-
-
 	normal_do_espelho_cortado_pela_reta; //a,b,c,d
 	vetor_origem_da_reta; //x,y,z
     sun_direction; //t_x,t_y,t_z
@@ -173,12 +158,18 @@ vetor_3d intersec_plano_reta(vetor_3d vetor_origem_da_reta, vetor_3d sun_directi
 	//calcula o valor de t
 	float A = normal_do_espelho_cortado_pela_reta.scalar_prod(sun_direction);
 	float B = normal_do_espelho_cortado_pela_reta.scalar_prod(vetor_origem_da_reta);
-	float t = -(d + B)/A;
+	float t = -(-d + B)/A;
 
 	// calcula o ponto P em que a reta corta o plano do espelho:
-	sun_direction.multiply_by_scalar(t);
-	vetor_3d P(0,0,0);
-	vetor_origem_da_reta.vector_sum(sun_direction, P);
-
-	return P ;
+    sun_direction.multiply_by_scalar(t);
+	vetor_3d P;
+   // vetor_origem_da_reta.vector_sum(sun_direction, P);
+for (short i=0; i<3; i++) {
+		P.coord[i]= vetor_origem_da_reta.coord[i] * sun_direction.coord[i];
+	}
+	return P;
 }
+
+//Criar função que verifica se os pontos estão no interior da região do espelho.
+//saber as dimenções do espelho
+//se distancia

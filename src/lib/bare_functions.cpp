@@ -5,9 +5,9 @@
 #include "bare_functions.h"
 
 vetor_3d::vetor_3d(){
-	this->coord[0] = 0;	
-	this->coord[1] = 0;	
-	this->coord[2] = 0;	
+	this->coord[0] = 1;	
+	this->coord[1] = 3;	
+	this->coord[2] = 4;	
 }
 
 vetor_3d::vetor_3d(float v_x, float v_y, float v_z){
