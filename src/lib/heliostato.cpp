@@ -173,3 +173,17 @@ for (short i=0; i<3; i++) {
 //Criar função que verifica se os pontos estão no interior da região do espelho.
 //saber as dimenções do espelho
 //se distancia
+
+float Heliostato::reverse_pick_point_inside_mirror_region(vetor_3d point){
+ 
+    vetor_3d result;
+	float r;
+	float thetaDeg;
+	
+	      thetaDeg = rad_to_deg(atan(point.coord[1]/point.coord[0]));
+	    
+	      r = sqrt(pow((point.coord[0]),2)+pow(point.coord[1],2));
+	
+
+	return r;
+}

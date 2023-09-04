@@ -83,6 +83,18 @@ result2 = h2.intersec_plano_reta(vetor_origem_da_reta,sun_direction,normal_do_es
  std::cout << "Coordenada x: " << result2.coord[0]<< std::endl;
  std::cout << "Coordenada y: " << result2.coord[1] << std::endl;
  std::cout << "Coordenada z: " << result2.coord[2] << std::endl;
+ 
+  std::
+    cout <<
+    "******************************************************************************" << std::endl;;
+    std::cout<<"reverse_pick_point_inside_mirror_region:"<< std::endl;
+    
+ float result3;
+ vetor_3d point(321.4,383.0,0);
+  vetor_3d origem_da_reta (0, 0, 0);
+ 
+ result3 = h2.reverse_pick_point_inside_mirror_region(result);
+ std::cout <<  result3 <<std::endl;
 
   return 0;
 }
