@@ -7,7 +7,7 @@
 class Heliostato {
 	private:
 		//posição da base do heliostato e altura do eixo vertical são determinadas no construtor
-	
+
 		float vert_axis_height;
 		float mirror_height;//espelho retangular
 		float mirror_width;
@@ -24,13 +24,13 @@ class Heliostato {
 		float delta_zenit;
 
 	public:
-	  Heliostato();
-	  
-	  /*alterações para teste*****************************************************/
-	  
-	  	vetor_3d base_pos;//OBS:jogar no privado depois dos testes(posição da base do heliostato e altura do eixo vertical são determinadas no construtor)
-	  	
-	  	/*alterações para testes**************************************************/
+		Heliostato();
+
+		/*alterações para teste*****************************************************/
+
+		vetor_3d base_pos;//OBS:jogar no privado depois dos testes(posição da base do heliostato e altura do eixo vertical são determinadas no construtor)
+
+		/*alterações para testes**************************************************/
 		Heliostato(float x, float y, float z, float vert_axis_height, float mirror_height, float mirror_width);
 		Heliostato(vetor_3d base_pos, float vert_axis_height, float mirror_height, float mirror_width);
 		void set_normal(vetor_3d sun_pos, vetor_3d focus_pos);
@@ -42,11 +42,11 @@ class Heliostato {
 		//troca de informações com sensores:
 		void measure_angles();
 		void set_movements(vetor_3d normal);
-		
+
 		//calcula a intersenção de um plano com uma reta (retorna um vetor 3d)
-	vetor_3d intersec_plano_reta(vetor_3d vetor_origem_da_reta, vetor_3d sun_direction, vetor_3d normal_do_espelho_cortado_pela_reta, float d);
-	
-	float reverse_pick_point_inside_mirror_region(vetor_3d point);
+		vetor_3d intersec_plano_reta(vetor_3d vetor_origem_da_reta, vetor_3d sun_direction, vetor_3d normal_do_espelho_cortado_pela_reta, float d);
+
+		bool check_if_picked_point_is_inside_mirror(vetor_3d point);
 };
 
 

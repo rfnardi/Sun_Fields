@@ -11,9 +11,9 @@ Heliostato::Heliostato(){
 
 void Heliostato::set_point_inside_mirror_region(float eta_par_unit, float xi_par_unit){
 	float parameters[] = {eta_par_unit, xi_par_unit};
-		
-	
-		std::cout << "set_point_inside_mirror_region parameters: " << parameters << std::endl;
+
+
+	std::cout << "set_point_inside_mirror_region parameters: " << parameters << std::endl;
 	return;
 }
 
@@ -25,7 +25,7 @@ Heliostato::Heliostato(float x, float y, float z, float vert_axis_height, float 
 	this->vert_axis_height = vert_axis_height;
 	this->mirror_height = mirror_height;
 	this->mirror_width = mirror_width;
-	
+
 	//dados necessários para estabelecer o movimento (all set to 0):
 	this->measured_azim = 0.0;
 	this->measured_zenit = 0.0;
@@ -39,7 +39,7 @@ Heliostato::Heliostato(vetor_3d base_pos, float vert_axis_height, float mirror_h
 	this->vert_axis_height = vert_axis_height;
 	this->mirror_height = mirror_height;
 	this->mirror_width = mirror_width;
-	
+
 	//dados necessários para estabelecer o movimento (all set to 0):
 	this->measured_azim = 0.0;
 	this->measured_zenit = 0.0;
@@ -48,7 +48,7 @@ Heliostato::Heliostato(vetor_3d base_pos, float vert_axis_height, float mirror_h
 }
 
 //calcula a normal do espelho e os ângulos azimutal e zenital teóricos
- void Heliostato::set_normal(vetor_3d sun_pos, vetor_3d focus_pos){
+void Heliostato::set_normal(vetor_3d sun_pos, vetor_3d focus_pos){
 	vetor_3d mirror_pos = this->base_pos;
 	mirror_pos.coord[2] = mirror_pos.coord[2] + vert_axis_height;
 	this->normal = get_normal_vector(sun_pos, mirror_pos, focus_pos, this->normal);
@@ -64,21 +64,21 @@ Heliostato::Heliostato(vetor_3d base_pos, float vert_axis_height, float mirror_h
 	else { this->azim = 0.0; }
 
 	this->zenit = std::acos(this->normal.coord[2]);
-	
+
 	std::cout << "normal x: " << normal_x << std::endl;
 	std::cout << "normal y: " << normal_y << std::endl;
 	std::cout << "zenital: " << zenit << std::endl;
-	 std::cout << "azimutal: " << zenit << std::endl;
-	 
-	 return;// alteração
+	std::cout << "azimutal: " << zenit << std::endl;
+
+	return;// alteração
 }
 
 void Heliostato::set_movements(vetor_3d normal){
 	this->delta_azim = this->azim - this->measured_azim;
 	this->delta_zenit = this->zenit - this->measured_zenit;
 	//após calcular os valores dos deltas, enviá-los ao arduino para acionar os motores
-	
-	
+
+
 }
 
 // mexer nesse método para captar dados do potenciômetro com o arduino
@@ -130,17 +130,17 @@ vetor_3d Heliostato::pick_point_inside_mirror_region(float eta_par_unit, float x
 }
 
 /*
-Construir reta ao longo da direção dos raios do sol a partir do ponto de um dos espelhos, ver onde essa reta cruza o plano de outro espelho.
-contruir função que calcaula a intersenção de um plano com uma reta (retorna um vetor 3d)
-*/
+	 Construir reta ao longo da direção dos raios do sol a partir do ponto de um dos espelhos, ver onde essa reta cruza o plano de outro espelho.
+	 contruir função que calcaula a intersecção de um plano com uma reta (retorna um vetor 3d)
+	 */
 vetor_3d Heliostato::intersec_plano_reta(vetor_3d vetor_origem_da_reta, vetor_3d sun_direction, vetor_3d normal_do_espelho_cortado_pela_reta, float d){
 
 	//vetor_3d result_p;
 
-	// equação da reta:
+	// straight line equation:
 	// bi-dimensional: y = a*x + b 
 	// 3-dimensional: (v_x, v_y, v_z)*t + V_o = p 
-	// Plano:
+	// Plane equation:
 	// a*x + b*y + c*z + d = 0 
 	// onde a, b e c são as componentes da normal do plano. E d é a constante que dá a altura plano.
 	//
@@ -149,41 +149,37 @@ vetor_3d Heliostato::intersec_plano_reta(vetor_3d vetor_origem_da_reta, vetor_3d
 	// componente y de p: v_y*t + vetor_origem_y
 	// componente z de p: v_z*t + vetor_origem_z
 	// a*(v_x*t + V_o_x) + b*(v_y*t + V_o_y) + c*(v_z*t + V_o_z) + d = 0 ---> encontrar o valor de t ---> escrever o valor de p.
-	//
 
-	normal_do_espelho_cortado_pela_reta; //a,b,c,d
-	vetor_origem_da_reta; //x,y,z
-    sun_direction; //t_x,t_y,t_z
+	/* normal_do_espelho_cortado_pela_reta; //a,b,c,d */
+	/* vetor_origem_da_reta; //x,y,z */
+	/* sun_direction; //t_x,t_y,t_z */
 
 	//calcula o valor de t
 	float A = normal_do_espelho_cortado_pela_reta.scalar_prod(sun_direction);
 	float B = normal_do_espelho_cortado_pela_reta.scalar_prod(vetor_origem_da_reta);
-	float t = -(-d + B)/A;
+	float t = (d - B)/A;
 
 	// calcula o ponto P em que a reta corta o plano do espelho:
-    sun_direction.multiply_by_scalar(t);
+	sun_direction.multiply_by_scalar(t);
 	vetor_3d P;
-   // vetor_origem_da_reta.vector_sum(sun_direction, P);
-for (short i=0; i<3; i++) {
+	// vetor_origem_da_reta.vector_sum(sun_direction, P);
+	for (short i=0; i<3; i++) {
 		P.coord[i]= vetor_origem_da_reta.coord[i] * sun_direction.coord[i];
 	}
 	return P;
 }
 
-//Criar função que verifica se os pontos estão no interior da região do espelho.
-//saber as dimenções do espelho
-//se distancia
+//Criar função que verifica se o ponto está no interior da região do espelho.
+//saber as dimensões do espelho
 
-float Heliostato::reverse_pick_point_inside_mirror_region(vetor_3d point){
- 
-    vetor_3d result;
-	float r;
-	float thetaDeg;
-	
-	      thetaDeg = rad_to_deg(atan(point.coord[1]/point.coord[0]));
-	    
-	      r = sqrt(pow((point.coord[0]),2)+pow(point.coord[1],2));
-	
+bool Heliostato::check_if_picked_point_is_inside_mirror(vetor_3d point){
 
-	return r;
+	// primeiro a função deve calcular o valor dos parametros xi e eta.
+	// em seguida aplica uma condição que verifica se os valores dos parâmetros
+	// são os de um ponto no interior do espelho
+
+	bool result;
+
+
+	return result;
 }
