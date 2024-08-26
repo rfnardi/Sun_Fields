@@ -182,11 +182,18 @@ vetor_3d Heliostato::intersec_plano_reta(vetor_3d vetor_origem_da_reta, vetor_3d
 bool Heliostato::check_if_picked_point_is_inside_mirror(vetor_3d point){
 
 	// primeiro a função deve calcular o valor dos parametros xi e eta.
+	float xi = this->vector_xi.scalar_prod(point);
+	float eta = this->vector_eta.scalar_prod(point);
+
 	// em seguida aplica uma condição que verifica se os valores dos parâmetros
 	// são os de um ponto no interior do espelho
-
 	bool result;
-
+	if ({- this->mirror_height/2 < xi && xi < this->mirror_height/2} && {- this->mirror_width/2 < eta && eta < this->mirror_width/2}) {
+		result = 1;	
+	}
+	else{
+		result = 0;
+	}
 
 	return result;
 }
