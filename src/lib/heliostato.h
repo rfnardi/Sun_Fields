@@ -17,6 +17,10 @@ class Heliostato {
 		float azim;
 		float zenit;
 
+		//versores que expandem o plano do espelho:
+		vetor_3d vector_eta;
+		vetor_3d vector_xi;
+
 		//dados necessários para estabelecer o movimento obtidos com medição em sensor (potenciômetro):
 		float measured_azim;
 		float measured_zenit;

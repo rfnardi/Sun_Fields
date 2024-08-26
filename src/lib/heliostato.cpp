@@ -9,14 +9,6 @@ Heliostato::Heliostato(){
 	this->base_pos.coord[2] = 0;
 }
 
-void Heliostato::set_point_inside_mirror_region(float eta_par_unit, float xi_par_unit){
-	float parameters[] = {eta_par_unit, xi_par_unit};
-
-
-	std::cout << "set_point_inside_mirror_region parameters: " << parameters << std::endl;
-	return;
-}
-
 Heliostato::Heliostato(float x, float y, float z, float vert_axis_height, float mirror_height, float mirror_width){
 	this->base_pos.coord[0] = x;
 	this->base_pos.coord[1] = y;
@@ -70,21 +62,36 @@ void Heliostato::set_normal(vetor_3d sun_pos, vetor_3d focus_pos){
 	std::cout << "zenital: " << zenit << std::endl;
 	std::cout << "azimutal: " << zenit << std::endl;
 
-	return;// alteração
+}
+
+void Heliostato::set_eta_vec(){
+	float theta_eta = std::atan(- this->normal.coord[0]/this->normal.coord[1]);
+
+	vetor_3d eta(std::sin(theta_eta), std::cos(theta_eta), 0);
+
+	this->vector_eta = eta;
+}
+
+void Heliostato::set_xi_vec(){
+	vetor_3d xi = vector_product(this->normal, this->vector_eta, this->vector_xi);
 }
 
 void Heliostato::set_movements(vetor_3d normal){
 	this->delta_azim = this->azim - this->measured_azim;
 	this->delta_zenit = this->zenit - this->measured_zenit;
 	//após calcular os valores dos deltas, enviá-los ao arduino para acionar os motores
-
-
 }
 
 // mexer nesse método para captar dados do potenciômetro com o arduino
 void Heliostato::measure_angles(){
 	this->measured_zenit = 0.0;
 	this->measured_azim = 0.0;
+}
+
+void Heliostato::set_point_inside_mirror_region(float eta_par_unit, float xi_par_unit){
+	float parameters[] = {eta_par_unit, xi_par_unit};
+
+	std::cout << "set_point_inside_mirror_region parameters: " << parameters << std::endl;
 }
 
 //os parâmetros eta_unit e xi_unit devem ser fornecidos com valores entre 0 e 1
