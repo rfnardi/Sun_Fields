@@ -5,7 +5,7 @@
 #include "transm_functions.h"
 
 class Heliostato {
-	private:
+	public:
 		//posição da base do heliostato e altura do eixo vertical são determinadas no construtor
 
 		float vert_axis_height;
@@ -27,7 +27,6 @@ class Heliostato {
 		float delta_azim;
 		float delta_zenit;
 
-	public:
 		Heliostato();
 
 		/*alterações para teste*****************************************************/
@@ -38,7 +37,10 @@ class Heliostato {
 		Heliostato(float x, float y, float z, float vert_axis_height, float mirror_height, float mirror_width);
 		Heliostato(vetor_3d base_pos, float vert_axis_height, float mirror_height, float mirror_width);
 		void set_normal(vetor_3d sun_pos, vetor_3d focus_pos);
-		void set_point_inside_mirror_region(float eta_par_unit, float xi_par_unit);
+		void set_eta_vec();
+		void set_xi_vec();
+		void set_base_pos(float bpx, float bpy, float bpz);
+		float calculate_d();
 
 		//os parâmetros eta_par_unit e xi_par_unit devem ser fornecidos com valores entre 0 e 1
 		vetor_3d pick_point_inside_mirror_region(float eta_par_unit, float xi_par_unit, vetor_3d result);
@@ -51,6 +53,7 @@ class Heliostato {
 		vetor_3d intersec_plano_reta(vetor_3d vetor_origem_da_reta, vetor_3d sun_direction, vetor_3d normal_do_espelho_cortado_pela_reta, float d);
 
 		bool check_if_picked_point_is_inside_mirror(vetor_3d point);
+
 };
 
 

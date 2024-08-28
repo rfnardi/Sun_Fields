@@ -64,6 +64,17 @@ void Heliostato::set_normal(vetor_3d sun_pos, vetor_3d focus_pos){
 
 }
 
+float Heliostato::calculate_d(){
+	vetor_3d mirror_center_pos, vector_height;
+
+	mirror_center_pos = this->base_pos.reset_coord(this->base_pos.coord[0], this->base_pos.coord[1], this->base_pos.coord[2] + this->mirror_height);
+float d;
+
+	d = - this->normal.scalar_prod(mirror_center_pos);
+
+	return d;
+}
+
 void Heliostato::set_eta_vec(){
 	float theta_eta = std::atan(- this->normal.coord[0]/this->normal.coord[1]);
 
@@ -76,6 +87,10 @@ void Heliostato::set_xi_vec(){
 	vetor_3d xi = vector_product(this->normal, this->vector_eta, this->vector_xi);
 }
 
+void Heliostato::set_base_pos(float bpx, float bpy, float bpz){
+	this->base_pos.reset_coord(bpx, bpy, bpz);
+}
+
 void Heliostato::set_movements(vetor_3d normal){
 	this->delta_azim = this->azim - this->measured_azim;
 	this->delta_zenit = this->zenit - this->measured_zenit;
@@ -86,12 +101,6 @@ void Heliostato::set_movements(vetor_3d normal){
 void Heliostato::measure_angles(){
 	this->measured_zenit = 0.0;
 	this->measured_azim = 0.0;
-}
-
-void Heliostato::set_point_inside_mirror_region(float eta_par_unit, float xi_par_unit){
-	float parameters[] = {eta_par_unit, xi_par_unit};
-
-	std::cout << "set_point_inside_mirror_region parameters: " << parameters << std::endl;
 }
 
 //os parâmetros eta_unit e xi_unit devem ser fornecidos com valores entre 0 e 1
