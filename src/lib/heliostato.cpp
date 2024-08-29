@@ -1,3 +1,6 @@
+#ifndef HELIOSTATO_CPP
+#define HELIOSTATO_CPP
+
 #include <iostream>
 #include "./heliostato.h"
 #include "./bare_functions.h"
@@ -26,7 +29,6 @@ Heliostato::Heliostato(float x, float y, float z, float vert_axis_height, float 
 }
 
 Heliostato::Heliostato(vetor_3d base_pos, float vert_axis_height, float mirror_height, float mirror_width){
-
 	this->base_pos = base_pos;
 	this->vert_axis_height = vert_axis_height;
 	this->mirror_height = mirror_height;
@@ -57,10 +59,10 @@ void Heliostato::set_normal(vetor_3d sun_pos, vetor_3d focus_pos){
 
 	this->zenit = std::acos(this->normal.coord[2]);
 
-	std::cout << "normal x: " << normal_x << std::endl;
-	std::cout << "normal y: " << normal_y << std::endl;
-	std::cout << "zenital: " << zenit << std::endl;
-	std::cout << "azimutal: " << zenit << std::endl;
+	/* std::cout << "normal x: " << normal_x << std::endl; */
+	/* std::cout << "normal y: " << normal_y << std::endl; */
+	/* std::cout << "zenital: " << zenit << std::endl; */
+	/* std::cout << "azimutal: " << zenit << std::endl; */
 
 }
 
@@ -210,3 +212,6 @@ bool Heliostato::check_if_picked_point_is_inside_mirror(vetor_3d point){
 
 	return result;
 }
+
+
+#endif /* end of include guard: HELIOSTATO_CPP */

@@ -1,20 +1,14 @@
 #include <iostream>
-
 #include "/home/nardi/repos/Sun_Fields/src/lib/heliostato.h"
-#include "/home/nardi/repos/Sun_Fields/src/lib/heliostato.cpp"
 
 int main(){
 
-Heliostato Hs;
-Heliostato Hb;
-Hs.set_base_pos(0, -20, 0);
-Hs.vert_axis_height = 1.0;
-Hb.set_base_pos(0, -10, 0);
-Hb.vert_axis_height = 1.0;
+Heliostato Hs(0, -20, 0, 1.0, 1.0, 1.0);
+Heliostato Hb(0, -18, 0, 1.0, 1.0, 1.0);
 
 vetor_3d Ps;
-vetor_3d S(0,1,1); // sun position
-vetor_3d F(0,0,40); // focus position
+vetor_3d S(0,1,0.5); // sun position
+vetor_3d F(0,0,20); // focus position
 
 Hs.set_normal(S, F);
 

@@ -28,14 +28,10 @@ class Heliostato {
 		float delta_zenit;
 
 		Heliostato();
-
-		/*alterações para teste*****************************************************/
-
-		vetor_3d base_pos;//OBS:jogar no privado depois dos testes(posição da base do heliostato e altura do eixo vertical são determinadas no construtor)
-
-		/*alterações para testes**************************************************/
 		Heliostato(float x, float y, float z, float vert_axis_height, float mirror_height, float mirror_width);
 		Heliostato(vetor_3d base_pos, float vert_axis_height, float mirror_height, float mirror_width);
+
+		vetor_3d base_pos;
 		void set_normal(vetor_3d sun_pos, vetor_3d focus_pos);
 		void set_eta_vec();
 		void set_xi_vec();
@@ -53,8 +49,6 @@ class Heliostato {
 		vetor_3d intersec_plano_reta(vetor_3d vetor_origem_da_reta, vetor_3d sun_direction, vetor_3d normal_do_espelho_cortado_pela_reta, float d);
 
 		bool check_if_picked_point_is_inside_mirror(vetor_3d point);
-
 };
-
 
 #endif /* end of include guard: HELIOSTATO_H_JNBGHR0W */
