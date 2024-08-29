@@ -203,7 +203,7 @@ bool Heliostato::check_if_picked_point_is_inside_mirror(vetor_3d point){
 	// em seguida aplica uma condição que verifica se os valores dos parâmetros
 	// são os de um ponto no interior do espelho
 	bool result;
-	if ((- this->mirror_height/2 < xi && xi < this->mirror_height/2) && (- this->mirror_width/2 < eta && eta < this->mirror_width/2)) {
+	if (((-1 * this->mirror_height)/2 < xi && xi < (this->mirror_height)/2) && ((-1 * this->mirror_width)/2 < eta && eta < (this->mirror_width)/2)) {
 		result = 1;	
 	}
 	else{
