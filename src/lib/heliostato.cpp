@@ -197,7 +197,7 @@ vetor_3d Heliostato::intersec_plano_reta(vetor_3d ponto_origem_da_reta_no_espelh
 bool Heliostato::check_if_picked_point_is_inside_mirror(vetor_3d point){
 
 	// primeiro a função deve calcular o valor dos parametros xi e eta.
-	float xi = this->vector_xi.scalar_prod(point);
+	float xi = this->vector_xi.scalar_prod(point); //<--------------- preciso tomar a diferença entre o Point e o centro do espelho para só aí tomar o produto escalar!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	float eta = this->vector_eta.scalar_prod(point);
 
 	// em seguida aplica uma condição que verifica se os valores dos parâmetros
