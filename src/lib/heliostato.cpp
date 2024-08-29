@@ -152,10 +152,10 @@ vetor_3d Heliostato::pick_point_inside_mirror_region(float eta_par_unit, float x
 }
 
 /*
-	 Construir reta ao longo da direção dos raios do sol a partir do ponto de um dos espelhos, ver onde essa reta cruza o plano de outro espelho.
+	 Construir reta ao longo da direção dos raios do sol a partir do ponto do espelho possivelmente sombreado, ver onde essa reta cruza o plano do outro espelho.
 	 contruir função que calcaula a intersecção de um plano com uma reta (retorna um vetor 3d)
 	 */
-vetor_3d Heliostato::intersec_plano_reta(vetor_3d vetor_origem_da_reta, vetor_3d sun_direction, vetor_3d normal_do_espelho_cortado_pela_reta, float d){
+vetor_3d Heliostato::intersec_plano_reta(vetor_3d ponto_origem_da_reta_no_espelho_sombreado, vetor_3d sun_direction, vetor_3d normal_do_espelho_bright, float d_do_espelho_bright){
 
 	//vetor_3d result_p;
 
@@ -177,16 +177,16 @@ vetor_3d Heliostato::intersec_plano_reta(vetor_3d vetor_origem_da_reta, vetor_3d
 	/* sun_direction; //t_x,t_y,t_z */
 
 	//calcula o valor de t
-	float A = normal_do_espelho_cortado_pela_reta.scalar_prod(sun_direction);
-	float B = normal_do_espelho_cortado_pela_reta.scalar_prod(vetor_origem_da_reta);
-	float t = (d - B)/A;
+	float A = normal_do_espelho_bright.scalar_prod(sun_direction);
+	float B = normal_do_espelho_bright.scalar_prod(ponto_origem_da_reta_no_espelho_sombreado);
+	float t = (- d_do_espelho_bright - B)/A;
 
 	// calcula o ponto P em que a reta corta o plano do espelho:
 	sun_direction.multiply_by_scalar(t);
 	vetor_3d P;
 	// vetor_origem_da_reta.vector_sum(sun_direction, P);
 	for (short i=0; i<3; i++) {
-		P.coord[i]= vetor_origem_da_reta.coord[i] * sun_direction.coord[i];
+		P.coord[i]= ponto_origem_da_reta_no_espelho_sombreado.coord[i] + sun_direction.coord[i];
 	}
 	return P;
 }
