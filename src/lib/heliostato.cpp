@@ -112,44 +112,81 @@ void Heliostato::measure_angles(){
 //os parâmetros eta_unit e xi_unit devem ser fornecidos com valores entre 0 e 1
 //eta_par_unit e xi_par_unit: localização do ponto dentro do espelho
 // recebe como parametro uma coordenada bidimensional e retorna a localização tridimensional deste ponto
-vetor_3d Heliostato::pick_point_inside_mirror_region(float eta_par_unit, float xi_par_unit, vetor_3d result){
+/* vetor_3d Heliostato::pick_point_inside_mirror_region(float eta_par_unit, float xi_par_unit, vetor_3d result){ */
 
-	//setting local base versors (eta and xi): 
-	//eta e xi formam uma base que expande o espaço linear do plano em que o espelho se encontra
-	vetor_3d eta;
+/* 	//setting local base versors (eta and xi): */ 
+/* 	//eta e xi formam uma base que expande o espaço linear do plano em que o espelho se encontra */
+/* 	vetor_3d eta; */
 
-	{
-		//coordenada x do vetor eta está sendo calculada como: 1 / sqrt(1 - (n_0/n_1)^2)
-		//eta é um vetor puramente na horizontal. Portanto possui coordenada z nula.
-		//eta é ortogonal à normal do espelho 
-		//eta é unitário
-		float eta_x = 1/sqrt(1+std::pow(this->normal.coord[0]/this->normal.coord[1],2));
-		float eta_y = -(this->normal.coord[0]/this->normal.coord[1])*eta_x;
+/* 	{ */
+/* 		//coordenada x do vetor eta está sendo calculada como: 1 / sqrt(1 - (n_0/n_1)^2) */
+/* 		//eta é um vetor puramente na horizontal. Portanto possui coordenada z nula. */
+/* 		//eta é ortogonal à normal do espelho */ 
+/* 		//eta é unitário */
+/* 		float eta_x = 1/sqrt(1+std::pow(this->normal.coord[0]/this->normal.coord[1],2)); */
+/* 		float eta_y = -(this->normal.coord[0]/this->normal.coord[1])*eta_x; */
 
-		eta.reset_coord(eta_x, eta_y, 0);
-		eta.get_unitary_vector();
-	}
+/* 		eta.reset_coord(eta_x, eta_y, 0); */
+/* 		eta.get_unitary_vector(); */
+/* 	} */
 
-	vetor_3d xi;
-	xi = vector_product(this->normal, eta, xi);
-	xi.get_unitary_vector();
+/* 	vetor_3d xi; */
+/* 	xi = vector_product(this->normal, eta, xi); */
+/* 	xi.get_unitary_vector(); */
 
-	vetor_3d mirror_center_pos = this->base_pos;//armazena a posição do centro do espelho
-	mirror_center_pos.coord[2] = mirror_center_pos.coord[2] + this->vert_axis_height;// vert_axis_height:altura do heliostato
+/* 	vetor_3d mirror_center_pos = this->base_pos;//armazena a posição do centro do espelho */
+/* 	mirror_center_pos.coord[2] = mirror_center_pos.coord[2] + this->vert_axis_height;// vert_axis_height:altura do heliostato */
 
-	//translação da origem do sistema de coordenadas dentro do plano:
-	//transformando as coordenadas que vão de 0-1 para coordenadas que vão de -1/2 a 1/2
-	float eta_par = this->mirror_width*(-1 + 2*eta_par_unit)/2;
-	float xi_par = this->mirror_height*(-1 + 2*xi_par_unit)/2;
+/* 	//translação da origem do sistema de coordenadas dentro do plano: */
+/* 	//transformando as coordenadas que vão de 0-1 para coordenadas que vão de -1/2 a 1/2 */
+/* 	float eta_par = this->mirror_width*(-1 + 2*eta_par_unit)/2; */
+/* 	float xi_par = this->mirror_height*(-1 + 2*xi_par_unit)/2; */
 
-	eta.multiply_by_scalar(eta_par);
-	xi.multiply_by_scalar(xi_par);
+/* 	eta.multiply_by_scalar(eta_par); */
+/* 	xi.multiply_by_scalar(xi_par); */
 
-	result = mirror_center_pos.vector_sum(eta, result);
-	result = result.vector_sum(xi, result);
+/* 	result = mirror_center_pos.vector_sum(eta, result); */
+/* 	result = result.vector_sum(xi, result); */
 
-	return result;
+/* 	return result; */
+/* } */
+
+vetor_3d Heliostato::pick_point_inside_mirror_region(float eta_par_unit, float xi_par_unit) {
+    // Configuração dos versores de base locais (eta e xi):
+    vetor_3d eta;
+
+    // Calcular a coordenada x do vetor eta
+    float eta_x = 1 / sqrt(1 + std::pow(this->normal.coord[0] / this->normal.coord[1], 2));
+    float eta_y = -(this->normal.coord[0] / this->normal.coord[1]) * eta_x;
+
+    // Configurar o vetor eta como unitário
+    eta.reset_coord(eta_x, eta_y, 0);
+    eta = eta.get_unitary_vector();
+
+    // Definir o vetor xi como o produto vetorial entre a normal e o vetor eta
+    vetor_3d xi = vector_product(this->normal, eta);
+    xi = xi.get_unitary_vector();
+
+    // Obter a posição do centro do espelho
+    vetor_3d mirror_center_pos = this->base_pos;
+    mirror_center_pos.coord[2] += this->vert_axis_height;
+
+    // Converter coordenadas de 0-1 para -1/2 a 1/2
+    float eta_par = this->mirror_width * (-1 + 2 * eta_par_unit) / 2;
+    float xi_par = this->mirror_height * (-1 + 2 * xi_par_unit) / 2;
+
+    // Escalar eta e xi de acordo com os parâmetros eta_par e xi_par
+    eta = eta.multiply_by_scalar(eta_par);
+    xi = xi.multiply_by_scalar(xi_par);
+
+    // Somar os vetores ao centro do espelho para obter o ponto resultante
+    vetor_3d result = mirror_center_pos.vector_sum(eta);
+    result = result.vector_sum(xi);
+
+    return result;
 }
+
+
 
 /*
 	 Construir reta ao longo da direção dos raios do sol a partir do ponto do espelho possivelmente sombreado, ver onde essa reta cruza o plano do outro espelho.

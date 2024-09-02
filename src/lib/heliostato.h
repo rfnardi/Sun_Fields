@@ -39,7 +39,7 @@ class Heliostato {
 		float calculate_d();
 
 		//os parâmetros eta_par_unit e xi_par_unit devem ser fornecidos com valores entre 0 e 1
-		vetor_3d pick_point_inside_mirror_region(float eta_par_unit, float xi_par_unit, vetor_3d result);
+		vetor_3d pick_point_inside_mirror_region(float eta_par_unit, float xi_par_unit);
 
 		//troca de informações com sensores:
 		void measure_angles();

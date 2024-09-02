@@ -54,22 +54,14 @@ for (int i = 0; i < 10000; i++) {
 	random_eta = distrib(gen);
 	random_xi = distrib(gen);
 
-Ps = Hs.pick_point_inside_mirror_region(random_eta,random_xi, Ps);
-	
-/* std::cout << "Coordenadas de Ps:" << std::endl; */
-/* Ps.log_coords(); */
-/* std::cout << " ----------------- " << std::endl; */
+	Ps = Hs.pick_point_inside_mirror_region(random_eta,random_xi, Ps);
 
-vetor_3d Pb = Hs.intersec_plano_reta(Ps, S, Hb.normal, d);
+	vetor_3d Pb = Hs.intersec_plano_reta(Ps, S, Hb.normal, d);
 
-/* std::cout << "Coordenadas de Pb:" << std::endl; */
-/* Pb.log_coords(); */
-/* std::cout << " ----------------- " << std::endl; */
+	is_inside = Hb.check_if_picked_point_is_inside_mirror(Pb);
 
-is_inside = Hb.check_if_picked_point_is_inside_mirror(Pb);
-
-if (is_inside) {count_yes++;}
-else{ count_no++;}
+	if (is_inside) {count_yes++;}
+	else{ count_no++;}
 
 }
 

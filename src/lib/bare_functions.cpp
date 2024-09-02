@@ -24,16 +24,27 @@ float vetor_3d::scalar_prod(vetor_3d vetor_2){
 	return result;
 }
 
-vetor_3d vector_product(vetor_3d v1, vetor_3d v2, vetor_3d result){
+/* vetor_3d vector_product(vetor_3d v1, vetor_3d v2, vetor_3d result){ */
 
-	float rx = v1.coord[1]*v2.coord[2] - v1.coord[2]*v2.coord[1];
-	float ry = v1.coord[2]*v2.coord[0] - v1.coord[0]*v2.coord[2];
-	float rz = v1.coord[0]*v2.coord[1] - v1.coord[1]*v2.coord[0];
+/* 	float rx = v1.coord[1]*v2.coord[2] - v1.coord[2]*v2.coord[1]; */
+/* 	float ry = v1.coord[2]*v2.coord[0] - v1.coord[0]*v2.coord[2]; */
+/* 	float rz = v1.coord[0]*v2.coord[1] - v1.coord[1]*v2.coord[0]; */
 
-	result.reset_coord(rx, ry, rz);
+/* 	result.reset_coord(rx, ry, rz); */
 
-	return result;
+/* 	return result; */
+/* } */
+
+vetor_3d vector_product(const vetor_3d& v1, const vetor_3d& v2) {
+    // Calcular as coordenadas do produto vetorial
+    float rx = v1.coord[1] * v2.coord[2] - v1.coord[2] * v2.coord[1];
+    float ry = v1.coord[2] * v2.coord[0] - v1.coord[0] * v2.coord[2];
+    float rz = v1.coord[0] * v2.coord[1] - v1.coord[1] * v2.coord[0];
+
+    // Criar e retornar um novo vetor_3d com as coordenadas calculadas
+    return vetor_3d(rx, ry, rz);
 }
+
 
 void vetor_3d::get_unitary_vector(){
 	float norm = sqrt(pow(this->coord[0],2) + pow(this->coord[1],2) + pow(this->coord[2],2));
@@ -62,10 +73,13 @@ vetor_3d vetor_3d::vector_sum(vetor_3d vetor_2, vetor_3d result){
 	return result;
 }
 
-void vetor_3d::multiply_by_scalar(float lambda){
-	this->coord[0] = this->coord[0]*lambda;
-	this->coord[1] = this->coord[1]*lambda;
-	this->coord[2] = this->coord[2]*lambda;
+vetor_3d vetor_3d::multiply_by_scalar(float lambda){
+	vetor_3d result;
+	result.coord[0] = this->coord[0]*lambda;
+	result.coord[1] = this->coord[1]*lambda;
+	result.coord[2] = this->coord[2]*lambda;
+
+	return result;
 }
 
 void vetor_3d::log_coords(){

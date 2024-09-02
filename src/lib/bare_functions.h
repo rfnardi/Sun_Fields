@@ -20,7 +20,7 @@ class vetor_3d {
 
 	vetor_3d vector_sum(vetor_3d vetor_2, vetor_3d result);
 
-	void multiply_by_scalar(float lambda);
+	vetor_3d multiply_by_scalar(float lambda);
 
 	void log_coords();
 
@@ -37,7 +37,7 @@ void log_sun_position(vetor_3d s);
 
 vetor_3d get_unitary_vector(vetor_3d v, vetor_3d result);
 
-vetor_3d vector_product(vetor_3d v1, vetor_3d v2, vetor_3d result);
+vetor_3d vector_product(vetor_3d v1, vetor_3d v2);
 
 vetor_3d get_normal_vector(vetor_3d sun_pos, vetor_3d mirror_pos, vetor_3d focus_pos, vetor_3d result);
 
