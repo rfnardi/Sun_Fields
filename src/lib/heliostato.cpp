@@ -44,8 +44,9 @@ Heliostato::Heliostato(vetor_3d base_pos, float vert_axis_height, float mirror_h
 //calcula a normal do espelho e os ângulos azimutal e zenital teóricos
 void Heliostato::set_normal(vetor_3d sun_pos, vetor_3d focus_pos){
 	vetor_3d mirror_pos = this->base_pos;
-	mirror_pos.coord[2] = mirror_pos.coord[2] + vert_axis_height;
+	mirror_pos.coord[2] = mirror_pos.coord[2] + this->vert_axis_height;
 	this->normal = get_normal_vector(sun_pos, mirror_pos, focus_pos, this->normal);
+	this->normal = this->normal.get_unitary_vector();
 	//projeção no plano xy:
 	float normal_x = this->normal.coord[0];
 	float normal_y = this->normal.coord[1];
@@ -63,17 +64,12 @@ void Heliostato::set_normal(vetor_3d sun_pos, vetor_3d focus_pos){
 	/* std::cout << "normal y: " << normal_y << std::endl; */
 	/* std::cout << "zenital: " << zenit << std::endl; */
 	/* std::cout << "azimutal: " << zenit << std::endl; */
-
 }
 
 float Heliostato::calculate_d(){
-	vetor_3d mirror_center_pos, vector_height;
+	vetor_3d mirror_center_pos(this->base_pos.coord[0], this->base_pos.coord[1], this->base_pos.coord[2] + this->mirror_height);
 
-	mirror_center_pos.reset_coord(this->base_pos.coord[0], this->base_pos.coord[1], this->base_pos.coord[2] + this->mirror_height);
-
-float d;
-
-	d = - this->normal.scalar_prod(mirror_center_pos);
+	float d = - this->normal.scalar_prod(mirror_center_pos);
 
 	return d;
 }
@@ -88,7 +84,7 @@ void Heliostato::set_eta_vec(){
 
 void Heliostato::set_xi_vec(){
 	vetor_3d xi;
-	xi = vector_product(this->normal, this->vector_eta, this->vector_xi);
+	xi = vector_product(this->normal, this->vector_eta);
 
 	this->vector_xi = xi;
 }
@@ -156,12 +152,12 @@ vetor_3d Heliostato::pick_point_inside_mirror_region(float eta_par_unit, float x
     vetor_3d eta;
 
     // Calcular a coordenada x do vetor eta
-    float eta_x = 1 / sqrt(1 + std::pow(this->normal.coord[0] / this->normal.coord[1], 2));
-    float eta_y = -(this->normal.coord[0] / this->normal.coord[1]) * eta_x;
+    float eta_x = 1 / sqrt(1 + std::pow(this->normal.coord[0] / this->normal.coord[1], 2)); //condição de unitariedade com ortogonalidade com a normal
+    float eta_y = -(this->normal.coord[0] / this->normal.coord[1]) * eta_x; // condição de ortogonalidade com a normal
 
-    // Configurar o vetor eta como unitário
-    eta.reset_coord(eta_x, eta_y, 0);
-    eta = eta.get_unitary_vector();
+    // Configurar o vetor eta como unitário --- > bloco foi comentado pq o vetor eta já nasce unitário pela conta acima
+    /* eta.reset_coord(eta_x, eta_y, 0); */
+    /* eta = eta.get_unitary_vector(); */
 
     // Definir o vetor xi como o produto vetorial entre a normal e o vetor eta
     vetor_3d xi = vector_product(this->normal, eta);
@@ -172,8 +168,8 @@ vetor_3d Heliostato::pick_point_inside_mirror_region(float eta_par_unit, float x
     mirror_center_pos.coord[2] += this->vert_axis_height;
 
     // Converter coordenadas de 0-1 para -1/2 a 1/2
-    float eta_par = this->mirror_width * (-1 + 2 * eta_par_unit) / 2;
-    float xi_par = this->mirror_height * (-1 + 2 * xi_par_unit) / 2;
+    float eta_par = this->mirror_width * (eta_par_unit - 0.5);
+    float xi_par = this->mirror_height * (xi_par_unit - 0.5);
 
     // Escalar eta e xi de acordo com os parâmetros eta_par e xi_par
     eta = eta.multiply_by_scalar(eta_par);
@@ -259,6 +255,5 @@ bool Heliostato::check_if_picked_point_is_inside_mirror(vetor_3d point){
 
 	return result;
 }
-
 
 #endif /* end of include guard: HELIOSTATO_CPP */

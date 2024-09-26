@@ -46,11 +46,13 @@ vetor_3d vector_product(const vetor_3d& v1, const vetor_3d& v2) {
 }
 
 
-void vetor_3d::get_unitary_vector(){
-	float norm = sqrt(pow(this->coord[0],2) + pow(this->coord[1],2) + pow(this->coord[2],2));
-	this->coord[0] = this->coord[0]/norm; 
-	this->coord[1] = this->coord[1]/norm; 
-	this->coord[2] = this->coord[2]/norm; 
+vetor_3d vetor_3d::get_unitary_vector(){
+	float norm = sqrt(std::pow(this->coord[0],2) + std::pow(this->coord[1],2) + std::pow(this->coord[2],2));
+	float rx = this->coord[0]/norm; 
+	float ry = this->coord[1]/norm; 
+	float rz = this->coord[2]/norm; 
+
+	return vetor_3d(rx, ry, rz);
 }
 
 void vetor_3d::reset_coord(float x, float y, float z){
@@ -65,12 +67,20 @@ void vetor_3d::invert_direction(){
 	this->coord[2] = -1*this->coord[2];
 }
 
-vetor_3d vetor_3d::vector_sum(vetor_3d vetor_2, vetor_3d result){
-	result.coord[0] = this->coord[0] + vetor_2.coord[0];	
-	result.coord[1] = this->coord[1] + vetor_2.coord[1];	
-	result.coord[2] = this->coord[2] + vetor_2.coord[2];	
+vetor_3d vetor_3d::vector_sum(const vetor_3d& vetor_2){
+	float rx = this->coord[0] + vetor_2.coord[0];	
+	float ry = this->coord[1] + vetor_2.coord[1];	
+	float rz = this->coord[2] + vetor_2.coord[2];	
 
-	return result;
+	return vetor_3d(rx, ry, rz);
+}
+
+vetor_3d vector_sum(const vetor_3d& vetor_1, const vetor_3d& vetor_2){
+	float rx = vetor_1.coord[0] + vetor_2.coord[0];	
+	float ry = vetor_1.coord[1] + vetor_2.coord[1];	
+	float rz = vetor_1.coord[2] + vetor_2.coord[2];	
+
+	return vetor_3d(rx, ry, rz);
 }
 
 vetor_3d vetor_3d::multiply_by_scalar(float lambda){
@@ -93,8 +103,6 @@ void vetor_3d::transf_coord_from_spher_to_cart(float r, float theta_rad, float p
 	this->coord[1] = r*sin(phi_rad)*sin(theta_rad);
 	this->coord[2] = r*cos(phi_rad);
 }
-
-
 
 int NDA_calculation(int month_day, int month){
 
@@ -128,32 +136,30 @@ void log_sun_position(vetor_3d s){
 
 vetor_3d get_normal_vector(vetor_3d sun_pos, vetor_3d mirror_pos, vetor_3d focus_pos, vetor_3d result){
 
-	sun_pos.get_unitary_vector();//normalizando vetor
+	vetor_3d SP = sun_pos.get_unitary_vector();//normalizando vetor
 	focus_pos.invert_direction();
 	vetor_3d r;
-	r = mirror_pos.vector_sum(focus_pos, r);//posição a partir do foco
-	r.get_unitary_vector();//normalizando
+	r = mirror_pos.vector_sum(focus_pos);//posição a partir do foco
+	r = r.get_unitary_vector();//normalizando
 
 	r.invert_direction();
 	vetor_3d normal_vector;
-	normal_vector = r.vector_sum(sun_pos, normal_vector);
-	normal_vector.get_unitary_vector();
+	normal_vector = r.vector_sum(SP);
+	normal_vector = normal_vector.get_unitary_vector();
 
 	result = normal_vector;
 
 	return result;
 }
 
-vetor_3d get_unitary_vector(vetor_3d v, vetor_3d result){
+vetor_3d get_unitary_vector(vetor_3d v){
 	float v_hat[3];
 	for (short i = 0; i < 3; ++i) {
 		v_hat[i] = v.coord[i]/sqrt(v.scalar_prod(v)); 
 	}
 	vetor_3d unitary(v_hat[0],v_hat[1],v_hat[2]);
 
-	result = unitary;
-
-	return result;
+	return unitary;
 }
 
 float rad_to_deg(float rad){ //transforma radianos em graus 
@@ -264,7 +270,7 @@ float one_mirror_power(vetor_3d s, vetor_3d R,vetor_3d focus_pos, int NDA){
 	/* s.log_coords(); */
 
 	vetor_3d r(0,0,0);
-	r = get_unitary_vector(R,r);
+	r = r.get_unitary_vector();
 	/* std::cout << "Coordenadas de r unitário:" << std::endl; */
 	/* r.log_coords(); */
 

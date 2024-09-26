@@ -12,13 +12,13 @@ class vetor_3d {
 
 	void invert_direction();
 
-	void get_unitary_vector();
+	vetor_3d get_unitary_vector();
 
 	float scalar_prod(vetor_3d vetor_2);
 
 	void reset_coord(float x, float y, float z);
 
-	vetor_3d vector_sum(vetor_3d vetor_2, vetor_3d result);
+	vetor_3d vector_sum( const vetor_3d& vetor_2);
 
 	vetor_3d multiply_by_scalar(float lambda);
 
@@ -26,6 +26,8 @@ class vetor_3d {
 
 	void transf_coord_from_spher_to_cart(float r, float theta_rad, float phi_rad);
 };
+
+vetor_3d vector_sum(vetor_3d& vetor_1, vetor_3d& vetor_2);
 
 int NDA_calculation(int month_day, int month);
 
@@ -35,9 +37,9 @@ void log_angulos(float * sin_Alt_sin_Azim_Array );
 
 void log_sun_position(vetor_3d s);
 
-vetor_3d get_unitary_vector(vetor_3d v, vetor_3d result);
+vetor_3d get_unitary_vector();
 
-vetor_3d vector_product(vetor_3d v1, vetor_3d v2);
+vetor_3d vector_product(const vetor_3d& v1, const vetor_3d& v2);
 
 vetor_3d get_normal_vector(vetor_3d sun_pos, vetor_3d mirror_pos, vetor_3d focus_pos, vetor_3d result);
 
