@@ -15,7 +15,7 @@ mirror_center_position.log_coords();
 
 vetor_3d Ps;
 vetor_3d S(0,0.4,0.1); // sun position
-S.get_unitary_vector();
+S = S.get_unitary_vector();
 
 std::cout << " ----------------- " << std::endl;
 std::cout << "tamanho de S:" << std::endl;

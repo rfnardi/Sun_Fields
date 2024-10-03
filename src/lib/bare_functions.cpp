@@ -47,7 +47,11 @@ vetor_3d vector_product(const vetor_3d& v1, const vetor_3d& v2) {
 
 
 vetor_3d vetor_3d::get_unitary_vector(){
-	float norm = sqrt(std::pow(this->coord[0],2) + std::pow(this->coord[1],2) + std::pow(this->coord[2],2));
+	float norm = 0.0;
+	for (short i = 0; i<3; i++) {
+		norm += std::pow(this->coord[i], 2);
+	}
+	norm = sqrt(norm);
 	float rx = this->coord[0]/norm; 
 	float ry = this->coord[1]/norm; 
 	float rz = this->coord[2]/norm; 

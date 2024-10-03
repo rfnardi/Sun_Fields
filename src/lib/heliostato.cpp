@@ -152,7 +152,7 @@ vetor_3d Heliostato::pick_point_inside_mirror_region(float eta_par_unit, float x
     vetor_3d eta;
 
     // Calcular a coordenada x do vetor eta
-    float eta_x = 1 / sqrt(1 + std::pow(this->normal.coord[0] / this->normal.coord[1], 2)); //condição de unitariedade com ortogonalidade com a normal
+    float eta_x = 1 / sqrt(1 + std::pow( (this->normal.coord[0] / this->normal.coord[1]) , 2)); //condição de unitariedade com ortogonalidade com a normal
     float eta_y = -(this->normal.coord[0] / this->normal.coord[1]) * eta_x; // condição de ortogonalidade com a normal
 
     // Configurar o vetor eta como unitário --- > bloco foi comentado pq o vetor eta já nasce unitário pela conta acima
@@ -246,7 +246,7 @@ bool Heliostato::check_if_picked_point_is_inside_mirror(vetor_3d point){
 	// em seguida aplica uma condição que verifica se os valores dos parâmetros
 	// são os de um ponto no interior do espelho
 	bool result;
-	if (((-1 * this->mirror_height)/2 < xi && xi < (this->mirror_height)/2) && ((-1 * this->mirror_width)/2 < eta && eta < (this->mirror_width)/2)) {
+	if (((-this->mirror_height)/2 < xi && xi < (this->mirror_height)/2) && ((-this->mirror_width)/2 < eta && eta < (this->mirror_width)/2)) {
 		result = 1;	
 	}
 	else{
