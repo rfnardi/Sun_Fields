@@ -21,6 +21,9 @@ Heliostato::Heliostato(float x, float y, float z, float vert_axis_height, float 
 	this->mirror_height = mirror_height;
 	this->mirror_width = mirror_width;
 
+	vetor_3d mirror_center_pos(x,y,z+vert_axis_height);
+	this->mirror_center_position = mirror_center_pos;
+
 	//dados necessários para estabelecer o movimento (all set to 0):
 	this->measured_azim = 0.0;
 	this->measured_zenit = 0.0;
@@ -33,6 +36,10 @@ Heliostato::Heliostato(vetor_3d base_pos, float vert_axis_height, float mirror_h
 	this->vert_axis_height = vert_axis_height;
 	this->mirror_height = mirror_height;
 	this->mirror_width = mirror_width;
+
+	vetor_3d mirror_center_pos(base_pos.coord[0],base_pos.coord[1],base_pos.coord[2]+vert_axis_height);
+	this->mirror_center_position = mirror_center_pos;
+
 
 	//dados necessários para estabelecer o movimento (all set to 0):
 	this->measured_azim = 0.0;
@@ -83,8 +90,9 @@ void Heliostato::set_eta_vec(){
 }
 
 void Heliostato::set_xi_vec(){
-	vetor_3d xi;
-	xi = vector_product(this->normal, this->vector_eta);
+	vetor_3d xi = vector_product(this->normal, this->vector_eta);
+
+	xi = xi.get_unitary_vector();
 
 	this->vector_xi = xi;
 }

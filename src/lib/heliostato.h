@@ -11,6 +11,7 @@ class Heliostato {
 		float vert_axis_height;
 		float mirror_height;//espelho retangular
 		float mirror_width;
+		vetor_3d mirror_center_position;
 
 		//normal e ângulos azim e zenital são calculados no método 'set_normal'
 		vetor_3d normal;
