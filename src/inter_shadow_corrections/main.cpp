@@ -7,7 +7,7 @@ int main(){
 float vert_axis_height = 1.0;
 
 Heliostato Hs(0, -50, 0, vert_axis_height, 1.0, 1.0); //shadow
-Heliostato Hb(0, -50.0, 0, vert_axis_height, 1.0, 1.0); //bright
+Heliostato Hb(0, -23.7, 0, vert_axis_height, 1.0, 1.0); //bright
 
 std::cout << "Coordenadas do ponto central do espelho Hs:" << std::endl;
 vetor_3d mirror_center_position(Hs.base_pos.coord[0], Hs.base_pos.coord[1] , Hs.base_pos.coord[2] + vert_axis_height);

@@ -149,15 +149,19 @@ void Heliostato::measure_angles(){
 
 vetor_3d Heliostato::pick_point_inside_mirror_region(float eta_par_unit, float xi_par_unit) {
     // Configuração dos versores de base locais (eta e xi):
-    vetor_3d eta;
 
     // Calcular a coordenada x do vetor eta
-    float eta_x = 1 / sqrt(1 + std::pow( (this->normal.coord[0] / this->normal.coord[1]) , 2)); //condição de unitariedade com ortogonalidade com a normal
-    float eta_y = -(this->normal.coord[0] / this->normal.coord[1]) * eta_x; // condição de ortogonalidade com a normal
+		// Condição de unitariedade com ortogonalidade com a normal:
+    float eta_x = 1 / sqrt(1 + std::pow( (this->normal.coord[0] / this->normal.coord[1]) , 2)); 
+
+		// condição de ortogonalidade com a normal:
+    float eta_y = -(this->normal.coord[0] / this->normal.coord[1]) * eta_x; 
 
     // Configurar o vetor eta como unitário --- > bloco foi comentado pq o vetor eta já nasce unitário pela conta acima
     /* eta.reset_coord(eta_x, eta_y, 0); */
     /* eta = eta.get_unitary_vector(); */
+
+    vetor_3d eta(eta_x, eta_y, 0);
 
     // Definir o vetor xi como o produto vetorial entre a normal e o vetor eta
     vetor_3d xi = vector_product(this->normal, eta);
