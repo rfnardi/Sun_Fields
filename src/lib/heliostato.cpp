@@ -265,28 +265,34 @@ vetor_3d Heliostato::intersec_plano_reta(vetor_3d ponto_origem_da_reta_no_espelh
 //Criar função que verifica se o ponto está no interior da região do espelho.
 //saber as dimensões do espelho
 
-bool Heliostato::check_if_picked_point_is_inside_mirror(vetor_3d point){
+bool Heliostato::check_if_picked_point_is_inside_mirror(vetor_3d point, bool print){
 
 	vetor_3d Point_at_plane(0,0,0);
 
-	std::cout << "-------------------" << std::endl;
-	std::cout << "Point_at_plane (initialized):" << std::endl;
-	Point_at_plane.log_coords();
+	if (print) {
+		std::cout << "-------------------" << std::endl;
+		std::cout << "Point_at_plane (initialized):" << std::endl;
+		Point_at_plane.log_coords();
+	}
 
 	for (short i = 0; i <= 2; i++){
 		Point_at_plane.coord[i] = point.coord[i] - this->mirror_center_position.coord[i];
 	}
 
-	std::cout << "-------------------" << std::endl;
-	std::cout << "Point_at_plane (after actual calculations):" << std::endl;
-	Point_at_plane.log_coords();
+	if (print) {
+		std::cout << "-------------------" << std::endl;
+		std::cout << "Point_at_plane (after actual calculations):" << std::endl;
+		Point_at_plane.log_coords();
+	}
 
 	// primeiro a função deve calcular o valor dos parametros xi e eta.
 	float xi = this->vector_xi.scalar_prod(Point_at_plane); 
 	float eta = this->vector_eta.scalar_prod(Point_at_plane);
 
-	std::cout << "Parâmetros xi: "<< xi << std::endl;
-	std::cout << "Parâmetros eta: "<< eta << std::endl;
+	if (print) {
+		std::cout << "Parâmetros xi: "<< xi << std::endl;
+		std::cout << "Parâmetros eta: "<< eta << std::endl;
+	}
 
 	// em seguida aplica uma condição que verifica se os valores dos parâmetros
 	// são os de um ponto no interior do espelho

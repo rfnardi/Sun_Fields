@@ -7,14 +7,13 @@ int main(){
 float vert_axis_height = 1.0;
 
 Heliostato Hs(0, -50, 0, vert_axis_height, 1.0, 1.0); //shadow
-Heliostato Hb(0, -23.7, 0, vert_axis_height, 1.0, 1.0); //bright
+Heliostato Hb(0, -49.9, 0, vert_axis_height, 1.0, 1.0); //bright
 
 std::cout << "Coordenadas do ponto central do espelho Hs:" << std::endl;
-vetor_3d mirror_center_position(Hs.base_pos.coord[0], Hs.base_pos.coord[1] , Hs.base_pos.coord[2] + vert_axis_height);
-mirror_center_position.log_coords();
+Hs.mirror_center_position.log_coords();
 
 vetor_3d Ps;
-vetor_3d S(0,0.4,0.1); // sun position
+vetor_3d S(0,0.1,0.12); // sun position
 S = S.get_unitary_vector();
 
 std::cout << " ----------------- " << std::endl;
@@ -22,7 +21,7 @@ std::cout << "tamanho de S:" << std::endl;
 S.log_coords();
 std::cout << " ----------------- " << std::endl;
 
-vetor_3d F(0,0,10); // focus position
+vetor_3d F(0,0,20); // focus position
 
 Hs.set_normal(S, F);
 Hb.set_normal(S, F);
@@ -53,7 +52,7 @@ bool is_inside;
 vetor_3d Pb;
 
 //monte-carlo loop:
-for (int i = 0; i < 10000; i++) {
+for (int i = 0; i < 100000; i++) {
 
 	random_eta = distrib(gen);
 	random_xi = distrib(gen);
@@ -64,7 +63,7 @@ for (int i = 0; i < 10000; i++) {
 
 	Pb = Hs.intersec_plano_reta(Ps, S, Hb.normal, d);
 
-	is_inside = Hb.check_if_picked_point_is_inside_mirror(Pb);
+	is_inside = Hb.check_if_picked_point_is_inside_mirror(Pb, 0);
 
 	/* std::cout << "Ps: " << std::endl; */
 	/* Ps.log_coords(); */
@@ -72,14 +71,18 @@ for (int i = 0; i < 10000; i++) {
 	/* Pb.log_coords(); */
 	/* std::cout << "Is inside: " << is_inside << std::endl; */
 
-	if (is_inside) {count_yes++;}
+	if (is_inside) {count_yes++;} //yes means shadow
 	else{ count_no++;}
 
 }
 
-std::cout << "Total de yes:" << count_yes << std::endl;
+float percent_brightness = (float) count_no/( (float) count_yes + (float) count_no);
 
-std::cout << "Total de no:" << count_no << std::endl;
+std::cout << "Total de pontos sombreados :" << count_yes << std::endl;
+
+std::cout << "Total de pontos sem sombra :" << count_no << std::endl;
+
+std::cout << "Percentual de reflexão: "<<  percent_brightness << std::endl;
 
 	return 0;
 }

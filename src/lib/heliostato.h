@@ -51,7 +51,7 @@ class Heliostato {
 		//calcula a intersenção de um plano com uma reta (retorna um vetor 3d)
 		vetor_3d intersec_plano_reta(vetor_3d vetor_origem_da_reta, vetor_3d sun_direction, vetor_3d normal_do_espelho_cortado_pela_reta, float d);
 
-		bool check_if_picked_point_is_inside_mirror(vetor_3d point);
+		bool check_if_picked_point_is_inside_mirror(vetor_3d point, bool print);
 };
 
 #endif /* end of include guard: HELIOSTATO_H_JNBGHR0W */
