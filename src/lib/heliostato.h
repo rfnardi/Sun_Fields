@@ -11,6 +11,7 @@ class Heliostato {
 		float vert_axis_height;
 		float mirror_height;//espelho retangular
 		float mirror_width;
+		float d;
 		vetor_3d mirror_center_position;
 
 		//normal e ângulos azim e zenital são calculados no método 'set_normal'
@@ -38,6 +39,7 @@ class Heliostato {
 		void set_xi_vec();
 		void set_base_pos(float bpx, float bpy, float bpz);
 		float calculate_d();
+		void calculate_D();
 
 		//os parâmetros eta_par_unit e xi_par_unit devem ser fornecidos com valores entre 0 e 1
 		vetor_3d pick_point_inside_mirror_region(float eta_par_unit, float xi_par_unit);

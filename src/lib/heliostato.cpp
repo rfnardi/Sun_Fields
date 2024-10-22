@@ -81,8 +81,34 @@ float Heliostato::calculate_d(){
 	return d;
 }
 
+// same function as above but this time defining a member float
+void Heliostato::calculate_D(){
+	vetor_3d mirror_center_pos(this->base_pos.coord[0], this->base_pos.coord[1], this->base_pos.coord[2] + this->mirror_height);
+
+	this->d = - this->normal.scalar_prod(mirror_center_pos);
+}
+
 void Heliostato::set_eta_vec(){
-	float theta_eta = std::atan(- this->normal.coord[0]/this->normal.coord[1]);
+	int check = 1;
+	for (int i = 0; i < 2 ; i++) {
+		if (this->normal.coord[i] == 0){ check = 0;}
+		else{ check = 1;}
+	}
+	if (!check) {
+	std::cerr << "Erro fatal: normal não pode estar na perfeita vertical." << std::endl;
+	exit(EXIT_FAILURE);
+	}
+
+	float theta_eta , eta_x, eta_y;
+	if (this->normal.coord[0] == 0 ) {
+	 eta_y = 0.0;
+	 eta_x = 1.0;
+	}
+	else if ( this->normal.coord[1] == 0 ) {
+	 eta_y = 1.0;
+	 eta_x = 0.0;
+	}
+	theta_eta = std::atan( 0.0 - (this->normal.coord[0]/this->normal.coord[1]));
 
 	vetor_3d eta(std::sin(theta_eta), std::cos(theta_eta), 0);
 
@@ -160,7 +186,7 @@ vetor_3d Heliostato::pick_point_inside_mirror_region(float eta_par_unit, float x
 
     // Calcular a coordenada x do vetor eta
 		// Condição de unitariedade com ortogonalidade com a normal:
-    float eta_x = 1 / sqrt(1 + std::pow( (this->normal.coord[0] / this->normal.coord[1]) , 2)); 
+    float eta_x = 1 / std::sqrt(1 + std::pow( (this->normal.coord[0] / this->normal.coord[1]) , 2)); 
 
 		// condição de ortogonalidade com a normal:
     float eta_y = -(this->normal.coord[0] / this->normal.coord[1]) * eta_x; 
@@ -230,7 +256,7 @@ vetor_3d Heliostato::intersec_plano_reta(vetor_3d ponto_origem_da_reta_no_espelh
 	sun_direction.multiply_by_scalar(t);
 	vetor_3d P;
 	// vetor_origem_da_reta.vector_sum(sun_direction, P);
-	for (short i=0; i<3; i++) {
+	for (short i=0; i<=2; i++) {
 		P.coord[i]= ponto_origem_da_reta_no_espelho_sombreado.coord[i] + sun_direction.coord[i];
 	}
 	return P;
@@ -241,19 +267,26 @@ vetor_3d Heliostato::intersec_plano_reta(vetor_3d ponto_origem_da_reta_no_espelh
 
 bool Heliostato::check_if_picked_point_is_inside_mirror(vetor_3d point){
 
-	float mirror_center_x = this->base_pos.coord[0];
-	float mirror_center_y = this->base_pos.coord[1];
-	float mirror_center_z = this->base_pos.coord[2] + this->mirror_height;
+	vetor_3d Point_at_plane(0,0,0);
 
-	float Point_at_plane_x = point.coord[0] - mirror_center_x;
-	float Point_at_plane_y = point.coord[1] - mirror_center_y;
-	float Point_at_plane_z = point.coord[2] - mirror_center_z;
+	std::cout << "-------------------" << std::endl;
+	std::cout << "Point_at_plane (initialized):" << std::endl;
+	Point_at_plane.log_coords();
 
-	vetor_3d Point_at_plane(Point_at_plane_x, Point_at_plane_y, Point_at_plane_z);
+	for (short i = 0; i <= 2; i++){
+		Point_at_plane.coord[i] = point.coord[i] - this->mirror_center_position.coord[i];
+	}
+
+	std::cout << "-------------------" << std::endl;
+	std::cout << "Point_at_plane (after actual calculations):" << std::endl;
+	Point_at_plane.log_coords();
 
 	// primeiro a função deve calcular o valor dos parametros xi e eta.
 	float xi = this->vector_xi.scalar_prod(Point_at_plane); 
 	float eta = this->vector_eta.scalar_prod(Point_at_plane);
+
+	std::cout << "Parâmetros xi: "<< xi << std::endl;
+	std::cout << "Parâmetros eta: "<< eta << std::endl;
 
 	// em seguida aplica uma condição que verifica se os valores dos parâmetros
 	// são os de um ponto no interior do espelho
