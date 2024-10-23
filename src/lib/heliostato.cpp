@@ -307,4 +307,13 @@ bool Heliostato::check_if_picked_point_is_inside_mirror(vetor_3d point, bool pri
 	return result;
 }
 
+//Calculo de potência no espelho do heliostato:
+void Heliostato::calculate_power(float J_irradiance, vetor_3d Sun, vetor_3d Focus){
+
+	float mirror_area = this->mirror_height * this->mirror_width;
+	float power = one_mirror_corrected_power(Sun, this->mirror_center_position, Focus, J_irradiance, mirror_area);
+
+	this->power = power;
+}
+
 #endif /* end of include guard: HELIOSTATO_CPP */

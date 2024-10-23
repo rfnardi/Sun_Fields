@@ -24,7 +24,6 @@ int main()
 	float temp_Kelvin = 293.0;
 	float mirror_area = 1.0;
 
-
 	float J = corrected_irradiance(NDA, lat, hora_local,  rel_air_humid, altitude, d, temp_Kelvin);
 	std::cout << "xpos" << ";" << "power" << ";" << "ReflPercent"<< std::endl;
 	while (x_pos < 100.1) {

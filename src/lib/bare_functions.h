@@ -57,6 +57,8 @@ float sin_Azim_calculation(int NDA, float lat, float local_time);
 
 vetor_3d sun_pos_in_cartesian_coord(float sin_Alt, float sin_Azim, vetor_3d result);
 
+vetor_3d sun_pos_in_cartesian_coord(float sin_Alt, float sin_Azim);
+
 //calcula a constante solar corrigida devido à variação na distância Terra-Sol ~ (d/D)^2
 float J_elliptic_correction(int NDA);
 
@@ -69,6 +71,8 @@ float refl_power_from_scalar_product(vetor_3d n, vetor_3d s, float J_bare);
 float elliptic_correction_factor(int NDA);
 
 vetor_3d get_sun_position(float NDA, float lat, float hora_local, vetor_3d result);
+
+vetor_3d get_sun_position(float NDA, float lat, float hora_local);
 
 float one_mirror_power(vetor_3d s, vetor_3d R, int NDA);
 

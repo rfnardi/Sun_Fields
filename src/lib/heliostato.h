@@ -29,6 +29,8 @@ class Heliostato {
 		float delta_azim;
 		float delta_zenit;
 
+		float power;
+
 		Heliostato();
 		Heliostato(float x, float y, float z, float vert_axis_height, float mirror_height, float mirror_width);
 		Heliostato(vetor_3d base_pos, float vert_axis_height, float mirror_height, float mirror_width);
@@ -52,6 +54,9 @@ class Heliostato {
 		vetor_3d intersec_plano_reta(vetor_3d vetor_origem_da_reta, vetor_3d sun_direction, vetor_3d normal_do_espelho_cortado_pela_reta, float d);
 
 		bool check_if_picked_point_is_inside_mirror(vetor_3d point, bool print);
+
+		void calculate_power(float J_irradiance, vetor_3d Sun, vetor_3d focus_pos);
 };
+
 
 #endif /* end of include guard: HELIOSTATO_H_JNBGHR0W */

@@ -235,6 +235,21 @@ vetor_3d sun_pos_in_cartesian_coord(float sin_Alt, float sin_Azim, vetor_3d resu
 	return result;
 }
 
+vetor_3d sun_pos_in_cartesian_coord(float sin_Alt, float sin_Azim){
+
+	float cos_Alt = sqrt(1 - pow(sin_Alt,2));
+	float cos_Azim = sqrt(1 - pow(sin_Azim,2));
+
+	//posição do sol em coordenadas cartezianas:
+	float s_z = sin_Alt;
+	float s_x = cos_Alt*sin_Azim; //projeção leste-oeste (positivo se ao leste)
+	float s_y = cos_Alt*cos_Azim; //projeção norte-sul (positivo se ao norte)
+
+	vetor_3d result(s_x, s_y, s_z);
+
+	return result;
+}
+
 //calcula a correção na constante solar devido à variação na distância Terra-Sol ~ (d/D)^2
 float J_elliptic_correction(int NDA){ 
 	float J = J_0*(1.000 + 0.033*cos(deg_to_rad(360.0*NDA/365.25)));
@@ -261,10 +276,20 @@ float elliptic_correction_factor(int NDA){
 	return (1.000 + 0.033*cos(deg_to_rad(360.0*NDA/365.25)));
 }
 
+//deprecada:
 vetor_3d get_sun_position(float NDA, float lat, float hora_local, vetor_3d result){
 	float sin_Alt = sin_Alt_calculation(NDA, lat, hora_local);
 	float sin_Azim = sin_Azim_calculation(NDA, lat, hora_local);
 	result = sun_pos_in_cartesian_coord(sin_Alt, sin_Azim, result);
+
+	return result;
+}
+
+//usar esta versão:
+vetor_3d get_sun_position(float NDA, float lat, float hora_local){
+	float sin_Alt = sin_Alt_calculation(NDA, lat, hora_local);
+	float sin_Azim = sin_Azim_calculation(NDA, lat, hora_local);
+	vetor_3d result = sun_pos_in_cartesian_coord(sin_Alt, sin_Azim);
 
 	return result;
 }
