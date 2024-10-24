@@ -27,7 +27,7 @@ int main() {
 
 	vetor_3d P(0,-30,1);
 	
-	bool result = H.check_if_picked_point_is_inside_mirror(P);
+	bool result = H.check_if_picked_point_is_inside_mirror(P, 0);
 
 	std::cout << "Ponto está dentro? Resposta:" << result << std::endl;
 
