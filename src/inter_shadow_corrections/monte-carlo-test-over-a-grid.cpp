@@ -4,7 +4,6 @@
 #include "/home/nardi/repos/Sun_Fields/src/lib/heliostato.h"
 #include "/home/nardi/repos/Sun_Fields/src/lib/bare_functions.h"
 #include "/home/nardi/repos/Sun_Fields/src/lib/transm_functions.h"
-/* #include "/home/nardi/repos/Sun_Fields/src/lib/table_functions.h" */
 
 int main(int argc, char *argv[]){
 
@@ -15,11 +14,11 @@ int main(int argc, char *argv[]){
 			grid_size = std::atoi(argv[i+1]);
 		}
 	}
-
 	if (grid_size == 0) {
 		std::cout << "Tamanho do grid inválido." << std::endl;
-		exit(EXIT_FAILURE);
+		return EXIT_FAILURE;
 	}
+
 
 	float gap = 0.0;
 	for (int i = 0; i < argc; i++) {
@@ -27,10 +26,9 @@ int main(int argc, char *argv[]){
 			gap = std::atof(argv[i+1]);
 		}
 	}
-
 	if (gap == 0.0) {
 		std::cout << "Tamanho do gap inválido." << std::endl;
-		exit(EXIT_FAILURE);
+		return EXIT_FAILURE;
 	}
 
 
@@ -40,16 +38,40 @@ int main(int argc, char *argv[]){
 			hora_local = std::atof(argv[i+1]);
 		}
 	}
-
 	if (hora_local == 0.0) {
 		std::cout << "Hora local inválida." << std::endl;
-		exit(EXIT_FAILURE);
+		return EXIT_FAILURE;
 	}
+
+
+	float mirrors_side_leght = 0.0;
+	for (int i = 0; i < argc; i++) {
+		if (strcmp(argv[i], "-mirror-side-lenght")==0){
+			mirrors_side_leght = std::atof(argv[i+1]);
+		}
+	}
+	if (hora_local == 0.0) {
+		std::cout << "Tamanho do espelho inválido." << std::endl;
+		return EXIT_FAILURE;
+	}
+
+
+	for (int i = 0; i < argc; i++) {
+		if (strcmp(argv[i], "-flags")==0){
+			std::cout << "Flags possíveis:" << std::endl;
+			std::cout << "-grid-size: quantidade de espelhos por linha/coluna (malha quadrada)" << std::endl;
+			std::cout << "-gap: distância entre espelhos (consdiredando-os na horizontal)" << std::endl;
+			std::cout << "-hora_local: hora local (frações de hora são inseridas em decimais: 12.5 = 12h30min)" << std::endl;
+			std::cout << "-mirror-side-lenght: tamanho do lado do espelho quadrado" << std::endl;
+			return EXIT_SUCCESS;
+		}
+	}
+
 	//---------------END - cli-handler 
 
 vetor_3d Focus(0, 20, 20);
 
-float mirrors_side_leght = 1.0; //square mirrors
+/* float mirrors_side_leght = 1.0; //square mirrors */
 float vert_axis_height = 1.0;
 int month_day = 22;
 int month = 10;
@@ -65,7 +87,6 @@ float temp_Kelvin = 393.0;
 float mirror_area = mirrors_side_leght*mirrors_side_leght;
 float J = corrected_irradiance(NDA, latitude, hora_local, rel_air_humid, altitude, d, temp_Kelvin);
 
-/* float power = one_mirror_corrected_power(s, mirror_place, focus_pos, J, mirror_area); */
 
 Heliostato *** Square_Grid = new Heliostato**[grid_size];
 for (int i = 0; i < grid_size; i++){
@@ -139,7 +160,7 @@ for (int i = 0; i < grid_size; i++) {
 		/* std::cout << " ------------------------------------- " << std::endl; */
 		/* std::cout << "linha: "<< i << " ; coluna: " << j  << std::endl; */
 		/* Square_Grid[i][j]->base_pos.log_coords(); */
-		std::cout << "l: "<< i << " ; y= " << Square_Grid[i][j]->base_pos.coord[1] << " ; c: " << j << " ; x= " << Square_Grid[i][j]->base_pos.coord[0] << " ; power: " << Square_Grid[i][j]->power << " ; Perc_brightness: " << Square_Grid[i][j]->percent_brightness << " ; Eff Power: " << Square_Grid[i][j]->effective_power << std::endl;
+		std::cout << "l: "<< i << " ; c: " << j << " ; x= " << Square_Grid[i][j]->base_pos.coord[0] << " ; y= " << Square_Grid[i][j]->base_pos.coord[1] << "\npower: " << Square_Grid[i][j]->power << " ; \% brightness: " << Square_Grid[i][j]->percent_brightness << " ; Eff power: " << Square_Grid[i][j]->effective_power << std::endl;
 		/* std::cout << "power: " << Square_Grid[i][j]->power << " ; Perc_brightness: " << Square_Grid[i][j]->percent_brightness << " ; Eff Power: " << Square_Grid[i][j]->effective_power << std::endl; */
 		std::cout << " ------------------------------------- " << std::endl;
 	}
