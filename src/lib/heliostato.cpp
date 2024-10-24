@@ -29,6 +29,9 @@ Heliostato::Heliostato(float x, float y, float z, float vert_axis_height, float 
 	this->measured_zenit = 0.0;
 	this->delta_azim = 0.0;
 	this->delta_zenit = 0.0;
+
+	this->power = 0.0;
+	this->effective_power = 0.0;
 }
 
 Heliostato::Heliostato(vetor_3d base_pos, float vert_axis_height, float mirror_height, float mirror_width){
@@ -46,6 +49,9 @@ Heliostato::Heliostato(vetor_3d base_pos, float vert_axis_height, float mirror_h
 	this->measured_zenit = 0.0;
 	this->delta_azim = 0.0;
 	this->delta_zenit = 0.0;
+
+	this->power = 0.0;
+	this->effective_power = 0.0;
 }
 
 //calcula a normal do espelho e os ângulos azimutal e zenital teóricos
@@ -83,9 +89,10 @@ float Heliostato::calculate_d(){
 
 // same function as above but this time defining a member float
 void Heliostato::calculate_D(){
-	vetor_3d mirror_center_pos(this->base_pos.coord[0], this->base_pos.coord[1], this->base_pos.coord[2] + this->mirror_height);
 
-	this->d = - this->normal.scalar_prod(mirror_center_pos);
+	/* vetor_3d mirror_center_pos(this->base_pos.coord[0], this->base_pos.coord[1], this->base_pos.coord[2] + this->mirror_height); */
+
+	this->d = - this->mirror_center_position.scalar_prod(this->normal);
 }
 
 void Heliostato::set_eta_vec(){

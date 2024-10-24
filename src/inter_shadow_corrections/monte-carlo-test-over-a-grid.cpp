@@ -32,6 +32,19 @@ int main(int argc, char *argv[]){
 		std::cout << "Tamanho do gap inválido." << std::endl;
 		exit(EXIT_FAILURE);
 	}
+
+
+	float hora_local = 0.0;
+	for (int i = 0; i < argc; i++) {
+		if (strcmp(argv[i], "-hora_local")==0){
+			hora_local = std::atof(argv[i+1]);
+		}
+	}
+
+	if (hora_local == 0.0) {
+		std::cout << "Hora local inválida." << std::endl;
+		exit(EXIT_FAILURE);
+	}
 	//---------------END - cli-handler 
 
 vetor_3d Focus(0, 20, 20);
@@ -42,7 +55,7 @@ int month_day = 22;
 int month = 10;
 int NDA = NDA_calculation(month_day, month);
 float latitude = -14.7973; //ilhéus
-float hora_local = 12.0;
+/* float hora_local = 12.0; */
 vetor_3d Sun = get_sun_position(NDA, latitude, hora_local);
 
 float rel_air_humid = 0.8; 
@@ -68,18 +81,69 @@ for (int i = 0; i < grid_size; i++) {
 	Square_Grid[i][j]->set_normal(Sun, Focus);
 	Square_Grid[i][j]->set_eta_vec();
 	Square_Grid[i][j]->set_xi_vec();
+	Square_Grid[i][j]->calculate_D();
 	Square_Grid[i][j]->calculate_power(J, Sun, Focus);
-	std::cout << "linha: "<< i << " ; coluna: " << j << " ; power: " << Square_Grid[i][j]->power << std::endl;
+	/* std::cout << "linha: "<< i << " ; coluna: " << j << " ; power: " << Square_Grid[i][j]->power << std::endl; */
+	}
+}
+
+std::random_device rd;  // Usado para obter um seed inicial
+std::mt19937 gen(rd()); // Mersenne Twister engine
+std::uniform_real_distribution<> distrib(0.0, 1.0);
+
+double random_xi, random_eta;
+int count_yes = 0;
+int count_no = 0;
+bool is_inside;
+float percent_brightness = 0.0;
+
+//nenhuma sombra na primeira fileira de heliostatos
+for (int j = 0; j < grid_size; j++) {
+	Square_Grid[0][j]->percent_brightness = 1.0;
+	Square_Grid[0][j]->effective_power = Square_Grid[0][j]->power * Square_Grid[0][j]->percent_brightness;
+}
+
+vetor_3d P_shadow;
+vetor_3d P_bright;
+
+//iteração do heliostato sombreado no grid todo (menos a primeira fileira):
+for (int i = 1; i < grid_size; i++) {
+	std::cout << " ------- Iterando linha " << i << " ------- " << std::endl;
+	for (int j = 0; j < grid_size; j++) {
+
+		//iteração na fileira da frente (àquela onde estamos calculando o sombreamento):
+		count_yes = 0;
+		count_no = 0;
+		for (int k = 0; k < grid_size; k++){
+			//monte-carlo loop:
+			for (int n = 0; n < 100000; n++) {
+				random_eta = distrib(gen);
+				random_xi = distrib(gen);
+
+				P_shadow = Square_Grid[i][j]->pick_point_inside_mirror_region(random_eta, random_xi);
+				P_bright = Square_Grid[i-1][k]->intersec_plano_reta(P_shadow, Sun, Square_Grid[i-1][k]->normal, Square_Grid[i-1][k]->d);
+				is_inside = Square_Grid[i-1][k]->check_if_picked_point_is_inside_mirror(P_bright, 0);
+
+				if (is_inside) {count_yes++;} //yes means shadow
+				else{ count_no++;}
+			}
+		}
+		Square_Grid[i][j]->percent_brightness = (float) count_no/( (float) count_yes + (float) count_no);
+		Square_Grid[i][j]->effective_power = Square_Grid[i][j]->power * Square_Grid[i][j]->percent_brightness;
 	}
 }
 
 
-
-
-
-
-
-
+for (int i = 0; i < grid_size; i++) {
+	for (int j = 0; j < grid_size; j++) {
+		/* std::cout << " ------------------------------------- " << std::endl; */
+		/* std::cout << "linha: "<< i << " ; coluna: " << j  << std::endl; */
+		/* Square_Grid[i][j]->base_pos.log_coords(); */
+		std::cout << "l: "<< i << " ; y= " << Square_Grid[i][j]->base_pos.coord[1] << " ; c: " << j << " ; x= " << Square_Grid[i][j]->base_pos.coord[0] << " ; power: " << Square_Grid[i][j]->power << " ; Perc_brightness: " << Square_Grid[i][j]->percent_brightness << " ; Eff Power: " << Square_Grid[i][j]->effective_power << std::endl;
+		/* std::cout << "power: " << Square_Grid[i][j]->power << " ; Perc_brightness: " << Square_Grid[i][j]->percent_brightness << " ; Eff Power: " << Square_Grid[i][j]->effective_power << std::endl; */
+		std::cout << " ------------------------------------- " << std::endl;
+	}
+}
 
 //Liberação de memória:
 for (int i = 0; i < grid_size; ++i) {

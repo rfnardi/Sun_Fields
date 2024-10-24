@@ -30,6 +30,10 @@ class Heliostato {
 		float delta_zenit;
 
 		float power;
+		float percent_brightness;
+
+		//Power after inter-shadowing deduction
+		float effective_power;
 
 		Heliostato();
 		Heliostato(float x, float y, float z, float vert_axis_height, float mirror_height, float mirror_width);
