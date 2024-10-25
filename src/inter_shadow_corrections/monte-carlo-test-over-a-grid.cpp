@@ -1,6 +1,9 @@
 #include <iostream>
 #include <random>
 #include <cstring>
+#include <vector>
+#include <stdio.h>
+#include <stdlib.h>
 #include "/home/nardi/repos/Sun_Fields/src/lib/heliostato.h"
 #include "/home/nardi/repos/Sun_Fields/src/lib/bare_functions.h"
 #include "/home/nardi/repos/Sun_Fields/src/lib/transm_functions.h"
@@ -94,7 +97,7 @@ for (int i = 0; i < grid_size; i++){
 //popular o grid com objetos da classe heliostato
 for (int i = 0; i < grid_size; i++) {
 	for (int j = 0; j < grid_size; j++) {
-		Square_Grid[i][j] = new Heliostato(j*(mirrors_side_leght + gap) - (gap + mirrors_side_leght)*((float) grid_size/2), i*(mirrors_side_leght + gap), 0.0, vert_axis_height, mirrors_side_leght, mirrors_side_leght);
+		Square_Grid[i][j] = new Heliostato(j*(mirrors_side_leght + gap) - (gap + mirrors_side_leght)*((float) grid_size/2), -i*(mirrors_side_leght + gap), 0.0, vert_axis_height, mirrors_side_leght, mirrors_side_leght);
 
 	// setar normal, xi, eta
 	Square_Grid[i][j]->set_normal(Sun, Focus);
@@ -123,6 +126,7 @@ for (int j = 0; j < grid_size; j++) {
 
 vetor_3d P_shadow;
 vetor_3d P_bright;
+std::vector<vetor_3d> random_points;
 
 //iteração do heliostato sombreado no grid todo (menos a primeira fileira):
 for (int i = 1; i < grid_size; i++) {
@@ -139,6 +143,7 @@ for (int i = 1; i < grid_size; i++) {
 				random_xi = distrib(gen);
 
 				P_shadow = Square_Grid[i][j]->pick_point_inside_mirror_region(random_eta, random_xi);
+				random_points.push_back(P_shadow);
 				P_bright = Square_Grid[i-1][k]->intersec_plano_reta(P_shadow, Sun, Square_Grid[i-1][k]->normal, Square_Grid[i-1][k]->d);
 				is_inside = Square_Grid[i-1][k]->check_if_picked_point_is_inside_mirror(P_bright, 0);
 
@@ -165,6 +170,16 @@ for (int i = 0; i < grid_size; i++) {
 		total_grid_power += Square_Grid[i][j]->effective_power;
 	}
 }
+
+FILE * data_file_ptr;
+
+data_file_ptr = fopen("random_points.txt", "w+");
+
+for (int i=0; i < (int) random_points.size(); i++){
+	fprintf(data_file_ptr, "%2f %2f %2f\n", random_points[i].coord[0], random_points[i].coord[1], random_points[i].coord[2]);
+}
+
+fclose(data_file_ptr);
 
 std::cout << "\nTotal Grid Power: "<< total_grid_power << " W\n" << std::endl;
 
